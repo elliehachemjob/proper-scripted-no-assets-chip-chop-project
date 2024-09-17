@@ -54,6 +54,12 @@ public class GameManager : MonoBehaviour
 			_inventory.Add(item);
 		}
 	}
+
+	void StartGame()
+	{
+		_gameState.UpdateGameState(GameState.Gameplay);
+		_questManager.StartGame();
+	}
 /* [SerializeField] private QuestManagerSO _questManager = default;
 	[SerializeField] private GameStateSO _gameState = default;
 

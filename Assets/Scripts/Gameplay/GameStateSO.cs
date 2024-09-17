@@ -15,7 +15,33 @@ public enum GameState
 //[CreateAssetMenu(fileName = "GameState", menuName = "Gameplay/GameState", order = 51)]
 public class GameStateSO : DescriptionBaseSO
 {
+
 	public GameState CurrentGameState => _currentGameState;
+	
+	[Header("Game states")]
+	[SerializeField][ReadOnly] private GameState _currentGameState = default;
+	[SerializeField][ReadOnly] private GameState _previousGameState = default;
+
+	[Header("Broadcasting on")]
+	[SerializeField] private BoolEventChannelSO _onCombatStateEvent = default;
+	
+	private List<Transform> _alertEnemies;
+
+	private void Start()
+	{
+		_alertEnemies = new List<Transform>();
+	}
+
+	public void AddAlertEnemy(Transform enemy)
+	{
+		if (!_alertEnemies.Contains(enemy))
+		{
+			_alertEnemies.Add(enemy);
+		}
+
+		UpdateGameState(GameState.Combat);
+	}
+/*	public GameState CurrentGameState => _currentGameState;
 	
 	[Header("Game states")]
 	[SerializeField][ReadOnly] private GameState _currentGameState = default;
@@ -89,5 +115,5 @@ public class GameStateSO : DescriptionBaseSO
 		GameState stateToReturnTo = _previousGameState;
 		_previousGameState = _currentGameState;
 		_currentGameState = stateToReturnTo;
-	}
+	}*/ 
 }
