@@ -4,7 +4,31 @@ using UnityEngine;
 
 public class SpawnSystem : MonoBehaviour
 {
-	[Header("Asset References")]
+
+	[Header("Asset References")]`
+	[SerializeField] private InputReader _inputReader = default;
+	[SerializeField] private Protagonist _playerPrefab = default;
+	[SerializeField] private TransformAnchor _playerTransformAnchor = default;
+	[SerializeField] private TransformEventChannelSO _playerInstantiatedChannel = default;
+	[SerializeField] private PathStorageSO _pathTaken = default;
+
+	[Header("Scene Ready Event")]
+	[SerializeField] private VoidEventChannelSO _onSceneReady = default; //Raised by SceneLoader when the scene is set to active
+
+	private LocationEntrance[] _spawnLocations;
+	private Transform _defaultSpawnPoint;
+
+	private void Awake()
+	{
+		_spawnLocations = GameObject.FindObjectsOfType<LocationEntrance>();
+		_defaultSpawnPoint = transform.GetChild(0);
+	}
+
+	private void OnEnable()
+	{
+		_onSceneReady.OnEventRaised += SpawnPlayer;
+	}
+	/* [Header("Asset References")]`
 	[SerializeField] private InputReader _inputReader = default;
 	[SerializeField] private Protagonist _playerPrefab = default;
 	[SerializeField] private TransformAnchor _playerTransformAnchor = default;
@@ -63,5 +87,5 @@ public class SpawnSystem : MonoBehaviour
 
 		//TODO: Probably move this to the GameManager once it's up and running
 		_inputReader.EnableGameplayInput();
-	}
+	}*/ 
 }
