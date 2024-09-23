@@ -5,7 +5,31 @@ using UnityEngine.Events;
 [CreateAssetMenu(fileName = "InputReader", menuName = "Game/Input Reader")]
 public class InputReader : DescriptionBaseSO, GameInput.IGameplayActions, GameInput.IDialoguesActions, GameInput.IMenusActions, GameInput.ICheatsActions
 {
+
 	[Space]
+	[SerializeField] private GameStateSO _gameStateManager;
+	
+	// Assign delegate{} to events to initialise them with an empty delegate
+	// so we can skip the null check when we use them
+
+	// Gameplay
+	public event UnityAction JumpEvent = delegate { };
+	public event UnityAction JumpCanceledEvent = delegate { };
+	public event UnityAction AttackEvent = delegate { };
+	public event UnityAction AttackCanceledEvent = delegate { };
+	public event UnityAction InteractEvent = delegate { }; // Used to talk, pickup objects, interact with tools like the cooking cauldron
+	public event UnityAction InventoryActionButtonEvent = delegate { };
+	public event UnityAction SaveActionButtonEvent = delegate { };
+	public event UnityAction ResetActionButtonEvent = delegate { };
+	public event UnityAction<Vector2> MoveEvent = delegate { };
+	public event UnityAction<Vector2, bool> CameraMoveEvent = delegate { };
+	public event UnityAction EnableMouseControlCameraEvent = delegate { };
+	public event UnityAction DisableMouseControlCameraEvent = delegate { };
+	public event UnityAction StartedRunning = delegate { };
+	public event UnityAction StoppedRunning = delegate { };
+
+/* 
+[Space]
 	[SerializeField] private GameStateSO _gameStateManager;
 	
 	// Assign delegate{} to events to initialise them with an empty delegate
@@ -271,5 +295,5 @@ public class InputReader : DescriptionBaseSO, GameInput.IGameplayActions, GameIn
 	public void OnCloseInventory(InputAction.CallbackContext context)
 	{
 		CloseInventoryEvent.Invoke();
-	}
+	} */ 
 }
