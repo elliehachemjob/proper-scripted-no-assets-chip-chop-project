@@ -28,6 +28,77 @@ public class InputReader : DescriptionBaseSO, GameInput.IGameplayActions, GameIn
 	public event UnityAction StartedRunning = delegate { };
 	public event UnityAction StoppedRunning = delegate { };
 
+public event UnityAction MoveSelectionEvent = delegate { };
+
+	// Dialogues
+	public event UnityAction AdvanceDialogueEvent = delegate { };
+
+	// Menus
+	public event UnityAction MenuMouseMoveEvent = delegate { };
+	public event UnityAction MenuClickButtonEvent = delegate { };
+	public event UnityAction MenuUnpauseEvent = delegate { };
+	public event UnityAction MenuPauseEvent = delegate { };
+	public event UnityAction MenuCloseEvent = delegate { };
+	public event UnityAction OpenInventoryEvent = delegate { }; // Used to bring up the inventory
+	public event UnityAction CloseInventoryEvent = delegate { }; // Used to bring up the inventory
+	public event UnityAction<float> TabSwitched = delegate { };
+
+	// Cheats (has effect only in the Editor)
+	public event UnityAction CheatMenuEvent = delegate { };
+
+	private GameInput _gameInput;
+
+	private void OnEnable()
+	{
+		if (_gameInput == null)
+		{
+			_gameInput = new GameInput();
+
+			_gameInput.Menus.SetCallbacks(this);
+			_gameInput.Gameplay.SetCallbacks(this);
+			_gameInput.Dialogues.SetCallbacks(this);
+			_gameInput.Cheats.SetCallbacks(this);
+		}
+
+#if UNITY_EDITOR
+	_gameInput.Cheats.Enable();
+#endif
+	}
+
+	private void OnDisable()
+	{
+		DisableAllInput();
+	}
+
+	public void OnAttack(InputAction.CallbackContext context)
+	{
+		switch (context.phase)
+		{
+			case InputActionPhase.Performed:
+				AttackEvent.Invoke();
+				break;
+			case InputActionPhase.Canceled:
+				AttackCanceledEvent.Invoke();
+				break;
+		}
+	}
+
+	public void OnOpenInventory(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			OpenInventoryEvent.Invoke();
+	}
+	public void OnCancel(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			MenuCloseEvent.Invoke();
+	}
+
+	public void OnInventoryActionButton(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			InventoryActionButtonEvent.Invoke();
+	}
 /* 
 [Space]
 	[SerializeField] private GameStateSO _gameStateManager;
