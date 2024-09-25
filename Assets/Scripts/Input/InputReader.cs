@@ -99,6 +99,80 @@ public event UnityAction MoveSelectionEvent = delegate { };
 		if (context.phase == InputActionPhase.Performed)
 			InventoryActionButtonEvent.Invoke();
 	}
+
+	public void OnSaveActionButton(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			SaveActionButtonEvent.Invoke();
+	}
+
+	public void OnResetActionButton(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			ResetActionButtonEvent.Invoke();
+	}
+
+	public void OnInteract(InputAction.CallbackContext context)
+	{
+		if ((context.phase == InputActionPhase.Performed)
+			&& (_gameStateManager.CurrentGameState == GameState.Gameplay)) // Interaction is only possible when in gameplay GameState
+			InteractEvent.Invoke();
+	}
+
+	public void OnJump(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			JumpEvent.Invoke();
+
+		if (context.phase == InputActionPhase.Canceled)
+			JumpCanceledEvent.Invoke();
+	}
+
+	public void OnMove(InputAction.CallbackContext context)
+	{
+		MoveEvent.Invoke(context.ReadValue<Vector2>());
+	}
+
+	public void OnRun(InputAction.CallbackContext context)
+	{
+		switch (context.phase)
+		{
+			case InputActionPhase.Performed:
+				StartedRunning.Invoke();
+				break;
+			case InputActionPhase.Canceled:
+				StoppedRunning.Invoke();
+				break;
+		}
+	}
+
+	public void OnPause(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			MenuPauseEvent.Invoke();
+	}
+
+	public void OnRotateCamera(InputAction.CallbackContext context)
+	{
+		CameraMoveEvent.Invoke(context.ReadValue<Vector2>(), IsDeviceMouse(context));
+	}
+
+	public void OnMouseControlCamera(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			EnableMouseControlCameraEvent.Invoke();
+
+		if (context.phase == InputActionPhase.Canceled)
+			DisableMouseControlCameraEvent.Invoke();
+	}
+
+	private bool IsDeviceMouse(InputAction.CallbackContext context) => context.control.device.name == "Mouse";
+
+	public void OnMoveSelection(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			MoveSelectionEvent.Invoke();
+	}
 /* 
 [Space]
 	[SerializeField] private GameStateSO _gameStateManager;
