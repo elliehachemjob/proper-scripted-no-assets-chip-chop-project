@@ -173,6 +173,104 @@ public event UnityAction MoveSelectionEvent = delegate { };
 		if (context.phase == InputActionPhase.Performed)
 			MoveSelectionEvent.Invoke();
 	}
+	public void OnAdvanceDialogue(InputAction.CallbackContext context)
+	{
+
+		if (context.phase == InputActionPhase.Performed)
+			AdvanceDialogueEvent.Invoke();
+	}
+
+	public void OnConfirm(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			MenuClickButtonEvent.Invoke();
+	}
+
+
+	public void OnMouseMove(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			MenuMouseMoveEvent.Invoke();
+	}
+
+	public void OnUnpause(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			MenuUnpauseEvent.Invoke();
+	}
+
+	public void OnOpenCheatMenu(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			CheatMenuEvent.Invoke();
+	}
+
+	public void EnableDialogueInput()
+	{
+		_gameInput.Menus.Enable();
+		_gameInput.Gameplay.Disable();
+		_gameInput.Dialogues.Enable();
+	}
+
+	public void EnableGameplayInput()
+	{
+		_gameInput.Menus.Disable();
+		_gameInput.Dialogues.Disable();
+		_gameInput.Gameplay.Enable();
+	}
+
+	public void EnableMenuInput()
+	{
+		_gameInput.Dialogues.Disable();
+		_gameInput.Gameplay.Disable();
+
+		_gameInput.Menus.Enable();
+	}
+
+	public void DisableAllInput()
+	{
+		_gameInput.Gameplay.Disable();
+		_gameInput.Menus.Disable();
+		_gameInput.Dialogues.Disable();
+	}
+
+	public void OnChangeTab(InputAction.CallbackContext context)
+	{
+		if (context.phase == InputActionPhase.Performed)
+			TabSwitched.Invoke(context.ReadValue<float>());
+	}
+
+	public bool LeftMouseDown() => Mouse.current.leftButton.isPressed;
+
+	public void OnClick(InputAction.CallbackContext context)
+	{
+
+	}
+
+	public void OnSubmit(InputAction.CallbackContext context)
+	{
+
+	}
+
+	public void OnPoint(InputAction.CallbackContext context)
+	{
+
+	}
+	
+	public void OnRightClick(InputAction.CallbackContext context)
+	{
+
+	}
+
+	public void OnNavigate(InputAction.CallbackContext context)
+	{
+
+	}
+
+	public void OnCloseInventory(InputAction.CallbackContext context)
+	{
+		CloseInventoryEvent.Invoke();
+	}
 /* 
 [Space]
 	[SerializeField] private GameStateSO _gameStateManager;
