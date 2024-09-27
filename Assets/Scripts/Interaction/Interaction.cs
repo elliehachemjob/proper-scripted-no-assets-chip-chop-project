@@ -10,4 +10,14 @@ public class Interaction
 		type = t;
 		interactableObject = obj;
 	}
+
+	/* public GameObject interactableObject;
+
+	public Interaction(InteractionType t, GameObject obj)
+	{
+		type = t;
+		interactableObject = obj;
+	}
+*/
+
 }
