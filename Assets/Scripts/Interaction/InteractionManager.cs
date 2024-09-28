@@ -23,6 +23,24 @@ public class InteractionManager : MonoBehaviour
 
 	private LinkedList<Interaction> _potentialInteractions = new LinkedList<Interaction>(); //To store the objects we the player could potentially interact with
 
+
+/*	[SerializeField] private InputReader _inputReader = default;
+
+	//Events for the different interaction types
+	[Header("Broadcasting on")]
+	[SerializeField] private ItemEventChannelSO _onObjectPickUp = default;
+	[SerializeField] private VoidEventChannelSO _onCookingStart = default;
+	[SerializeField] private DialogueActorChannelSO _startTalking = default;
+	[SerializeField] private InteractionUIEventChannelSO _toggleInteractionUI = default;
+
+	[Header("Listening to")]
+	[SerializeField] private VoidEventChannelSO _onInteractionEnded = default;
+	[SerializeField] private PlayableDirectorChannelSO _onCutsceneStart = default;
+	
+	[ReadOnly] public InteractionType currentInteractionType; //This is checked/consumed by conditions in the StateMachine
+
+	private LinkedList<Interaction> _potentialInteractions = new LinkedList<Interaction>(); //To store the objects we the player could potentially interact with
+
 	private void OnEnable()
 	{
 		_inputReader.InteractEvent += OnInteractionButtonPress;
@@ -159,5 +177,5 @@ public class InteractionManager : MonoBehaviour
 	{
 		_potentialInteractions.Clear();
 		RequestUpdateUI(_potentialInteractions.Count > 0);
-	}
+	}*/
 }
