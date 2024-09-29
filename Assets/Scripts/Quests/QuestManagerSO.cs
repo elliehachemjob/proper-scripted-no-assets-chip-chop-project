@@ -5,7 +5,7 @@ using UnityEngine.Serialization;
 //[CreateAssetMenu(fileName = "QuestManager", menuName = "Quests/QuestManager", order = 51)]
 public class QuestManagerSO : ScriptableObject
 {
-	[Header("Data")]
+	/* [Header("Data")]
 	[SerializeField] private List<QuestlineSO> _questlines = default;
 	[SerializeField] private InventorySO _inventory = default;
 	[SerializeField] private ItemSO _winningItem = default;
@@ -32,7 +32,29 @@ public class QuestManagerSO : ScriptableObject
 	private StepSO _currentStep;
 	private int _currentQuestIndex = 0;
 	private int _currentQuestlineIndex = 0;
-	private int _currentStepIndex = 0;
+	private int _currentStepIndex = 0; */
+
+	[Header("Data")]
+	[SerializeField] private List<QuestlineSO> _questlines = default;
+	[SerializeField] private InventorySO _inventory = default;
+	[SerializeField] private ItemSO _winningItem = default;
+	[SerializeField] private ItemSO _losingItem = default;
+
+	[Header("Linstening to channels")]
+	[FormerlySerializedAs("_checkStepValidityEvent")]
+	[SerializeField] private VoidEventChannelSO _continueWithStepEvent = default;
+	[SerializeField] private IntEventChannelSO _endDialogueEvent = default;
+	[SerializeField] private VoidEventChannelSO _makeWinningChoiceEvent = default;
+	[SerializeField] private VoidEventChannelSO _makeLosingChoiceEvent = default;
+
+	[Header("Broadcasting on channels")]
+	[SerializeField] private VoidEventChannelSO _playCompletionDialogueEvent = default;
+	[SerializeField] private VoidEventChannelSO _playIncompleteDialogueEvent = default;
+	[SerializeField] private VoidEventChannelSO _startWinningCutscene = default;
+	[SerializeField] private VoidEventChannelSO _startLosingCutscene = default;
+	[SerializeField] private ItemEventChannelSO _giveItemEvent = default;
+	[SerializeField] private ItemStackEventChannelSO _rewardItemEvent = default;
+	[SerializeField] private SaveSystem saveSystem = default;
 
 	public void OnDisable()
 	{
