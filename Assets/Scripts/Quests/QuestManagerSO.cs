@@ -32,7 +32,78 @@ public class QuestManagerSO : ScriptableObject
 	private StepSO _currentStep;
 	private int _currentQuestIndex = 0;
 	private int _currentQuestlineIndex = 0;
-	private int _currentStepIndex = 0; */
+	private int _currentStepIndex = 0; 
+	
+	public void OnDisable()
+	{
+		_continueWithStepEvent.OnEventRaised -= CheckStepValidity;
+		_endDialogueEvent.OnEventRaised -= EndDialogue;
+		_makeWinningChoiceEvent.OnEventRaised -= MakeWinningChoice;
+		_makeLosingChoiceEvent.OnEventRaised -= MakeLosingChoice;
+	}
+
+	public void StartGame()
+	{
+		//Add code for saved information
+		_continueWithStepEvent.OnEventRaised += CheckStepValidity;
+		_endDialogueEvent.OnEventRaised += EndDialogue;
+		_makeWinningChoiceEvent.OnEventRaised += MakeWinningChoice;
+		_makeLosingChoiceEvent.OnEventRaised += MakeLosingChoice;
+		StartQuestline();
+	}
+
+	void StartQuestline()
+	{
+		if (_questlines != null)
+		{
+			if (_questlines.Exists(o => !o.IsDone))
+			{
+				_currentQuestlineIndex = _questlines.FindIndex(o => !o.IsDone);
+
+				if (_currentQuestlineIndex >= 0)
+					_currentQuestline = _questlines.Find(o => !o.IsDone);
+			}
+		}
+	}
+
+	bool HasStep(ActorSO actorToCheckWith)
+	{
+		if (_currentStep != null)
+		{
+			if (_currentStep.Actor == actorToCheckWith)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool CheckQuestlineForQuestWithActor(ActorSO actorToCheckWith)
+	{
+		if (_currentQuest == null)//check if there's a current quest 
+		{
+			if (_currentQuestline != null)
+			{
+
+				return _currentQuestline.Quests.Exists(o => !o.IsDone && o.Steps != null && o.Steps[0].Actor == actorToCheckWith);
+
+			}
+
+		}
+		return false;
+	}
+
+	public DialogueDataSO InteractWithCharacter(ActorSO actor, bool isCheckValidity, bool isValid)
+	{
+		if (_currentQuest == null)
+		{
+			if (CheckQuestlineForQuestWithActor(actor))
+			{
+				StartQuest(actor);
+			}
+		}
+
+	*/
 
 	[Header("Data")]
 	[SerializeField] private List<QuestlineSO> _questlines = default;
