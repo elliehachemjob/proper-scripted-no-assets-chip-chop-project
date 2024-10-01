@@ -103,99 +103,6 @@ public class QuestManagerSO : ScriptableObject
 			}
 		}
 
-	*/
-
-	[Header("Data")]
-	[SerializeField] private List<QuestlineSO> _questlines = default;
-	[SerializeField] private InventorySO _inventory = default;
-	[SerializeField] private ItemSO _winningItem = default;
-	[SerializeField] private ItemSO _losingItem = default;
-
-	[Header("Linstening to channels")]
-	[FormerlySerializedAs("_checkStepValidityEvent")]
-	[SerializeField] private VoidEventChannelSO _continueWithStepEvent = default;
-	[SerializeField] private IntEventChannelSO _endDialogueEvent = default;
-	[SerializeField] private VoidEventChannelSO _makeWinningChoiceEvent = default;
-	[SerializeField] private VoidEventChannelSO _makeLosingChoiceEvent = default;
-
-	[Header("Broadcasting on channels")]
-	[SerializeField] private VoidEventChannelSO _playCompletionDialogueEvent = default;
-	[SerializeField] private VoidEventChannelSO _playIncompleteDialogueEvent = default;
-	[SerializeField] private VoidEventChannelSO _startWinningCutscene = default;
-	[SerializeField] private VoidEventChannelSO _startLosingCutscene = default;
-	[SerializeField] private ItemEventChannelSO _giveItemEvent = default;
-	[SerializeField] private ItemStackEventChannelSO _rewardItemEvent = default;
-	[SerializeField] private SaveSystem saveSystem = default;
-
-	public void OnDisable()
-	{
-		_continueWithStepEvent.OnEventRaised -= CheckStepValidity;
-		_endDialogueEvent.OnEventRaised -= EndDialogue;
-		_makeWinningChoiceEvent.OnEventRaised -= MakeWinningChoice;
-		_makeLosingChoiceEvent.OnEventRaised -= MakeLosingChoice;
-	}
-
-	public void StartGame()
-	{
-		//Add code for saved information
-		_continueWithStepEvent.OnEventRaised += CheckStepValidity;
-		_endDialogueEvent.OnEventRaised += EndDialogue;
-		_makeWinningChoiceEvent.OnEventRaised += MakeWinningChoice;
-		_makeLosingChoiceEvent.OnEventRaised += MakeLosingChoice;
-		StartQuestline();
-	}
-
-	void StartQuestline()
-	{
-		if (_questlines != null)
-		{
-			if (_questlines.Exists(o => !o.IsDone))
-			{
-				_currentQuestlineIndex = _questlines.FindIndex(o => !o.IsDone);
-
-				if (_currentQuestlineIndex >= 0)
-					_currentQuestline = _questlines.Find(o => !o.IsDone);
-			}
-		}
-	}
-
-	bool HasStep(ActorSO actorToCheckWith)
-	{
-		if (_currentStep != null)
-		{
-			if (_currentStep.Actor == actorToCheckWith)
-			{
-				return true;
-			}
-		}
-		return false;
-	}
-
-	bool CheckQuestlineForQuestWithActor(ActorSO actorToCheckWith)
-	{
-		if (_currentQuest == null)//check if there's a current quest 
-		{
-			if (_currentQuestline != null)
-			{
-
-				return _currentQuestline.Quests.Exists(o => !o.IsDone && o.Steps != null && o.Steps[0].Actor == actorToCheckWith);
-
-			}
-
-		}
-		return false;
-	}
-
-	public DialogueDataSO InteractWithCharacter(ActorSO actor, bool isCheckValidity, bool isValid)
-	{
-		if (_currentQuest == null)
-		{
-			if (CheckQuestlineForQuestWithActor(actor))
-			{
-				StartQuest(actor);
-			}
-		}
-
 		if (HasStep(actor))
 		{
 			if (isCheckValidity)
@@ -509,4 +416,99 @@ public class QuestManagerSO : ScriptableObject
 		isNew = (!_questlines.Exists(o => o.Quests.Exists(j => j.Steps.Exists(k => k.IsDone))));
 		return isNew;
 	}
+
+	*/
+
+	[Header("Data")]
+	[SerializeField] private List<QuestlineSO> _questlines = default;
+	[SerializeField] private InventorySO _inventory = default;
+	[SerializeField] private ItemSO _winningItem = default;
+	[SerializeField] private ItemSO _losingItem = default;
+
+	[Header("Linstening to channels")]
+	[FormerlySerializedAs("_checkStepValidityEvent")]
+	[SerializeField] private VoidEventChannelSO _continueWithStepEvent = default;
+	[SerializeField] private IntEventChannelSO _endDialogueEvent = default;
+	[SerializeField] private VoidEventChannelSO _makeWinningChoiceEvent = default;
+	[SerializeField] private VoidEventChannelSO _makeLosingChoiceEvent = default;
+
+	[Header("Broadcasting on channels")]
+	[SerializeField] private VoidEventChannelSO _playCompletionDialogueEvent = default;
+	[SerializeField] private VoidEventChannelSO _playIncompleteDialogueEvent = default;
+	[SerializeField] private VoidEventChannelSO _startWinningCutscene = default;
+	[SerializeField] private VoidEventChannelSO _startLosingCutscene = default;
+	[SerializeField] private ItemEventChannelSO _giveItemEvent = default;
+	[SerializeField] private ItemStackEventChannelSO _rewardItemEvent = default;
+	[SerializeField] private SaveSystem saveSystem = default;
+
+	public void OnDisable()
+	{
+		_continueWithStepEvent.OnEventRaised -= CheckStepValidity;
+		_endDialogueEvent.OnEventRaised -= EndDialogue;
+		_makeWinningChoiceEvent.OnEventRaised -= MakeWinningChoice;
+		_makeLosingChoiceEvent.OnEventRaised -= MakeLosingChoice;
+	}
+
+	public void StartGame()
+	{
+		//Add code for saved information
+		_continueWithStepEvent.OnEventRaised += CheckStepValidity;
+		_endDialogueEvent.OnEventRaised += EndDialogue;
+		_makeWinningChoiceEvent.OnEventRaised += MakeWinningChoice;
+		_makeLosingChoiceEvent.OnEventRaised += MakeLosingChoice;
+		StartQuestline();
+	}
+
+	void StartQuestline()
+	{
+		if (_questlines != null)
+		{
+			if (_questlines.Exists(o => !o.IsDone))
+			{
+				_currentQuestlineIndex = _questlines.FindIndex(o => !o.IsDone);
+
+				if (_currentQuestlineIndex >= 0)
+					_currentQuestline = _questlines.Find(o => !o.IsDone);
+			}
+		}
+	}
+
+	bool HasStep(ActorSO actorToCheckWith)
+	{
+		if (_currentStep != null)
+		{
+			if (_currentStep.Actor == actorToCheckWith)
+			{
+				return true;
+			}
+		}
+		return false;
+	}
+
+	bool CheckQuestlineForQuestWithActor(ActorSO actorToCheckWith)
+	{
+		if (_currentQuest == null)//check if there's a current quest 
+		{
+			if (_currentQuestline != null)
+			{
+
+				return _currentQuestline.Quests.Exists(o => !o.IsDone && o.Steps != null && o.Steps[0].Actor == actorToCheckWith);
+
+			}
+
+		}
+		return false;
+	}
+
+	public DialogueDataSO InteractWithCharacter(ActorSO actor, bool isCheckValidity, bool isValid)
+	{
+		if (_currentQuest == null)
+		{
+			if (CheckQuestlineForQuestWithActor(actor))
+			{
+				StartQuest(actor);
+			}
+		}
+
+		
 }
