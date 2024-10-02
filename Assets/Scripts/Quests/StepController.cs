@@ -7,7 +7,9 @@ using UnityEngine.Events;
 
 public class StepController : MonoBehaviour
 {
-	[Header("Data")]
+
+
+		[Header("Data")]
 	[SerializeField] private ActorSO _actor = default;
 	[SerializeField] private DialogueDataSO _defaultDialogue = default;
 	[SerializeField] private QuestManagerSO _questData = default;
@@ -38,6 +40,40 @@ public class StepController : MonoBehaviour
 		}
 
 	}
+
+
+	/* [Header("Data")]
+	[SerializeField] private ActorSO _actor = default;
+	[SerializeField] private DialogueDataSO _defaultDialogue = default;
+	[SerializeField] private QuestManagerSO _questData = default;
+	[SerializeField] private GameStateSO _gameStateManager = default;
+
+	[Header("Listening to channels")]
+	[SerializeField] private VoidEventChannelSO _winDialogueEvent = default;
+	[SerializeField] private VoidEventChannelSO _loseDialogueEvent = default;
+	[SerializeField] private IntEventChannelSO _endDialogueEvent = default;
+
+	[Header("Broadcasting on channels")]
+	public DialogueDataChannelSO _startDialogueEvent = default;
+
+	[Header("Dialogue Shot Camera")]
+	public GameObject dialogueShot;
+
+	//check if character is actif. An actif character is the character concerned by the step.
+	private DialogueDataSO _currentDialogue;
+
+	public bool isInDialogue; //Consumed by the state machine
+
+	private void Start()
+	{
+		if (dialogueShot)
+		{
+			dialogueShot.transform.parent = null;
+			dialogueShot.SetActive(false);
+		}
+
+	}
+
 
 	void PlayDefaultDialogue()
 	{
@@ -146,5 +182,5 @@ public class StepController : MonoBehaviour
 				talkingTo[i].GetComponent<NPC>().npcState = NPCState.Talk;
 			}
 		}
-	}
+	}*/
 }
