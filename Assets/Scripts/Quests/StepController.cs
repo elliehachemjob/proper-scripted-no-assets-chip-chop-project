@@ -41,6 +41,58 @@ public class StepController : MonoBehaviour
 
 	}
 
+	void PlayLoseDialogue()
+	{
+		if (_questData != null)
+		{
+			DialogueDataSO displayDialogue = _questData.InteractWithCharacter(_actor, true, false);
+			if (displayDialogue != null)
+			{
+				_currentDialogue = displayDialogue;
+				StartDialogue();
+
+			}
+
+		}
+	}
+
+	void PlayWinDialogue()
+	{
+		if (_questData != null)
+		{
+			DialogueDataSO displayDialogue = _questData.InteractWithCharacter(_actor, true, true);
+			if (displayDialogue != null)
+			{
+				_currentDialogue = displayDialogue;
+				StartDialogue();
+			}
+		}
+	}
+
+	private void StopConversation()
+	{
+		GameObject[] talkingTo = gameObject.GetComponent<NPC>().talkingTo;
+		if (talkingTo != null)
+		{
+			for (int i = 0; i < talkingTo.Length; ++i)
+			{
+				talkingTo[i].GetComponent<NPC>().npcState = NPCState.Idle;
+			}
+		}
+	}
+
+	private void ResumeConversation()
+	{
+		GameObject[] talkingTo = GetComponent<NPC>().talkingTo;
+		if (talkingTo != null)
+		{
+
+			for (int i = 0; i < talkingTo.Length; ++i)
+			{
+				talkingTo[i].GetComponent<NPC>().npcState = NPCState.Talk;
+			}
+		}
+	}
 
 	/* [Header("Data")]
 	[SerializeField] private ActorSO _actor = default;
