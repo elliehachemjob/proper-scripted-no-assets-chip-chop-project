@@ -8,4 +8,8 @@ public class PathStorageSO : DescriptionBaseSO
 {
 	[Space]
 	[ReadOnly] public PathSO lastPathTaken;
+
+	/*	[Space]
+	[ReadOnly] public PathSO lastPathTaken;/*
+}
 }
