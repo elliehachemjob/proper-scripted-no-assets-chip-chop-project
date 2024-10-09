@@ -14,6 +14,15 @@ public class SaveSystem : ScriptableObject
 
 	public string saveFilename = "save.chop";
 	public string backupSaveFilename = "save.chop.bak";
+
+	/*( [SerializeField] private VoidEventChannelSO _saveSettingsEvent = default;
+	[SerializeField] private LoadEventChannelSO _loadLocation = default;
+	[SerializeField] private InventorySO _playerInventory = default;
+	[SerializeField] private SettingsSO _currentSettings = default;
+	[SerializeField] private QuestManagerSO _questManagerSO = default;
+
+	public string saveFilename = "save.chop";
+	public string backupSaveFilename = "save.chop.bak";
 	public Save saveData = new Save();
 
 	void OnEnable()
@@ -111,5 +120,5 @@ public class SaveSystem : ScriptableObject
 	{
 		saveData.SaveSettings(_currentSettings);
 
-	}
+	} */
 }
