@@ -24,6 +24,40 @@ public string _locationId;
 	public bool _isFullscreen = default;
 	public Locale _currentLocale = default;
 
+		public string _locationId;
+	public List<SerializedItemStack> _itemStacks = new List<SerializedItemStack>();
+	public List<string> _finishedQuestlineItemsGUIds = new List<string>();
+
+	public float _masterVolume = default;
+	public float _musicVolume = default;
+	public float _sfxVolume = default;
+	public int _resolutionsIndex = default;
+	public int _antiAliasingIndex = default;
+	public float _shadowDistance = default;
+	public bool _isFullscreen = default;
+	public Locale _currentLocale = default;
+
+	public void SaveSettings(SettingsSO settings)
+	{
+		_masterVolume = settings.MasterVolume;
+		_musicVolume = settings.MusicVolume;
+		_sfxVolume = settings.SfxVolume;
+		_resolutionsIndex = settings.ResolutionsIndex;
+		_antiAliasingIndex = settings.AntiAliasingIndex;
+		_shadowDistance = settings.ShadowDistance;
+		_isFullscreen = settings.IsFullscreen;
+		_currentLocale = settings.CurrentLocale;
+	}
+	public string ToJson()
+	{
+		return JsonUtility.ToJson(this);
+	}
+
+	public void LoadFromJson(string json)
+	{
+		JsonUtility.FromJsonOverwrite(json, this);
+	}
+
 	/*
 	// This is test data, written according to TestScript.cs class
 	// This will change according to whatever data that needs to be stored
