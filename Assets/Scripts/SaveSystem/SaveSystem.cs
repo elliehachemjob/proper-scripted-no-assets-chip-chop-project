@@ -15,6 +15,43 @@ public class SaveSystem : ScriptableObject
 	public string saveFilename = "save.chop";
 	public string backupSaveFilename = "save.chop.bak";
 
+		public Save saveData = new Save();
+
+	void OnEnable()
+	{
+		_saveSettingsEvent.OnEventRaised += SaveSettings;
+		_loadLocation.OnLoadingRequested += CacheLoadLocations;
+	}
+
+	void OnDisable()
+	{
+		_saveSettingsEvent.OnEventRaised -= SaveSettings;
+		_loadLocation.OnLoadingRequested -= CacheLoadLocations;
+	}
+
+	private void CacheLoadLocations(GameSceneSO locationToLoad, bool showLoadingScreen, bool fadeScreen)
+	{
+		LocationSO locationSO = locationToLoad as LocationSO;
+		if (locationSO)
+		{
+			saveData._locationId = locationSO.Guid;
+		}
+
+		SaveDataToDisk();
+	}
+
+	public bool LoadSaveDataFromDisk()
+	{
+		if (FileManager.LoadFromFile(saveFilename, out var json))
+		{
+			saveData.LoadFromJson(json);
+			return true;
+		}
+
+		return false;
+	}
+
+
 	/*( [SerializeField] private VoidEventChannelSO _saveSettingsEvent = default;
 	[SerializeField] private LoadEventChannelSO _loadLocation = default;
 	[SerializeField] private InventorySO _playerInventory = default;
