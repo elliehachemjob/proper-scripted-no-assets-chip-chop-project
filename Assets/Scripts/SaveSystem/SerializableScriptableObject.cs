@@ -27,5 +27,4 @@ public class SerializableScriptableObject : ScriptableObject
 		_guid = AssetDatabase.AssetPathToGUID(path);
 	}
 #endif
-*/
 }

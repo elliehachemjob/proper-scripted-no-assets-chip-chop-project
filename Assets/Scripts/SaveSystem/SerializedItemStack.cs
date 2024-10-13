@@ -9,4 +9,13 @@ public class SerializedItemStack
 		this.itemGuid = itemGuid;
 		this.amount = amount;
 	}
+
+	/*	public string itemGuid;
+	public int amount;
+
+	public SerializedItemStack(string itemGuid, int amount)
+	{
+		this.itemGuid = itemGuid;
+		this.amount = amount;
+	}*/
 }
