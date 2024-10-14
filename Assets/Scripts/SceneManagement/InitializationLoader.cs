@@ -17,6 +17,13 @@ public class InitializationLoader : MonoBehaviour
 	[Header("Broadcasting on")]
 	[SerializeField] private AssetReference _menuLoadChannel = default;
 
+
+/* [SerializeField] private GameSceneSO _managersScene = default;
+	[SerializeField] private GameSceneSO _menuToLoad = default;
+
+	[Header("Broadcasting on")]
+	[SerializeField] private AssetReference _menuLoadChannel = default;
+
 	private void Start()
 	{
 		//Load the persistent managers scene
@@ -33,5 +40,5 @@ public class InitializationLoader : MonoBehaviour
 		obj.Result.RaiseEvent(_menuToLoad, true);
 
 		SceneManager.UnloadSceneAsync(0); //Initialization is the only scene in BuildSettings, thus it has index 0
-	}
+	}*/
 }
