@@ -9,8 +9,26 @@ using UnityEngine.SceneManagement;
 /// This class manages the scene loading and unloading.
 /// </summary>
 public class SceneLoader : MonoBehaviour
+
+
 {
 	[SerializeField] private GameSceneSO _gameplayScene = default;
+	[SerializeField] private InputReader _inputReader = default;
+
+	[Header("Listening to")]
+	[SerializeField] private LoadEventChannelSO _loadLocation = default;
+	[SerializeField] private LoadEventChannelSO _loadMenu = default;
+	[SerializeField] private LoadEventChannelSO _coldStartupLocation = default;
+
+	[Header("Broadcasting on")]
+	[SerializeField] private BoolEventChannelSO _toggleLoadingScreen = default;
+	[SerializeField] private VoidEventChannelSO _onSceneReady = default; //picked up by the SpawnSystem
+	[SerializeField] private FadeChannelSO _fadeRequestChannel = default;
+
+	private AsyncOperationHandle<SceneInstance> _loadingOperationHandle;
+	private AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOpHandle;
+
+/* 	[SerializeField] private GameSceneSO _gameplayScene = default;
 	[SerializeField] private InputReader _inputReader = default;
 
 	[Header("Listening to")]
@@ -200,5 +218,5 @@ public class SceneLoader : MonoBehaviour
 	{
 		Application.Quit();
 		Debug.Log("Exit!");
-	}
+	}*/
 }
