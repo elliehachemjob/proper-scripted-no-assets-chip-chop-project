@@ -28,6 +28,51 @@ public class SceneLoader : MonoBehaviour
 	private AsyncOperationHandle<SceneInstance> _loadingOperationHandle;
 	private AsyncOperationHandle<SceneInstance> _gameplayManagerLoadingOpHandle;
 
+//Parameters coming from scene loading requests
+	private GameSceneSO _sceneToLoad;
+	private GameSceneSO _currentlyLoadedScene;
+	private bool _showLoadingScreen;
+
+	private SceneInstance _gameplayManagerSceneInstance = new SceneInstance();
+	private float _fadeDuration = .5f;
+	private bool _isLoading = false; //To prevent a new loading request while already loading a new scene
+
+	private void OnEnable()
+	{
+		_loadLocation.OnLoadingRequested += LoadLocation;
+		_loadMenu.OnLoadingRequested += LoadMenu;
+#if UNITY_EDITOR
+		_coldStartupLocation.OnLoadingRequested += LocationColdStartup;
+#endif
+	}
+
+	private void OnDisable()
+	{
+		_loadLocation.OnLoadingRequested -= LoadLocation;
+		_loadMenu.OnLoadingRequested -= LoadMenu;
+#if UNITY_EDITOR
+		_coldStartupLocation.OnLoadingRequested -= LocationColdStartup;
+#endif
+	}
+
+#if UNITY_EDITOR
+	/// <summary>
+	/// This special loading function is only used in the editor, when the developer presses Play in a Location scene, without passing by Initialisation.
+	/// </summary>
+	private void LocationColdStartup(GameSceneSO currentlyOpenedLocation, bool showLoadingScreen, bool fadeScreen)
+	{
+		_currentlyLoadedScene = currentlyOpenedLocation;
+
+		if (_currentlyLoadedScene.sceneType == GameSceneSO.GameSceneType.Location)
+		{
+			//Gameplay managers is loaded synchronously
+			_gameplayManagerLoadingOpHandle = _gameplayScene.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true);
+			_gameplayManagerLoadingOpHandle.WaitForCompletion();
+			_gameplayManagerSceneInstance = _gameplayManagerLoadingOpHandle.Result;
+
+			StartGameplay();
+		}
+	}
 /* 	[SerializeField] private GameSceneSO _gameplayScene = default;
 	[SerializeField] private InputReader _inputReader = default;
 
