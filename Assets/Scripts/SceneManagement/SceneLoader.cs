@@ -174,7 +174,35 @@ public class SceneLoader : MonoBehaviour
 		_loadingOperationHandle = _sceneToLoad.sceneReference.LoadSceneAsync(LoadSceneMode.Additive, true, 0);
 		_loadingOperationHandle.Completed += OnNewSceneLoaded;
 	}
+	private void OnNewSceneLoaded(AsyncOperationHandle<SceneInstance> obj)
+	{
+		//Save loaded scenes (to be unloaded at next load request)
+		_currentlyLoadedScene = _sceneToLoad;
 
+		Scene s = obj.Result.Scene;
+		SceneManager.SetActiveScene(s);
+		LightProbes.TetrahedralizeAsync();
+
+		_isLoading = false;
+
+		if (_showLoadingScreen)
+			_toggleLoadingScreen.RaiseEvent(false);
+
+		_fadeRequestChannel.FadeIn(_fadeDuration);
+
+		StartGameplay();
+	}
+
+	private void StartGameplay()
+	{
+		_onSceneReady.RaiseEvent(); //Spawn system will spawn the PigChef in a gameplay scene
+	}
+
+	private void ExitGame()
+	{
+		Application.Quit();
+		Debug.Log("Exit!");
+	}
 
 /* 	[SerializeField] private GameSceneSO _gameplayScene = default;
 	[SerializeField] private InputReader _inputReader = default;
