@@ -29,6 +29,26 @@ public class StartGame : MonoBehaviour
 		_onContinueButton.OnEventRaised += ContinuePreviousGame;
 	}
 
+/*	[SerializeField] private GameSceneSO _locationsToLoad;
+	[SerializeField] private SaveSystem _saveSystem = default;
+	[SerializeField] private bool _showLoadScreen = default;
+	
+	[Header("Broadcasting on")]
+	[SerializeField] private LoadEventChannelSO _loadLocation = default;
+
+	[Header("Listening to")]
+	[SerializeField] private VoidEventChannelSO _onNewGameButton = default;
+	[SerializeField] private VoidEventChannelSO _onContinueButton = default;
+
+	private bool _hasSaveData;
+
+	private void Start()
+	{
+		_hasSaveData = _saveSystem.LoadSaveDataFromDisk();
+		_onNewGameButton.OnEventRaised += StartNewGame;
+		_onContinueButton.OnEventRaised += ContinuePreviousGame;
+	}
+
 	private void OnDestroy()
 	{
 		_onNewGameButton.OnEventRaised -= StartNewGame;
@@ -69,5 +89,5 @@ public class StartGame : MonoBehaviour
 			LocationSO locationSO = asyncOperationHandle.Result;
 			_loadLocation.RaiseEvent(locationSO, _showLoadScreen);
 		}
-	}
+	}*/
 }
