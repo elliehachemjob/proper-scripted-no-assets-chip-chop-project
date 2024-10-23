@@ -28,6 +28,47 @@ public class StartGame : MonoBehaviour
 		_onNewGameButton.OnEventRaised += StartNewGame;
 		_onContinueButton.OnEventRaised += ContinuePreviousGame;
 	}
+	private void OnDestroy()
+	{
+		_onNewGameButton.OnEventRaised -= StartNewGame;
+		_onContinueButton.OnEventRaised -= ContinuePreviousGame;
+	}
+
+	private void StartNewGame()
+	{
+		_hasSaveData = false;
+		
+		_saveSystem. WriteEmptySaveFile();
+		_saveSystem.SetNewGameData();
+		_loadLocation.RaiseEvent(_locationsToLoad, _showLoadScreen);
+	}
+
+	private void ContinuePreviousGame()
+	{
+		StartCoroutine(LoadSaveGame());
+	}
+
+	private void OnResetSaveDataPress()
+	{
+		_hasSaveData = false;
+	}
+
+	private IEnumerator LoadSaveGame()
+	{
+		yield return StartCoroutine(_saveSystem.LoadSavedInventory());
+
+		_saveSystem.LoadSavedQuestlineStatus(); 
+		var locationGuid = _saveSystem.saveData._locationId;
+		var asyncOperationHandle = Addressables.LoadAssetAsync<LocationSO>(locationGuid);
+
+		yield return asyncOperationHandle;
+
+		if (asyncOperationHandle.Status == AsyncOperationStatus.Succeeded)
+		{
+			LocationSO locationSO = asyncOperationHandle.Result;
+			_loadLocation.RaiseEvent(locationSO, _showLoadScreen);
+		}
+	}
 
 /*	[SerializeField] private GameSceneSO _locationsToLoad;
 	[SerializeField] private SaveSystem _saveSystem = default;
