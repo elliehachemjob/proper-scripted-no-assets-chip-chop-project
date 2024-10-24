@@ -4,7 +4,15 @@ namespace UOP1.StateMachine
 {
 	public class State
 	{
+
 		internal StateSO _originSO;
+		internal StateMachine _stateMachine;
+		internal StateTransition[] _transitions;
+		internal StateAction[] _actions;
+
+		internal State() { }
+
+		/*internal StateSO _originSO;
 		internal StateMachine _stateMachine;
 		internal StateTransition[] _transitions;
 		internal StateAction[] _actions;
@@ -64,5 +72,5 @@ namespace UOP1.StateMachine
 
 			return state != null;
 		}
-	}
+	}*/
 }
