@@ -11,6 +11,29 @@ namespace UOP1.StateMachine
 		internal StateAction[] _actions;
 
 		internal State() { }
+			public State(
+			StateSO originSO,
+			StateMachine stateMachine,
+			StateTransition[] transitions,
+			StateAction[] actions)
+		{
+			_originSO = originSO;
+			_stateMachine = stateMachine;
+			_transitions = transitions;
+			_actions = actions;
+		}
+
+		public void OnStateEnter()
+		{
+			void OnStateEnter(IStateComponent[] comps)
+			{
+				for (int i = 0; i < comps.Length; i++)
+					comps[i].OnStateEnter();
+			}
+			OnStateEnter(_transitions);
+			OnStateEnter(_actions);
+		}
+
 
 		/*internal StateSO _originSO;
 		internal StateMachine _stateMachine;
