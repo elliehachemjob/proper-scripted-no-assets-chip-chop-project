@@ -6,7 +6,27 @@ namespace UOP1.StateMachine
 {
 	public class StateMachine : MonoBehaviour
 	{
-		[Tooltip("Set the initial state of this StateMachine")]
+	[Tooltip("Set the initial state of this StateMachine")]
+		[SerializeField] private ScriptableObjects.TransitionTableSO _transitionTableSO = default;
+
+#if UNITY_EDITOR
+		[Space]
+		[SerializeField]
+		internal Debugging.StateMachineDebugger _debugger = default;
+#endif
+
+		private readonly Dictionary<Type, Component> _cachedComponents = new Dictionary<Type, Component>();
+		internal State _currentState;
+
+		private void Awake()
+		{
+			_currentState = _transitionTableSO.GetInitialState(this);
+#if UNITY_EDITOR
+			_debugger.Awake(this);
+#endif
+		}
+
+	/*[Tooltip("Set the initial state of this StateMachine")]
 		[SerializeField] private ScriptableObjects.TransitionTableSO _transitionTableSO = default;
 
 #if UNITY_EDITOR
@@ -95,5 +115,5 @@ namespace UOP1.StateMachine
 			_currentState = transitionState;
 			_currentState.OnStateEnter();
 		}
-	}
+	}*/
 }
