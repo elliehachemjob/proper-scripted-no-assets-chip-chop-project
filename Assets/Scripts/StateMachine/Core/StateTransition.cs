@@ -2,7 +2,26 @@
 {
 	public class StateTransition : IStateComponent
 	{
-		private State _targetState;
+			private State _targetState;
+		private StateCondition[] _conditions;
+		private int[] _resultGroups;
+		private bool[] _results;
+
+		internal StateTransition() { }
+		public StateTransition(State targetState, StateCondition[] conditions, int[] resultGroups = null)
+		{
+			Init(targetState, conditions, resultGroups);
+		}
+
+		internal void Init(State targetState, StateCondition[] conditions, int[] resultGroups = null)
+		{
+			_targetState = targetState;
+			_conditions = conditions;
+			_resultGroups = resultGroups != null && resultGroups.Length > 0 ? resultGroups : new int[1];
+			_results = new bool[_resultGroups.Length];
+		}
+
+	/* 	private State _targetState;
 		private StateCondition[] _conditions;
 		private int[] _resultGroups;
 		private bool[] _results;
@@ -73,5 +92,5 @@
 			for (int i = 0; i < _conditions.Length; i++)
 				_conditions[i]._condition.ClearStatementCache();
 		}
-	}
+	}*/
 }
