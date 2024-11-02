@@ -6,7 +6,49 @@ using UnityEngine;
 
 namespace UOP1.StateMachine.Debugging
 {
-	/// <summary>
+		/// <summary>
+	/// Class specialized in debugging the state transitions, should only be used while in editor mode.
+	/// </summary>
+	[Serializable]
+	internal class StateMachineDebugger
+	{
+		[SerializeField]
+		[Tooltip("Issues a debug log when a state transition is triggered")]
+		internal bool debugTransitions = false;
+
+		[SerializeField]
+		[Tooltip("List all conditions evaluated, the result is read: ConditionName == BooleanResult [PassedTest]")]
+		internal bool appendConditionsInfo = true;
+
+		[SerializeField]
+		[Tooltip("List all actions activated by the new State")]
+		internal bool appendActionsInfo = true;
+
+		[SerializeField]
+		[Tooltip("The current State name [Readonly]")]
+		internal string currentState;
+
+		private StateMachine _stateMachine;
+		private StringBuilder _logBuilder;
+		private string _targetState = string.Empty;
+
+		private const string CHECK_MARK = "\u2714";
+		private const string UNCHECK_MARK = "\u2718";
+		private const string THICK_ARROW = "\u279C";
+		private const string SHARP_ARROW = "\u27A4";
+
+		/// <summary>
+		/// Must be called together with <c>StateMachine.Awake()</c>
+		/// </summary>
+		internal void Awake(StateMachine stateMachine)
+		{
+			_stateMachine = stateMachine;
+			_logBuilder = new StringBuilder();
+
+			currentState = stateMachine._currentState._originSO.name;
+		}
+
+	/* /// <summary>
 	/// Class specialized in debugging the state transitions, should only be used while in editor mode.
 	/// </summary>
 	[Serializable]
@@ -117,7 +159,7 @@ namespace UOP1.StateMachine.Debugging
 
 			Debug.Log(_logBuilder.ToString());
 		}
-	}
+	}*/
 }
 
 #endif
