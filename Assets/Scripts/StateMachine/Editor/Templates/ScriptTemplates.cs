@@ -6,6 +6,26 @@ using UnityEditor.ProjectWindowCallback;
 
 internal class ScriptTemplates
 {
+
+	private static readonly string _path = "Assets/Scripts/StateMachine/Editor/Templates";
+
+	[MenuItem("Assets/Create/State Machines/Action Script", false, 0)]
+	public static void CreateActionScript() =>
+		ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0,
+			ScriptableObject.CreateInstance<DoCreateStateMachineScriptAsset>(),
+			"NewActionSO.cs",
+			(Texture2D)EditorGUIUtility.IconContent("cs Script Icon").image,
+			$"{_path}/StateAction.txt");
+
+	[MenuItem("Assets/Create/State Machines/Condition Script", false, 0)]
+	public static void CreateConditionScript() =>
+		ProjectWindowUtil.StartNameEditingIfProjectWindowExists(0,
+			ScriptableObject.CreateInstance<DoCreateStateMachineScriptAsset>(),
+			"NewConditionSO.cs",
+			(Texture2D)EditorGUIUtility.IconContent("cs Script Icon").image,
+			$"{_path}/StateCondition.txt");
+
+/*
 	private static readonly string _path = "Assets/Scripts/StateMachine/Editor/Templates";
 
 	[MenuItem("Assets/Create/State Machines/Action Script", false, 0)]
@@ -58,5 +78,5 @@ internal class ScriptTemplates
 			AssetDatabase.ImportAsset(pathName);
 			ProjectWindowUtil.ShowCreatedAsset(AssetDatabase.LoadAssetAtPath(pathName, typeof(UnityEngine.Object)));
 		}
-	}
+	}*/
 }
