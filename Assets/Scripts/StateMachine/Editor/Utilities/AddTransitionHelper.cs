@@ -23,6 +23,20 @@ namespace UOP1.StateMachine.Editor
 			_list = new ReorderableList(_transition, SerializedTransition.Conditions);
 			SetupConditionsList(_list);
 		}
+		/* internal SerializedTransition SerializedTransition { get; }
+		private readonly SerializedObject _transition;
+		private readonly ReorderableList _list;
+		private readonly TransitionTableEditor _editor;
+		private bool _toggle = false;
+
+		internal AddTransitionHelper(TransitionTableEditor editor)
+		{
+			_editor = editor;
+			_transition = new SerializedObject(ScriptableObject.CreateInstance<TransitionItemSO>());
+			SerializedTransition = new SerializedTransition(_transition.FindProperty("Item"));
+			_list = new ReorderableList(_transition, SerializedTransition.Conditions);
+			SetupConditionsList(_list);
+		}
 
 		internal void Display(Rect position)
 		{
@@ -172,5 +186,5 @@ namespace UOP1.StateMachine.Editor
 		{
 			public TransitionTableSO.TransitionItem Item = default;
 		}
-	}
+	}*/
 }
