@@ -23,6 +23,86 @@ namespace UOP1.StateMachine.Editor
 			_list = new ReorderableList(_transition, SerializedTransition.Conditions);
 			SetupConditionsList(_list);
 		}
+
+				internal void Display(Rect position)
+		{
+			position.x += 8;
+			position.width -= 16;
+			var rect = position;
+			float listHeight = _list.GetHeight();
+			float singleLineHeight = EditorGUIUtility.singleLineHeight;
+
+			// Display add button only if not already adding a transition
+			if (!_toggle)
+			{
+				position.height = singleLineHeight;
+
+				// Reserve space
+				GUILayoutUtility.GetRect(position.width, position.height);
+
+				if (GUI.Button(position, "Add Transition"))
+				{
+					_toggle = true;
+					SerializedTransition.ClearProperties();
+				}
+
+				return;
+			}
+
+			// Background
+			{
+				position.height = listHeight + singleLineHeight * 4;
+				DrawRect(position, ContentStyle.LightGray);
+			}
+
+			// Reserve space
+			GUILayoutUtility.GetRect(position.width, position.height);
+
+			// State Fields
+			{
+				position.y += 10;
+				position.x += 20;
+				StatePropField(position, "From", SerializedTransition.FromState);
+				position.x = rect.width / 2 + 20;
+				StatePropField(position, "To", SerializedTransition.ToState);
+			}
+
+			// Conditions List
+			{
+				position.y += 30;
+				position.x = rect.x + 5;
+				position.height = listHeight;
+				position.width -= 10;
+				_list.DoList(position);
+			}
+
+			// Add and cancel buttons
+			{
+				position.y += position.height + 5;
+				position.height = singleLineHeight;
+				position.width = rect.width / 2 - 20;
+				if (GUI.Button(position, "Add Transition"))
+				{
+					if (SerializedTransition.FromState.objectReferenceValue == null)
+						Debug.LogException(new ArgumentNullException("FromState"));
+					else if (SerializedTransition.ToState.objectReferenceValue == null)
+						Debug.LogException(new ArgumentNullException("ToState"));
+					else if (SerializedTransition.FromState.objectReferenceValue == SerializedTransition.ToState.objectReferenceValue)
+						Debug.LogException(new InvalidOperationException("FromState and ToState are the same."));
+					else
+					{
+						_editor.AddTransition(SerializedTransition);
+						_toggle = false;
+					}
+				}
+				position.x += rect.width / 2;
+				if (GUI.Button(position, "Cancel"))
+				{
+					_toggle = false;
+				}
+			}
+
+
 		/* internal SerializedTransition SerializedTransition { get; }
 		private readonly SerializedObject _transition;
 		private readonly ReorderableList _list;
