@@ -20,6 +20,21 @@ namespace UOP1.StateMachine.Editor
 
 		private static bool _initialised = false;
 
+	/* 	internal static Color DarkGray { get; private set; }
+		internal static Color LightGray { get; private set; }
+		internal static Color Focused { get; private set; }
+		internal static Color ZebraDark { get; private set; }
+		internal static Color ZebraLight { get; private set; }
+		internal static RectOffset Padding { get; private set; }
+		internal static RectOffset LeftPadding { get; private set; }
+		internal static RectOffset Margin { get; private set; }
+		internal static GUIStyle BoldCentered { get; private set; }
+		internal static GUIStyle StateListStyle { get; private set; }
+		internal static GUIStyle WithPadding { get; private set; }
+		internal static GUIStyle WithPaddingAndMargins { get; private set; }
+
+		private static bool _initialised = false;
+
 		[InitializeOnLoadMethod]
 		internal static void Initialize()
 		{
@@ -55,5 +70,5 @@ namespace UOP1.StateMachine.Editor
 				normal = guiStyleStateNormal,
 			};
 		}
-	}
+	}*/
 }
