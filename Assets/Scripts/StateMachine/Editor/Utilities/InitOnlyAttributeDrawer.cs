@@ -22,6 +22,18 @@ namespace UOP1.StateMachine.Editor
 
 			EditorGUI.PropertyField(position, property, label);
 		}
+				public override float GetPropertyHeight(SerializedProperty property, GUIContent label)
+		{
+			float height = EditorGUI.GetPropertyHeight(property, label);
+
+			if (EditorApplication.isPlaying)
+			{
+				height += _style.CalcHeight(new GUIContent(_text), EditorGUIUtility.currentViewWidth)
+					+ EditorGUIUtility.standardVerticalSpacing * 4;
+			}
+
+			return height;
+		}
 	/*[CustomPropertyDrawer(typeof(InitOnlyAttribute))]
 	public class InitOnlyAttributeDrawer : PropertyDrawer
 	{
