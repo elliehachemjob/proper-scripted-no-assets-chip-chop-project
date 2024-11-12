@@ -19,6 +19,21 @@ namespace UOP1.StateMachine.Editor
 			Index = -1;
 		}
 
+	/*	internal readonly SerializedProperty Transition;
+		internal readonly SerializedProperty FromState;
+		internal readonly SerializedProperty ToState;
+		internal readonly SerializedProperty Conditions;
+		internal readonly int Index;
+
+		internal SerializedTransition(SerializedProperty transition)
+		{
+			Transition = transition;
+			FromState = Transition.FindPropertyRelative("FromState");
+			ToState = Transition.FindPropertyRelative("ToState");
+			Conditions = Transition.FindPropertyRelative("Conditions");
+			Index = -1;
+		}
+
 		internal SerializedTransition(SerializedObject transitionTable, int index)
 		{
 			Transition = transitionTable.FindProperty("_transitions").GetArrayElementAtIndex(index);
@@ -43,5 +58,5 @@ namespace UOP1.StateMachine.Editor
 			ToState.objectReferenceValue = null;
 			Conditions.ClearArray();
 		}
-	}
+	}*/
 }
