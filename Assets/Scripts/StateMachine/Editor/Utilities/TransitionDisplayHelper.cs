@@ -5,7 +5,36 @@ using static UnityEditor.EditorGUI;
 
 namespace UOP1.StateMachine.Editor
 {
-	internal class TransitionDisplayHelper
+	 internal class TransitionDisplayHelper
+	{
+		internal SerializedTransition SerializedTransition { get; }
+		private readonly ReorderableList _reorderableList;
+		private readonly TransitionTableEditor _editor;
+
+		internal TransitionDisplayHelper(SerializedTransition serializedTransition, TransitionTableEditor editor)
+		{
+			SerializedTransition = serializedTransition;
+			_reorderableList = new ReorderableList(SerializedTransition.Transition.serializedObject, SerializedTransition.Conditions, true, false, true, true);
+			SetupConditionsList(_reorderableList);
+			_editor = editor;
+		}
+
+		internal bool Display(ref Rect position)
+		{
+			var rect = position;
+			float listHeight = _reorderableList.GetHeight();
+			float singleLineHeight = EditorGUIUtility.singleLineHeight;
+
+			// Reserve space
+			{
+				rect.height = singleLineHeight + 10 + listHeight;
+				GUILayoutUtility.GetRect(rect.width, rect.height);
+				position.y += rect.height + 5;
+			}
+
+
+
+	/* internal class TransitionDisplayHelper
 	{
 		internal SerializedTransition SerializedTransition { get; }
 		private readonly ReorderableList _reorderableList;
@@ -171,5 +200,5 @@ namespace UOP1.StateMachine.Editor
 					EditorGUI.DrawRect(rect, ContentStyle.ZebraLight);
 			};
 		}
-	}
+	}*/
 }
