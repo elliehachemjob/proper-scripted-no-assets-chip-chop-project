@@ -48,6 +48,49 @@ namespace UOP1.StateMachine.Editor
 				prop.objectReferenceValue = null;
 			};
 
+	/* [CustomEditor(typeof(StateSO))]
+	public class StateEditor : UnityEditor.Editor
+	{
+		private ReorderableList _list;
+		private SerializedProperty _actions;
+
+		private void OnEnable()
+		{
+			Undo.undoRedoPerformed += DoUndo;
+			_actions = serializedObject.FindProperty("_actions");
+			_list = new ReorderableList(serializedObject, _actions, true, true, true, true);
+			SetupActionsList(_list);
+		}
+
+		private void OnDisable()
+		{
+			Undo.undoRedoPerformed -= DoUndo;
+		}
+
+		public override void OnInspectorGUI()
+		{
+			_list.DoLayoutList();
+
+			serializedObject.ApplyModifiedProperties();
+		}
+
+		private void DoUndo()
+		{
+			serializedObject.UpdateIfRequiredOrScript();
+		}
+
+		private static void SetupActionsList(ReorderableList reorderableList)
+		{
+			reorderableList.elementHeight *= 1.5f;
+			reorderableList.drawHeaderCallback += rect => GUI.Label(rect, "Actions");
+			reorderableList.onAddCallback += list =>
+			{
+				int count = list.count;
+				list.serializedProperty.InsertArrayElementAtIndex(count);
+				var prop = list.serializedProperty.GetArrayElementAtIndex(count);
+				prop.objectReferenceValue = null;
+			};
+
 			reorderableList.drawElementCallback += (Rect rect, int index, bool isActive, bool isFocused) =>
 			{
 				var r = rect;
@@ -90,5 +133,5 @@ namespace UOP1.StateMachine.Editor
 					EditorGUI.DrawRect(rect, ContentStyle.ZebraLight);
 			};
 		}
-	}
+	}*/
 }
