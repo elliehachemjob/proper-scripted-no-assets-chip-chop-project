@@ -48,6 +48,50 @@ namespace UOP1.StateMachine.Editor
 				prop.objectReferenceValue = null;
 			};
 
+				reorderableList.drawElementCallback += (Rect rect, int index, bool isActive, bool isFocused) =>
+			{
+				var r = rect;
+				r.height = EditorGUIUtility.singleLineHeight;
+				r.y += 5;
+				r.x += 5;
+
+				var prop = reorderableList.serializedProperty.GetArrayElementAtIndex(index);
+				if (prop.objectReferenceValue != null)
+				{
+					//The icon of the asset SO (basically an object field, cut to show just the icon)
+					r.width = 35;
+					EditorGUI.PropertyField(r, prop, GUIContent.none);
+					r.width = rect.width - 50;
+					r.x += 42;
+
+					//The name of the StateAction
+					string label = prop.objectReferenceValue.name;
+					GUI.Label(r, label, EditorStyles.boldLabel);
+
+					//The description
+					r.x += 180;
+					r.width = rect.width - 50 - 180;
+					string description = (prop.objectReferenceValue as DescriptionSMActionBaseSO).description;
+					GUI.Label(r, description);
+				}
+				else
+					EditorGUI.PropertyField(r, prop, GUIContent.none);
+			};
+
+			reorderableList.onChangedCallback += list => list.serializedProperty.serializedObject.ApplyModifiedProperties();
+			reorderableList.drawElementBackgroundCallback += (Rect rect, int index, bool isActive, bool isFocused) =>
+			{
+				if (isFocused)
+					EditorGUI.DrawRect(rect, ContentStyle.Focused);
+
+				if (index % 2 != 0)
+					EditorGUI.DrawRect(rect, ContentStyle.ZebraDark);
+				else
+					EditorGUI.DrawRect(rect, ContentStyle.ZebraLight);
+			};
+		}
+	}
+
 	/* [CustomEditor(typeof(StateSO))]
 	public class StateEditor : UnityEditor.Editor
 	{
