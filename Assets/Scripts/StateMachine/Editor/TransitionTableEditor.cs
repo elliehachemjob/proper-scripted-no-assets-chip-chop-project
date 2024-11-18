@@ -8,7 +8,52 @@ using Object = UnityEngine.Object;
 
 namespace UOP1.StateMachine.Editor
 {
+
 	[CustomEditor(typeof(TransitionTableSO))]
+	internal class TransitionTableEditor : UnityEditor.Editor
+	{
+		// Property with all the transitions.
+		private SerializedProperty _transitions;
+
+		// _fromStates and _transitionsByFromStates form a State->Transitions dictionary.
+		private List<Object> _fromStates;
+		private List<List<TransitionDisplayHelper>> _transitionsByFromStates;
+
+		// Index of the state currently toggled on, -1 if none is.
+		internal int _toggledIndex = -1;
+
+		// Helper class to add new transitions.
+		private AddTransitionHelper _addTransitionHelper;
+
+		// Editor to display the StateSO inspector.
+		private UnityEditor.Editor _cachedStateEditor;
+		private bool _displayStateEditor;
+
+		private void OnEnable()
+		{
+			_addTransitionHelper = new AddTransitionHelper(this);
+			Undo.undoRedoPerformed += Reset;
+			Reset();
+		}
+
+		private void OnDisable()
+		{
+			Undo.undoRedoPerformed -= Reset;
+			_addTransitionHelper?.Dispose();
+		}
+
+		/// <summary>
+		/// Method to fully reset the editor. Used whenever adding, removing and reordering transitions.
+		/// </summary>
+		internal void Reset()
+		{
+			serializedObject.Update();
+			var toggledState = _toggledIndex > -1 ? _fromStates[_toggledIndex] : null;
+			_transitions = serializedObject.FindProperty("_transitions");
+			GroupByFromState();
+			_toggledIndex = toggledState ? _fromStates.IndexOf(toggledState) : -1;
+		}
+/* 	[CustomEditor(typeof(TransitionTableSO))]
 	internal class TransitionTableEditor : UnityEditor.Editor
 	{
 		// Property with all the transitions.
@@ -388,5 +433,5 @@ namespace UOP1.StateMachine.Editor
 			serializedObject.ApplyModifiedProperties();
 			Reset();
 		}
-	}
+	}*/
 }
