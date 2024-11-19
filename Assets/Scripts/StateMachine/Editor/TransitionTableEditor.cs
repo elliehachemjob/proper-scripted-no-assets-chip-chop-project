@@ -53,6 +53,168 @@ namespace UOP1.StateMachine.Editor
 			GroupByFromState();
 			_toggledIndex = toggledState ? _fromStates.IndexOf(toggledState) : -1;
 		}
+			public override void OnInspectorGUI()
+		{
+			if (!_displayStateEditor)
+				TransitionTableGUI();
+			else
+				StateEditorGUI();
+		}
+
+		private void StateEditorGUI()
+		{
+			Separator();
+
+			// Back button
+			if (GUILayout.Button(EditorGUIUtility.IconContent("scrollleft"), GUILayout.Width(35), GUILayout.Height(20))
+				|| _cachedStateEditor.serializedObject == null)
+			{
+				_displayStateEditor = false;
+				return;
+			}
+
+
+			Separator();
+			EditorGUILayout.HelpBox("Edit the Actions that a State performs per frame. The order represent the order of execution.", MessageType.Info);
+			Separator();
+
+			// State name
+			EditorGUILayout.LabelField(_cachedStateEditor.target.name, EditorStyles.boldLabel);
+			Separator();
+			_cachedStateEditor.OnInspectorGUI();
+		}
+
+		private void TransitionTableGUI()
+		{
+			Separator();
+			EditorGUILayout.HelpBox("Click on any State's name to see the Transitions it contains, or click the Pencil/Wrench icon to see its Actions.", MessageType.Info);
+			Separator();
+
+			// For each fromState
+			for (int i = 0; i < _fromStates.Count; i++)
+			{
+				var stateRect = BeginVertical(ContentStyle.WithPaddingAndMargins);
+				EditorGUI.DrawRect(stateRect, ContentStyle.LightGray);
+
+				var transitions = _transitionsByFromStates[i];
+
+				// State Header
+				var headerRect = BeginHorizontal();
+				{
+					BeginVertical();
+					string label = transitions[0].SerializedTransition.FromState.objectReferenceValue.name;
+					if (i == 0)
+						label += " (Initial State)";
+
+					headerRect.height = EditorGUIUtility.singleLineHeight;
+					GUILayoutUtility.GetRect(headerRect.width, headerRect.height);
+					headerRect.x += 5;
+
+					// Toggle
+					{
+						var toggleRect = headerRect;
+						toggleRect.width -= 140;
+						_toggledIndex =
+							EditorGUI.BeginFoldoutHeaderGroup(toggleRect, _toggledIndex == i, label, ContentStyle.StateListStyle) ?
+							i : _toggledIndex == i ? -1 : _toggledIndex;
+					}
+
+					Separator();
+					EndVertical();
+
+					// State Header Buttons
+					{
+						bool Button(Rect position, string icon) => GUI.Button(position, EditorGUIUtility.IconContent(icon));
+
+						var buttonRect = new Rect(x: headerRect.width - 25, y: headerRect.y, width: 35, height: 20);
+
+						// Move state down
+						if (i < _fromStates.Count - 1)
+						{
+							if (Button(buttonRect, "scrolldown"))
+							{
+								ReorderState(i, false);
+								EarlyOut();
+								return;
+							}
+							buttonRect.x -= 40;
+						}
+
+						// Move state up
+						if (i > 0)
+						{
+							if (Button(buttonRect, "scrollup"))
+							{
+								ReorderState(i, true);
+								EarlyOut();
+								return;
+							}
+							buttonRect.x -= 40;
+						}
+
+						// Switch to state editor
+						if (Button(buttonRect, "SceneViewTools"))
+						{
+							DisplayStateEditor(transitions[0].SerializedTransition.FromState.objectReferenceValue);
+							EarlyOut();
+							return;
+						}
+
+						void EarlyOut()
+						{
+							EndHorizontal();
+							EndFoldoutHeaderGroup();
+							EndVertical();
+							EndHorizontal();
+						}
+					}
+				}
+				EndHorizontal();
+
+				if (_toggledIndex == i)
+				{
+					EditorGUI.BeginChangeCheck();
+					stateRect.y += EditorGUIUtility.singleLineHeight * 2;
+
+					foreach (var transition in transitions) // Display all the transitions in the state
+					{
+						if (transition.Display(ref stateRect)) // Return if there were changes
+						{
+							EditorGUI.EndChangeCheck();
+							EndFoldoutHeaderGroup();
+							EndVertical();
+							EndHorizontal();
+							return;
+						}
+						Separator();
+					}
+					if (EditorGUI.EndChangeCheck())
+						serializedObject.ApplyModifiedProperties();
+				}
+
+				EndFoldoutHeaderGroup();
+				EndVertical();
+				Separator();
+			}
+
+			var rect = BeginHorizontal();
+			Space(rect.width - 55);
+
+			// Display add transition button
+			_addTransitionHelper.Display(rect);
+
+			EndHorizontal();
+		}
+
+		internal void DisplayStateEditor(Object state)
+		{
+			if (_cachedStateEditor == null)
+				_cachedStateEditor = CreateEditor(state, typeof(StateEditor));
+			else
+				CreateCachedEditor(state, typeof(StateEditor), ref _cachedStateEditor);
+
+			_displayStateEditor = true;
+		}
 /* 	[CustomEditor(typeof(TransitionTableSO))]
 	internal class TransitionTableEditor : UnityEditor.Editor
 	{
