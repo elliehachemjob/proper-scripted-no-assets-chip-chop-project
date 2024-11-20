@@ -215,6 +215,174 @@ namespace UOP1.StateMachine.Editor
 
 			_displayStateEditor = true;
 		}
+		
+				/// <summary>
+		/// Move a state up or down
+		/// </summary>
+		/// <param name="index">Index of the state in _fromStates</param>
+		/// <param name="up">Moving up(true) or down(true)</param>
+		internal void ReorderState(int index, bool up)
+		{
+			var toggledState = _toggledIndex > -1 ? _fromStates[_toggledIndex] : null;
+
+			if (!up)
+				index++;
+
+			var transitions = _transitionsByFromStates[index];
+			int transitionIndex = transitions[0].SerializedTransition.Index;
+			int targetIndex = _transitionsByFromStates[index - 1][0].SerializedTransition.Index;
+			_transitions.MoveArrayElement(transitionIndex, targetIndex);
+
+			ApplyModifications($"Moved {_fromStates[index].name} State {(up ? "up" : "down")}");
+
+			if (toggledState)
+				_toggledIndex = _fromStates.IndexOf(toggledState);
+		}
+
+		/// <summary>
+		/// Add a new transition. If a transition with the same from and to states is found,
+		/// the conditions in the new transition are added to it.
+		/// </summary>
+		/// <param name="source">Source Transition</param>
+		internal void AddTransition(SerializedTransition source)
+		{
+			SerializedTransition transition;
+			if (TryGetExistingTransition(source.FromState, source.ToState, out int fromIndex, out int toIndex))
+			{
+				transition = _transitionsByFromStates[fromIndex][toIndex].SerializedTransition;
+			}
+			else
+			{
+				int count = _transitions.arraySize;
+				_transitions.InsertArrayElementAtIndex(count);
+				transition = new SerializedTransition(_transitions.GetArrayElementAtIndex(count));
+				transition.ClearProperties();
+				transition.FromState.objectReferenceValue = source.FromState.objectReferenceValue;
+				transition.ToState.objectReferenceValue = source.ToState.objectReferenceValue;
+			}
+
+			CopyConditions(transition.Conditions, source.Conditions);
+
+			ApplyModifications($"Added transition from {transition.FromState} to {transition.ToState}");
+
+			_toggledIndex = fromIndex >= 0 ? fromIndex : _fromStates.Count - 1;
+		}
+
+		/// <summary>
+		/// Move a transition up or down
+		/// </summary>
+		/// <param name="serializedTransition">The transition to move</param>
+		/// <param name="up">Move up(true) or down(false)</param>
+		internal void ReorderTransition(SerializedTransition serializedTransition, bool up)
+		{
+			int stateIndex = _fromStates.IndexOf(serializedTransition.FromState.objectReferenceValue);
+			var stateTransitions = _transitionsByFromStates[stateIndex];
+			int index = stateTransitions.FindIndex(t => t.SerializedTransition.Index == serializedTransition.Index);
+
+			(int currentIndex, int targetIndex) = up ?
+				(serializedTransition.Index, stateTransitions[index - 1].SerializedTransition.Index) :
+				(stateTransitions[index + 1].SerializedTransition.Index, serializedTransition.Index);
+
+			_transitions.MoveArrayElement(currentIndex, targetIndex);
+
+			ApplyModifications($"Moved transition to {serializedTransition.ToState.objectReferenceValue.name} {(up ? "up" : "down")}");
+
+			_toggledIndex = stateIndex;
+		}
+
+		/// <summary>
+		/// Remove a transition.
+		/// </summary>
+		/// <param name="serializedTransition">Transition to delete.</param>
+		internal void RemoveTransition(SerializedTransition serializedTransition)
+		{
+			int stateIndex = _fromStates.IndexOf(serializedTransition.FromState.objectReferenceValue);
+			var stateTransitions = _transitionsByFromStates[stateIndex];
+			int count = stateTransitions.Count;
+			int index = stateTransitions.FindIndex(t => t.SerializedTransition.Index == serializedTransition.Index);
+			int deleteIndex = serializedTransition.Index;
+			string fromStateName = serializedTransition.FromState.objectReferenceValue.name;
+
+			if (index == 0 && count > 1)
+				_transitions.MoveArrayElement(stateTransitions[1].SerializedTransition.Index, deleteIndex++);
+
+			_transitions.DeleteArrayElementAtIndex(deleteIndex);
+
+			ApplyModifications($"Deleted transition from {fromStateName} " +
+				"to {serializedTransition.ToState.objectReferenceValue.name}");
+
+			if (count > 1)
+				_toggledIndex = stateIndex;
+		}
+
+		internal List<SerializedTransition> GetStateTransitions(Object state)
+		{
+			return _transitionsByFromStates[_fromStates.IndexOf(state)].Select(t => t.SerializedTransition).ToList();
+		}
+
+		private void CopyConditions(SerializedProperty copyTo, SerializedProperty copyFrom)
+		{
+			for (int i = 0, j = copyTo.arraySize; i < copyFrom.arraySize; i++, j++)
+			{
+				copyTo.InsertArrayElementAtIndex(j);
+				var cond = copyTo.GetArrayElementAtIndex(j);
+				var srcCond = copyFrom.GetArrayElementAtIndex(i);
+				cond.FindPropertyRelative("ExpectedResult").enumValueIndex = srcCond.FindPropertyRelative("ExpectedResult").enumValueIndex;
+				cond.FindPropertyRelative("Operator").enumValueIndex = srcCond.FindPropertyRelative("Operator").enumValueIndex;
+				cond.FindPropertyRelative("Condition").objectReferenceValue = srcCond.FindPropertyRelative("Condition").objectReferenceValue;
+			}
+		}
+
+		private bool TryGetExistingTransition(SerializedProperty from, SerializedProperty to, out int fromIndex, out int toIndex)
+		{
+			fromIndex = _fromStates.IndexOf(from.objectReferenceValue);
+			toIndex = -1;
+			if (fromIndex < 0)
+				return false;
+
+			toIndex = _transitionsByFromStates[fromIndex].FindIndex(
+				transitionHelper => transitionHelper.SerializedTransition.ToState.objectReferenceValue == to.objectReferenceValue);
+
+			return toIndex >= 0;
+		}
+
+		private void GroupByFromState()
+		{
+			var groupedTransitions = new Dictionary<Object, List<TransitionDisplayHelper>>();
+			int count = _transitions.arraySize;
+			for (int i = 0; i < count; i++)
+			{
+				var serializedTransition = new SerializedTransition(_transitions, i);
+				if (serializedTransition.FromState.objectReferenceValue == null)
+				{
+					Debug.LogError("Transition with invalid \"From State\" found in table " + serializedObject.targetObject.name + ", deleting...");
+					_transitions.DeleteArrayElementAtIndex(i);
+					ApplyModifications("Invalid transition deleted");
+					return;
+				}
+				if (serializedTransition.ToState.objectReferenceValue == null)
+				{
+					Debug.LogError("Transition with invalid \"Target State\" found in table " + serializedObject.targetObject.name + ", deleting...");
+					_transitions.DeleteArrayElementAtIndex(i);
+					ApplyModifications("Invalid transition deleted");
+					return;
+				}
+
+				if (!groupedTransitions.TryGetValue(serializedTransition.FromState.objectReferenceValue, out var groupedProps))
+				{
+					groupedProps = new List<TransitionDisplayHelper>();
+					groupedTransitions.Add(serializedTransition.FromState.objectReferenceValue, groupedProps);
+				}
+				groupedProps.Add(new TransitionDisplayHelper(serializedTransition, this));
+			}
+
+			_fromStates = groupedTransitions.Keys.ToList();
+			_transitionsByFromStates = new List<List<TransitionDisplayHelper>>();
+			foreach (var fromState in _fromStates)
+				_transitionsByFromStates.Add(groupedTransitions[fromState]);
+		}
+
+
 /* 	[CustomEditor(typeof(TransitionTableSO))]
 	internal class TransitionTableEditor : UnityEditor.Editor
 	{
