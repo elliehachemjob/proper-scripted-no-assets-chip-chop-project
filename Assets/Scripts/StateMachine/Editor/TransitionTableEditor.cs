@@ -381,7 +381,12 @@ namespace UOP1.StateMachine.Editor
 			foreach (var fromState in _fromStates)
 				_transitionsByFromStates.Add(groupedTransitions[fromState]);
 		}
-
+private void ApplyModifications(string msg)
+		{
+			Undo.RecordObject(serializedObject.targetObject, msg);
+			serializedObject.ApplyModifiedProperties();
+			Reset();
+		}
 
 /* 	[CustomEditor(typeof(TransitionTableSO))]
 	internal class TransitionTableEditor : UnityEditor.Editor
