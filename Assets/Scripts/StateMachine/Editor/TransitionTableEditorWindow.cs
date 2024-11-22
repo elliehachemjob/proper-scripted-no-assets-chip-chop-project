@@ -6,7 +6,42 @@ using UOP1.StateMachine.ScriptableObjects;
 
 namespace UOP1.StateMachine.Editor
 {
+
 	internal class TransitionTableEditorWindow : EditorWindow
+	{
+		private static TransitionTableEditorWindow _window;
+		private static readonly string _uxmlPath = "Assets/Scripts/StateMachine/Editor/TransitionTableEditorWindow.uxml";
+		private static readonly string _ussPath = "Assets/Scripts/StateMachine/Editor/TransitionTableEditorWindow.uss";
+		private bool _doRefresh;
+
+		private UnityEditor.Editor _transitionTableEditor;
+
+		[MenuItem("State Machine Editor", menuItem = "ChopChop/State Machine Editor")]
+		internal static void Display()
+		{
+			if (_window == null)
+				_window = GetWindow<TransitionTableEditorWindow>("State Machine Editor");
+
+			_window.Show();
+		}
+
+		private void OnEnable()
+		{
+			var visualTree = AssetDatabase.LoadAssetAtPath<VisualTreeAsset>(_uxmlPath);
+			var styleSheet = AssetDatabase.LoadAssetAtPath<StyleSheet>(_ussPath);
+
+			rootVisualElement.Add(visualTree.CloneTree());
+
+			string labelClass = $"label-{(EditorGUIUtility.isProSkin ? "pro" : "personal")}";
+			rootVisualElement.Query<Label>().Build().ForEach(label => label.AddToClassList(labelClass));
+
+			rootVisualElement.styleSheets.Add(styleSheet);
+
+			minSize = new Vector2(480, 360);
+
+			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
+		}
+	/*internal class TransitionTableEditorWindow : EditorWindow
 	{
 		private static TransitionTableEditorWindow _window;
 		private static readonly string _uxmlPath = "Assets/Scripts/StateMachine/Editor/TransitionTableEditorWindow.uxml";
@@ -158,5 +193,5 @@ namespace UOP1.StateMachine.Editor
 
 			return assets;
 		}
-	}
+	}*/
 }
