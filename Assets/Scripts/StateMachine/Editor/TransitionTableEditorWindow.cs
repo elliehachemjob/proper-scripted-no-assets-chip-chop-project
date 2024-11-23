@@ -41,6 +41,71 @@ namespace UOP1.StateMachine.Editor
 
 			EditorApplication.playModeStateChanged += OnPlayModeStateChanged;
 		}
+
+				private void OnDisable()
+		{
+			EditorApplication.playModeStateChanged -= OnPlayModeStateChanged;
+		}
+
+		private void OnPlayModeStateChanged(PlayModeStateChange obj)
+		{
+			if (obj == PlayModeStateChange.EnteredPlayMode)
+				_doRefresh = true;
+		}
+
+		/// <summary>
+		/// Update list every time we gain focus
+		/// </summary>
+		private void OnFocus()
+		{
+			// Calling CreateListView() from here when the window is docked
+			// throws a NullReferenceException in UnityEditor.DockArea:OnEnable().
+			if (_doRefresh == false)
+				_doRefresh = true;
+		}
+
+		private void OnLostFocus()
+		{
+			ListView listView = rootVisualElement.Q<ListView>(className: "table-list");
+			listView.onSelectionChange -= OnListSelectionChanged;
+		}
+
+		private void Update()
+		{
+			if (!_doRefresh)
+				return;
+
+			CreateListView();
+			_doRefresh = false;
+		}
+
+		private void CreateListView()
+		{
+			var assets = FindAssets();
+			ListView listView = rootVisualElement.Q<ListView>(className: "table-list");
+
+			listView.makeItem = null;
+			listView.bindItem = null;
+
+			listView.itemsSource = assets;
+			listView.itemHeight = 16;
+			string labelClass = $"label-{(EditorGUIUtility.isProSkin ? "pro" : "personal")}";
+			listView.makeItem = () =>
+			{
+				var label = new Label();
+				label.AddToClassList(labelClass);
+				return label;
+			};
+			listView.bindItem = (element, i) => ((Label)element).text = assets[i].name;
+			listView.selectionType = SelectionType.Single;
+
+			listView.onSelectionChange -= OnListSelectionChanged;
+			listView.onSelectionChange += OnListSelectionChanged;
+
+			if (_transitionTableEditor && _transitionTableEditor.target)
+				listView.selectedIndex = System.Array.IndexOf(assets, _transitionTableEditor.target);
+		}
+
 	/*internal class TransitionTableEditorWindow : EditorWindow
 	{
 		private static TransitionTableEditorWindow _window;
