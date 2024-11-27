@@ -22,6 +22,10 @@ namespace UOP1.StateMachine.ScriptableObjects
 		}
 		protected abstract StateAction CreateAction();
 	}
+		public abstract class StateActionSO<T> : StateActionSO where T : StateAction, new()
+	{
+		protected override StateAction CreateAction() => new T();
+	}
 
 /* 	public abstract class StateActionSO : DescriptionSMActionBaseSO
 	{
