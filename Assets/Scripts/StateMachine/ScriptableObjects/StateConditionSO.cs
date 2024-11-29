@@ -26,6 +26,10 @@ namespace UOP1.StateMachine.ScriptableObjects
 		}
 		protected abstract Condition CreateCondition();
 	}
+		public abstract class StateConditionSO<T> : StateConditionSO where T : Condition, new()
+	{
+		protected override Condition CreateCondition() => new T();
+	}
 
 /* 		internal StateCondition GetCondition(StateMachine stateMachine, bool expectedResult, Dictionary<ScriptableObject, object> createdInstances)
 		{
