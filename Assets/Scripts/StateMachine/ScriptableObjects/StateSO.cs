@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace UOP1.StateMachine.ScriptableObjects
 {
+	/*
 	[CreateAssetMenu(fileName = "New State", menuName = "State Machines/State")]
 	public class StateSO : ScriptableObject
 	{
@@ -37,5 +38,5 @@ namespace UOP1.StateMachine.ScriptableObjects
 
 			return actions;
 		}
-	}
+	}*/
 }
