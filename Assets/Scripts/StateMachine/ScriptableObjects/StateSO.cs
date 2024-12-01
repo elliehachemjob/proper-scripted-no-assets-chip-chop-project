@@ -26,6 +26,18 @@ namespace UOP1.StateMachine.ScriptableObjects
 
 			return state;
 		}
+
+			private static StateAction[] GetActions(StateActionSO[] scriptableActions,
+			StateMachine stateMachine, Dictionary<ScriptableObject, object> createdInstances)
+		{
+			int count = scriptableActions.Length;
+			var actions = new StateAction[count];
+			for (int i = 0; i < count; i++)
+				actions[i] = scriptableActions[i].GetAction(stateMachine, createdInstances);
+
+			return actions;
+		}
+	}
 	/*
 	[CreateAssetMenu(fileName = "New State", menuName = "State Machines/State")]
 	public class StateSO : ScriptableObject
