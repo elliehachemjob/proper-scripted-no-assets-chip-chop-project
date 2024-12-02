@@ -5,7 +5,49 @@ using UnityEngine;
 
 namespace UOP1.StateMachine.ScriptableObjects
 {
-	[CreateAssetMenu(fileName = "NewTransitionTable", menuName = "State Machines/Transition Table")]
+
+	 [CreateAssetMenu(fileName = "NewTransitionTable", menuName = "State Machines/Transition Table")]
+	public class TransitionTableSO : ScriptableObject
+	{
+		[SerializeField] private TransitionItem[] _transitions = default;
+
+		/// <summary>
+		/// Will get the initial state and instantiate all subsequent states, transitions, actions and conditions.
+		/// </summary>
+		internal State GetInitialState(StateMachine stateMachine)
+		{
+			var states = new List<State>();
+			var transitions = new List<StateTransition>();
+			var createdInstances = new Dictionary<ScriptableObject, object>();
+
+			var fromStates = _transitions.GroupBy(transition => transition.FromState);
+
+			foreach (var fromState in fromStates)
+			{
+				if (fromState.Key == null)
+					throw new ArgumentNullException(nameof(fromState.Key), $"TransitionTable: {name}");
+
+				var state = fromState.Key.GetState(stateMachine, createdInstances);
+				states.Add(state);
+
+				transitions.Clear();
+				foreach (var transitionItem in fromState)
+				{
+					if (transitionItem.ToState == null)
+						throw new ArgumentNullException(nameof(transitionItem.ToState), $"TransitionTable: {name}, From State: {fromState.Key.name}");
+
+					var toState = transitionItem.ToState.GetState(stateMachine, createdInstances);
+					ProcessConditionUsages(stateMachine, transitionItem.Conditions, createdInstances, out var conditions, out var resultGroups);
+					transitions.Add(new StateTransition(toState, conditions, resultGroups));
+				}
+
+				state._transitions = transitions.ToArray();
+			}
+
+			return states.Count > 0 ? states[0]
+				: throw new InvalidOperationException($"TransitionTable {name} is empty.");
+		}
+	/* [CreateAssetMenu(fileName = "NewTransitionTable", menuName = "State Machines/Transition Table")]
 	public class TransitionTableSO : ScriptableObject
 	{
 		[SerializeField] private TransitionItem[] _transitions = default;
@@ -94,5 +136,5 @@ namespace UOP1.StateMachine.ScriptableObjects
 
 		public enum Result { True, False }
 		public enum Operator { And, Or }
-	}
+	}*/
 }
