@@ -47,6 +47,55 @@ namespace UOP1.StateMachine.ScriptableObjects
 			return states.Count > 0 ? states[0]
 				: throw new InvalidOperationException($"TransitionTable {name} is empty.");
 		}
+		
+		private static void ProcessConditionUsages(
+			StateMachine stateMachine,
+			ConditionUsage[] conditionUsages,
+			Dictionary<ScriptableObject, object> createdInstances,
+			out StateCondition[] conditions,
+			out int[] resultGroups)
+		{
+			int count = conditionUsages.Length;
+			conditions = new StateCondition[count];
+			for (int i = 0; i < count; i++)
+				conditions[i] = conditionUsages[i].Condition.GetCondition(
+					stateMachine, conditionUsages[i].ExpectedResult == Result.True, createdInstances);
+
+
+			List<int> resultGroupsList = new List<int>();
+			for (int i = 0; i < count; i++)
+			{
+				int idx = resultGroupsList.Count;
+				resultGroupsList.Add(1);
+				while (i < count - 1 && conditionUsages[i].Operator == Operator.And)
+				{
+					i++;
+					resultGroupsList[idx]++;
+				}
+			}
+
+			resultGroups = resultGroupsList.ToArray();
+		}
+
+		[Serializable]
+		public struct TransitionItem
+		{
+			public StateSO FromState;
+			public StateSO ToState;
+			public ConditionUsage[] Conditions;
+		}
+
+		[Serializable]
+		public struct ConditionUsage
+		{
+			public Result ExpectedResult;
+			public StateConditionSO Condition;
+			public Operator Operator;
+		}
+
+		public enum Result { True, False }
+		public enum Operator { And, Or }
+	}
 	/* [CreateAssetMenu(fileName = "NewTransitionTable", menuName = "State Machines/Transition Table")]
 	public class TransitionTableSO : ScriptableObject
 	{
