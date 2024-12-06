@@ -5,7 +5,31 @@ using UnityEngine.Rendering.Universal;
 
 public class SettingsSystem : MonoBehaviour
 {
-	[SerializeField] private VoidEventChannelSO SaveSettingsEvent = default;
+		[SerializeField] private VoidEventChannelSO SaveSettingsEvent = default;
+
+	[SerializeField] private SettingsSO _currentSettings = default;
+	[SerializeField] private UniversalRenderPipelineAsset _urpAsset = default;
+	[SerializeField] private SaveSystem _saveSystem = default;
+
+	[SerializeField] private FloatEventChannelSO _changeMasterVolumeEventChannel = default;
+	[SerializeField] private FloatEventChannelSO _changeSFXVolumeEventChannel = default;
+	[SerializeField] private FloatEventChannelSO _changeMusicVolumeEventChannel = default;
+
+	private void Awake()
+	{
+		_saveSystem.LoadSaveDataFromDisk();
+		_currentSettings.LoadSavedSettings(_saveSystem.saveData);
+		SetCurrentSettings();
+	}
+	private void OnEnable()
+	{
+		SaveSettingsEvent.OnEventRaised += SaveSettings;
+	}
+	private void OnDisable()
+	{
+		SaveSettingsEvent.OnEventRaised -= SaveSettings;
+	}
+/* 	[SerializeField] private VoidEventChannelSO SaveSettingsEvent = default;
 
 	[SerializeField] private SettingsSO _currentSettings = default;
 	[SerializeField] private UniversalRenderPipelineAsset _urpAsset = default;
@@ -49,11 +73,7 @@ public class SettingsSystem : MonoBehaviour
 	void SaveSettings()
 	{
 		_saveSystem.SaveDataToDisk();
-	}
-
-
-
-
+	}*/
 
 }
 
