@@ -3,7 +3,41 @@ using UnityEngine.Events;
 
 public class UISettingsAudioComponent : MonoBehaviour
 {
+
 	[SerializeField] UISettingItemFiller _masterVolumeField;
+	[SerializeField] UISettingItemFiller _musicVolumeField;
+	[SerializeField] UISettingItemFiller _sfxVolumeField;
+
+	[SerializeField] UIGenericButton _saveButton;
+	[SerializeField] UIGenericButton _resetButton;
+
+	[Header("Broadcasting")]
+	[SerializeField] private FloatEventChannelSO _masterVolumeEventChannel = default;
+	[SerializeField] private FloatEventChannelSO _sFXVolumeEventChannel = default;
+	[SerializeField] private FloatEventChannelSO _musicVolumeEventChannel = default;
+	private float _musicVolume { get; set; }
+	private float _sfxVolume { get; set; }
+	private float _masterVolume { get; set; }
+	private float _savedMusicVolume { get; set; }
+	private float _savedSfxVolume { get; set; }
+	private float _savedMasterVolume { get; set; }
+
+	int _maxVolume = 10;
+
+	public event UnityAction<float, float, float> _save = delegate { };
+	private void OnEnable()
+	{
+		_musicVolumeField.OnNextOption += IncreaseMusicVolume;
+		_musicVolumeField.OnPreviousOption += DecreaseMusicVolume;
+		_saveButton.Clicked += SaveVolumes;
+		_resetButton.Clicked += ResetVolumes;
+		_sfxVolumeField.OnNextOption += IncreaseSFXVolume;
+		_sfxVolumeField.OnPreviousOption += DecreaseSFXVolume;
+		_masterVolumeField.OnNextOption += IncreaseMasterVolume;
+		_masterVolumeField.OnPreviousOption += DecreaseMasterVolume;
+
+	}
+/*	[SerializeField] UISettingItemFiller _masterVolumeField;
 	[SerializeField] UISettingItemFiller _musicVolumeField;
 	[SerializeField] UISettingItemFiller _sfxVolumeField;
 
@@ -163,7 +197,5 @@ public class UISettingsAudioComponent : MonoBehaviour
 		_savedSfxVolume = _sfxVolume;
 		//save Audio
 		_save.Invoke(_musicVolume, _sfxVolume, _masterVolume);
-	}
-
-
+	}*/
 }
