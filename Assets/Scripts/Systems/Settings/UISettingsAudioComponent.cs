@@ -37,6 +37,45 @@ public class UISettingsAudioComponent : MonoBehaviour
 		_masterVolumeField.OnPreviousOption += DecreaseMasterVolume;
 
 	}
+		private void OnDisable()
+	{
+		ResetVolumes(); // reset volumes on disable. If not saved, it will reset to initial volumes. 
+		_musicVolumeField.OnNextOption -= IncreaseMusicVolume;
+		_musicVolumeField.OnPreviousOption -= DecreaseMusicVolume;
+		_saveButton.Clicked -= SaveVolumes;
+		_resetButton.Clicked -= ResetVolumes;
+		_sfxVolumeField.OnNextOption -= IncreaseSFXVolume;
+		_sfxVolumeField.OnPreviousOption -= DecreaseSFXVolume;
+		_masterVolumeField.OnNextOption -= IncreaseMasterVolume;
+		_masterVolumeField.OnPreviousOption -= DecreaseMasterVolume;
+
+	}
+	public void Setup(float musicVolume, float sfxVolume, float masterVolume)
+	{
+		_masterVolume = masterVolume;
+		_musicVolume = sfxVolume;
+		_sfxVolume = musicVolume;
+
+		_savedMasterVolume = _masterVolume;
+		_savedMusicVolume = _musicVolume;
+		_savedSfxVolume = _sfxVolume;
+
+		SetMusicVolumeField();
+		SetSfxVolumeField();
+		SetMasterVolumeField();
+	}
+	private void SetMusicVolumeField()
+	{
+		int paginationCount = _maxVolume + 1; // adding a page in the pagination since the count starts from 0
+		int selectedPaginationIndex = Mathf.RoundToInt(_maxVolume * _musicVolume);
+		string selectedOption = Mathf.RoundToInt(_maxVolume * _musicVolume).ToString();
+
+		SetMusicVolume();
+
+		_musicVolumeField.FillSettingField(paginationCount, selectedPaginationIndex, selectedOption);
+
+
+	}
 /*	[SerializeField] UISettingItemFiller _masterVolumeField;
 	[SerializeField] UISettingItemFiller _musicVolumeField;
 	[SerializeField] UISettingItemFiller _sfxVolumeField;
