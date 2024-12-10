@@ -73,9 +73,45 @@ public class UISettingsAudioComponent : MonoBehaviour
 		SetMusicVolume();
 
 		_musicVolumeField.FillSettingField(paginationCount, selectedPaginationIndex, selectedOption);
+	}
+	private void SetSfxVolumeField()
+	{
+		int paginationCount = _maxVolume + 1;// adding a page in the pagination since the count starts from 0
+		int selectedPaginationIndex = Mathf.RoundToInt(_maxVolume * _sfxVolume);
+		string selectedOption = Mathf.RoundToInt(_maxVolume * _sfxVolume).ToString();
 
+		SetSfxVolume();
+
+		_sfxVolumeField.FillSettingField(paginationCount, selectedPaginationIndex, selectedOption);
 
 	}
+	private void SetMasterVolumeField()
+	{
+		int paginationCount = _maxVolume + 1;// adding a page in the pagination since the count starts from 0
+		int selectedPaginationIndex = Mathf.RoundToInt(_maxVolume * _masterVolume);
+		string selectedOption = Mathf.RoundToInt(_maxVolume * _masterVolume).ToString();
+
+		SetMasterVolume();
+
+		_masterVolumeField.FillSettingField(paginationCount, selectedPaginationIndex, selectedOption);
+
+	}
+	private void SetMusicVolume()
+	{
+		_musicVolumeEventChannel.RaiseEvent(_musicVolume);//raise event for volume change
+	}
+	private void SetSfxVolume()
+	{
+		_sFXVolumeEventChannel.RaiseEvent(_sfxVolume); //raise event for volume change
+
+	}
+	private void SetMasterVolume()
+	{
+		_masterVolumeEventChannel.RaiseEvent(_masterVolume); //raise event for volume change
+
+	}
+
+
 /*	[SerializeField] UISettingItemFiller _masterVolumeField;
 	[SerializeField] UISettingItemFiller _musicVolumeField;
 	[SerializeField] UISettingItemFiller _sfxVolumeField;
