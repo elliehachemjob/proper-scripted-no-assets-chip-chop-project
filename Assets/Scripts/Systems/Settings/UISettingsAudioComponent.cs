@@ -111,7 +111,45 @@ public class UISettingsAudioComponent : MonoBehaviour
 
 	}
 
+private void IncreaseMasterVolume()
+	{
+		_masterVolume += 1 / (float)_maxVolume;
+		_masterVolume = Mathf.Clamp(_masterVolume, 0, 1);
+		SetMasterVolumeField();
+	}
+	private void DecreaseMasterVolume()
+	{
+		_masterVolume -= 1 / (float)_maxVolume;
+		_masterVolume = Mathf.Clamp(_masterVolume, 0, 1);
+		SetMasterVolumeField();
+	}
+	private void IncreaseMusicVolume()
+	{
+		_musicVolume += 1 / (float)_maxVolume;
+		_musicVolume = Mathf.Clamp(_musicVolume, 0, 1);
+		SetMusicVolumeField();
+	}
+	private void DecreaseMusicVolume()
+	{
 
+		_musicVolume -= 1 / (float)_maxVolume;
+		_musicVolume = Mathf.Clamp(_musicVolume, 0, 1);
+		SetMusicVolumeField();
+	}
+	private void IncreaseSFXVolume()
+	{
+		_sfxVolume += 1 / (float)_maxVolume;
+		_sfxVolume = Mathf.Clamp(_sfxVolume, 0, 1);
+
+		SetSfxVolumeField();
+	}
+	private void DecreaseSFXVolume()
+	{
+
+		_sfxVolume -= 1 / (float)_maxVolume;
+		_sfxVolume = Mathf.Clamp(_sfxVolume, 0, 1);
+		SetSfxVolumeField();
+	}
 /*	[SerializeField] UISettingItemFiller _masterVolumeField;
 	[SerializeField] UISettingItemFiller _musicVolumeField;
 	[SerializeField] UISettingItemFiller _sfxVolumeField;
