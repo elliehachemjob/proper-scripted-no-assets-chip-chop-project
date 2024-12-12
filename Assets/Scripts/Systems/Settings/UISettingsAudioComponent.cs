@@ -150,6 +150,18 @@ private void IncreaseMasterVolume()
 		_sfxVolume = Mathf.Clamp(_sfxVolume, 0, 1);
 		SetSfxVolumeField();
 	}
+		private void ResetVolumes()
+	{
+		Setup(_savedMusicVolume, _savedSfxVolume, _savedMasterVolume);
+	}
+	private void SaveVolumes()
+	{
+		_savedMasterVolume = _masterVolume;
+		_savedMusicVolume = _musicVolume;
+		_savedSfxVolume = _sfxVolume;
+		//save Audio
+		_save.Invoke(_musicVolume, _sfxVolume, _masterVolume);
+	}
 /*	[SerializeField] UISettingItemFiller _masterVolumeField;
 	[SerializeField] UISettingItemFiller _musicVolumeField;
 	[SerializeField] UISettingItemFiller _sfxVolumeField;
