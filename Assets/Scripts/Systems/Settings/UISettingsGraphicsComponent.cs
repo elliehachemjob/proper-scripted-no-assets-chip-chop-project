@@ -15,6 +15,7 @@ public class ShadowDistanceTier
 
 public class UISettingsGraphicsComponent : MonoBehaviour
 {
+	
 	[FormerlySerializedAs("ShadowDistanceTierList")]
 	[SerializeField] private List<ShadowDistanceTier> _shadowDistanceTierList = new List<ShadowDistanceTier>(); // filled from inspector
 	[FormerlySerializedAs("URPAsset")]
@@ -29,9 +30,20 @@ public class UISettingsGraphicsComponent : MonoBehaviour
 	private List<Resolution> _resolutionsList = default;
 	[SerializeField] UISettingItemFiller _resolutionsField = default;
 
-	/*	private int _currentShadowQualityIndex = default;
-		private List<string> _shadowQualityList = default;
-		[SerializeField] private UISettingItemFiller _shadowQualityField = default;*/
+	/* [FormerlySerializedAs("ShadowDistanceTierList")]
+	[SerializeField] private List<ShadowDistanceTier> _shadowDistanceTierList = new List<ShadowDistanceTier>(); // filled from inspector
+	[FormerlySerializedAs("URPAsset")]
+	[SerializeField] private UniversalRenderPipelineAsset _uRPAsset = default;
+
+	private int _savedResolutionIndex = default;
+	private int _savedAntiAliasingIndex = default;
+	private int _savedShadowDistanceTier = default;
+	private bool _savedFullscreenState = default;
+
+	private int _currentResolutionIndex = default;
+	private List<Resolution> _resolutionsList = default;
+	[SerializeField] UISettingItemFiller _resolutionsField = default;
+
 
 	private int _currentAntiAliasingIndex = default;
 	private List<string> _currentAntiAliasingList = default;
@@ -302,7 +314,6 @@ public class UISettingsGraphicsComponent : MonoBehaviour
 		_isFullscreen = _savedFullscreenState;
 		OnFullscreenChange();
 	}
-
-
+*/
 
 }
