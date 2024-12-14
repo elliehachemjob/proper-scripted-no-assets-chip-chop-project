@@ -30,6 +30,42 @@ public class UISettingsGraphicsComponent : MonoBehaviour
 	private List<Resolution> _resolutionsList = default;
 	[SerializeField] UISettingItemFiller _resolutionsField = default;
 
+		private int _currentAntiAliasingIndex = default;
+	private List<string> _currentAntiAliasingList = default;
+	[SerializeField] private UISettingItemFiller _antiAliasingField = default;
+
+	private int _currentShadowDistanceTier = default;
+	[SerializeField] private UISettingItemFiller _shadowDistanceField = default;
+	private bool _isFullscreen = default;
+
+	[SerializeField] private UISettingItemFiller _fullscreenField = default;
+
+	public event UnityAction<int, int, float, bool> _save = delegate { };
+
+	private Resolution _currentResolution;
+
+	[SerializeField] private UIGenericButton _saveButton;
+	[SerializeField] private UIGenericButton _resetButton;
+
+	void OnEnable()
+	{
+		_resolutionsField.OnNextOption += NextResolution;
+		_resolutionsField.OnPreviousOption += PreviousResolution;
+
+		_shadowDistanceField.OnNextOption += NextShadowDistanceTier;
+		_shadowDistanceField.OnPreviousOption += PreviousShadowDistanceTier;
+
+		_fullscreenField.OnNextOption += NextFullscreenState;
+		_fullscreenField.OnPreviousOption += PreviousFullscreenState;
+
+		_antiAliasingField.OnNextOption += NextAntiAliasingTier;
+		_antiAliasingField.OnPreviousOption += PreviousAntiAliasingTier;
+
+		_saveButton.Clicked += SaveSettings;
+		_resetButton.Clicked += ResetSettings;
+
+	}
+
 	/* [FormerlySerializedAs("ShadowDistanceTierList")]
 	[SerializeField] private List<ShadowDistanceTier> _shadowDistanceTierList = new List<ShadowDistanceTier>(); // filled from inspector
 	[FormerlySerializedAs("URPAsset")]
