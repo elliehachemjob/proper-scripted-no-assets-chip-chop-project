@@ -65,7 +65,51 @@ public class UISettingsGraphicsComponent : MonoBehaviour
 		_resetButton.Clicked += ResetSettings;
 
 	}
+	private void OnDisable()
+	{
+		ResetSettings();
+		
+		_resolutionsField.OnNextOption -= NextResolution;
+		_resolutionsField.OnPreviousOption -= PreviousResolution;
 
+		_shadowDistanceField.OnNextOption -= NextShadowDistanceTier;
+		_shadowDistanceField.OnPreviousOption -= PreviousShadowDistanceTier;
+
+		_fullscreenField.OnNextOption -= NextFullscreenState;
+		_fullscreenField.OnPreviousOption -= PreviousFullscreenState;
+
+		_antiAliasingField.OnNextOption -= NextAntiAliasingTier;
+		_antiAliasingField.OnPreviousOption -= PreviousAntiAliasingTier;
+
+		_saveButton.Clicked -= SaveSettings;
+		_resetButton.Clicked -= ResetSettings;
+	}
+
+	public void Init()
+	{
+		_resolutionsList = GetResolutionsList();
+		_currentShadowDistanceTier = GetCurrentShadowDistanceTier();
+		_currentAntiAliasingList = GetDropdownData(Enum.GetNames(typeof(MsaaQuality)));
+
+		_currentResolution = Screen.currentResolution;
+		_currentResolutionIndex = GetCurrentResolutionIndex();
+		_isFullscreen = GetCurrentFullscreenState();
+		_currentAntiAliasingIndex = GetCurrentAntialiasing();
+
+		_savedResolutionIndex = _currentResolutionIndex;
+		_savedAntiAliasingIndex = _currentAntiAliasingIndex;
+		_savedShadowDistanceTier = _currentShadowDistanceTier;
+		_savedFullscreenState = _isFullscreen;
+	}
+	
+	public void Setup()
+	{
+		Init();
+		SetResolutionField();
+		SetShadowDistance();
+		SetFullscreen();
+		SetAntiAliasingField();
+	}
 	/* [FormerlySerializedAs("ShadowDistanceTierList")]
 	[SerializeField] private List<ShadowDistanceTier> _shadowDistanceTierList = new List<ShadowDistanceTier>(); // filled from inspector
 	[FormerlySerializedAs("URPAsset")]
