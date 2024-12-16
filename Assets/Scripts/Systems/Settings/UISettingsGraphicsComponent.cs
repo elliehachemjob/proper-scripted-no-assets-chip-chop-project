@@ -110,6 +110,44 @@ public class UISettingsGraphicsComponent : MonoBehaviour
 		SetFullscreen();
 		SetAntiAliasingField();
 	}
+private List<string> GetDropdownData(string[] optionNames, params string[] customOptions)
+	{
+		List<string> options = new List<string>();
+		foreach (string option in optionNames)
+		{
+			options.Add(option);
+		}
+
+		foreach (string option in customOptions)
+		{
+			options.Add(option);
+		}
+		return options;
+	}
+
+	public void SaveSettings()
+	{
+
+		_savedResolutionIndex = _currentResolutionIndex;
+		_savedAntiAliasingIndex = _currentAntiAliasingIndex;
+		_savedShadowDistanceTier = _currentShadowDistanceTier;
+		_savedFullscreenState = _isFullscreen;
+		float shadowDistance = _shadowDistanceTierList[_currentShadowDistanceTier].Distance;
+		_save.Invoke(_currentResolutionIndex, _currentAntiAliasingIndex, shadowDistance, _isFullscreen);
+	}
+	
+	public void ResetSettings()
+	{
+		_currentResolutionIndex = _savedResolutionIndex;
+		OnResolutionChange();
+		_currentAntiAliasingIndex = _savedAntiAliasingIndex;
+		OnAntiAliasingChange();
+		_currentShadowDistanceTier = _savedShadowDistanceTier;
+		OnShadowDistanceChange();
+		_isFullscreen = _savedFullscreenState;
+		OnFullscreenChange();
+	}
+
 	/* [FormerlySerializedAs("ShadowDistanceTierList")]
 	[SerializeField] private List<ShadowDistanceTier> _shadowDistanceTierList = new List<ShadowDistanceTier>(); // filled from inspector
 	[FormerlySerializedAs("URPAsset")]
