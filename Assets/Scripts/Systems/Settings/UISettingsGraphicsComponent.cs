@@ -147,7 +147,42 @@ private List<string> GetDropdownData(string[] optionNames, params string[] custo
 		_isFullscreen = _savedFullscreenState;
 		OnFullscreenChange();
 	}
+	void PreviousFullscreenState()
+	{
+		_isFullscreen = false;
+		OnFullscreenChange();
+	}
+	void OnFullscreenChange()
+	{
+		Screen.fullScreen = _isFullscreen;
+		SetFullscreen();
+	}
+	#endregion
 
+	#region Anti Aliasing
+	void SetAntiAliasingField()
+	{
+		string optionDisplay = _currentAntiAliasingList[_currentAntiAliasingIndex].Replace("_", "");
+		_antiAliasingField.FillSettingField(_currentAntiAliasingList.Count, _currentAntiAliasingIndex, optionDisplay);
+
+	}
+	int GetCurrentAntialiasing()
+	{
+		return _uRPAsset.msaaSampleCount;
+
+	}
+	void NextAntiAliasingTier()
+	{
+		_currentAntiAliasingIndex++;
+		_currentAntiAliasingIndex = Mathf.Clamp(_currentAntiAliasingIndex, 0, _currentAntiAliasingList.Count - 1);
+		OnAntiAliasingChange();
+	}
+	void PreviousAntiAliasingTier()
+	{
+		_currentAntiAliasingIndex--;
+		_currentAntiAliasingIndex = Mathf.Clamp(_currentAntiAliasingIndex, 0, _currentAntiAliasingList.Count - 1);
+		OnAntiAliasingChange();
+	}
 	/* [FormerlySerializedAs("ShadowDistanceTierList")]
 	[SerializeField] private List<ShadowDistanceTier> _shadowDistanceTierList = new List<ShadowDistanceTier>(); // filled from inspector
 	[FormerlySerializedAs("URPAsset")]
