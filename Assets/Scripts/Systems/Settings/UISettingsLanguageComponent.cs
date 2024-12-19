@@ -8,7 +8,46 @@ using UnityEngine.Serialization;
 
 public class UISettingsLanguageComponent : MonoBehaviour
 {
-	[SerializeField] private UISettingItemFiller _languageField = default;
+		[SerializeField] private UISettingItemFiller _languageField = default;
+	[SerializeField] private UIGenericButton _saveButton;
+	[SerializeField] private UIGenericButton _resetButton;
+
+	public event UnityAction<Locale> _save = delegate { };
+	
+	private int _currentSelectedOption = 0;
+	private int _savedSelectedOption = default;
+	private AsyncOperationHandle _initializeOperation;
+	private List<string> _languagesList = new List<string>();
+
+	void OnEnable()
+	{
+		_initializeOperation = LocalizationSettings.SelectedLocaleAsync;
+		if (_initializeOperation.IsDone)
+		{
+			InitializeCompleted(_initializeOperation);
+		}
+		else
+		{
+			_initializeOperation.Completed += InitializeCompleted;
+		}
+		_saveButton.Clicked += SaveSettings;
+		_resetButton.Clicked += ResetSettings;
+		_languageField.OnNextOption += NextOption;
+		_languageField.OnPreviousOption += PreviousOption;
+	}
+
+	private void OnDisable()
+	{
+		ResetSettings();
+
+		_saveButton.Clicked -= SaveSettings;
+		_resetButton.Clicked -= ResetSettings;
+		_languageField.OnNextOption -= NextOption;
+		_languageField.OnPreviousOption -= PreviousOption;
+		LocalizationSettings.SelectedLocaleChanged -= LocalizationSettings_SelectedLocaleChanged;
+	}
+
+	/* [SerializeField] private UISettingItemFiller _languageField = default;
 	[SerializeField] private UIGenericButton _saveButton;
 	[SerializeField] private UIGenericButton _resetButton;
 
@@ -113,5 +152,5 @@ public class UISettingsLanguageComponent : MonoBehaviour
 	{
 		_currentSelectedOption = _savedSelectedOption;
 		OnSelectionChanged();
-	}
+	}*/
 }
