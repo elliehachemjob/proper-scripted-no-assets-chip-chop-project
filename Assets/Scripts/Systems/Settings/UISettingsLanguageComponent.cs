@@ -46,7 +46,60 @@ public class UISettingsLanguageComponent : MonoBehaviour
 		_languageField.OnPreviousOption -= PreviousOption;
 		LocalizationSettings.SelectedLocaleChanged -= LocalizationSettings_SelectedLocaleChanged;
 	}
+void InitializeCompleted(AsyncOperationHandle obj)
+	{
+		_initializeOperation.Completed -= InitializeCompleted;
+		// Create an option in the dropdown for each Locale
+		_languagesList = new List<string>();
 
+		List<Locale> locales = LocalizationSettings.AvailableLocales.Locales;
+
+		for (int i = 0; i < locales.Count; ++i)
+		{
+			var locale = locales[i];
+			if (LocalizationSettings.SelectedLocale == locale)
+				_currentSelectedOption = i;
+
+			var displayName = locales[i].Identifier.CultureInfo != null ? locales[i].Identifier.CultureInfo.NativeName : locales[i].ToString();
+			_languagesList.Add(displayName);
+		}
+		_languageField.FillSettingField(_languagesList.Count, _currentSelectedOption, _languagesList[_currentSelectedOption]);
+		_savedSelectedOption = _currentSelectedOption;
+		LocalizationSettings.SelectedLocaleChanged += LocalizationSettings_SelectedLocaleChanged;
+	}
+
+	void NextOption()
+	{
+		_currentSelectedOption++;
+		_currentSelectedOption = Mathf.Clamp(_currentSelectedOption, 0, _languagesList.Count - 1);
+		OnSelectionChanged();
+	}
+
+	void PreviousOption()
+	{
+		_currentSelectedOption--;
+		_currentSelectedOption = Mathf.Clamp(_currentSelectedOption, 0, _languagesList.Count - 1);
+		OnSelectionChanged();
+	}
+
+	void OnSelectionChanged()
+	{
+		// Unsubscribe from SelectedLocaleChanged so we don't get an unnecessary callback from the change we are about to make.
+		LocalizationSettings.SelectedLocaleChanged -= LocalizationSettings_SelectedLocaleChanged;
+
+		var locale = LocalizationSettings.AvailableLocales.Locales[_currentSelectedOption];
+		LocalizationSettings.SelectedLocale = locale;
+
+		// Resubscribe to SelectedLocaleChanged so that we can stay in sync with changes that may be made by other scripts.
+		LocalizationSettings.SelectedLocaleChanged += LocalizationSettings_SelectedLocaleChanged;
+	}
+
+	void LocalizationSettings_SelectedLocaleChanged(Locale locale)
+	{
+		// We need to update the dropdown selection to match.
+		var selectedIndex = LocalizationSettings.AvailableLocales.Locales.IndexOf(locale);
+		_languageField.FillSettingField(_languagesList.Count, selectedIndex, _languagesList[selectedIndex]);
+	}
 	/* [SerializeField] private UISettingItemFiller _languageField = default;
 	[SerializeField] private UIGenericButton _saveButton;
 	[SerializeField] private UIGenericButton _resetButton;
