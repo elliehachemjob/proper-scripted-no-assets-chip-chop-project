@@ -100,6 +100,18 @@ void InitializeCompleted(AsyncOperationHandle obj)
 		var selectedIndex = LocalizationSettings.AvailableLocales.Locales.IndexOf(locale);
 		_languageField.FillSettingField(_languagesList.Count, selectedIndex, _languagesList[selectedIndex]);
 	}
+		public void SaveSettings()
+	{
+		Locale _currentLocale = LocalizationSettings.AvailableLocales.Locales[_currentSelectedOption];
+		_savedSelectedOption = _currentSelectedOption;
+		_save.Invoke(_currentLocale);
+	}
+
+	public void ResetSettings()
+	{
+		_currentSelectedOption = _savedSelectedOption;
+		OnSelectionChanged();
+	}
 	/* [SerializeField] private UISettingItemFiller _languageField = default;
 	[SerializeField] private UIGenericButton _saveButton;
 	[SerializeField] private UIGenericButton _resetButton;
