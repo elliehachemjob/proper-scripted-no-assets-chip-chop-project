@@ -22,6 +22,10 @@ public class UIDialogueChoiceFiller : MonoBehaviour
 			_actionButton.UpdateSelected();
 		}
 	}
+	public void ButtonClicked()
+	{
+		_onChoiceMade.RaiseEvent(_currentChoice);
+	}
 	/* [SerializeField] private LocalizeStringEvent _choiceText = default;
 	[SerializeField] private MultiInputButton _actionButton = default;
 
