@@ -24,7 +24,13 @@ public class UIDialogueChoicesManager : MonoBehaviour
 					else
 					{
 						_choiceButtons[i].gameObject.SetActive(false);
-					}
+					}	else
+				{
+					Debug.LogError("There are more choices than buttons");
+				}
+			}
+		}
+	}
 	
 	/* [SerializeField] private UIDialogueChoiceFiller[] _choiceButtons;
 
