@@ -24,6 +24,25 @@ public class UIDialogueManager : MonoBehaviour
 		_showChoicesEvent.OnEventRaised -= ShowChoices;
 	}
 
+	/* [SerializeField] private LocalizeStringEvent _lineText = default;
+	[SerializeField] private LocalizeStringEvent _actorNameText = default;
+	[SerializeField] private GameObject _actorNamePanel = default;
+	[SerializeField] private GameObject _mainProtagonistNamePanel = default;
+	[SerializeField] private UIDialogueChoicesManager _choicesManager = default;
+
+	[Header("Listening to")]
+	[SerializeField] private DialogueChoicesChannelSO _showChoicesEvent = default;
+
+	private void OnEnable()
+	{
+		_showChoicesEvent.OnEventRaised += ShowChoices;
+	}
+
+	private void OnDisable()
+	{
+		_showChoicesEvent.OnEventRaised -= ShowChoices;
+	}
+
 	public void SetDialogue(LocalizedString dialogueLine, ActorSO actor, bool isMainProtagonist)
 	{
 		_choicesManager.gameObject.SetActive(false);
@@ -48,5 +67,5 @@ public class UIDialogueManager : MonoBehaviour
 	private void HideChoices()
 	{
 		_choicesManager.gameObject.SetActive(false);
-	}
+	}*/
 }
