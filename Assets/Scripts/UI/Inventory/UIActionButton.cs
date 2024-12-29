@@ -36,6 +36,17 @@ public class UIActionButton : MonoBehaviour
 					_inputReader.InventoryActionButtonEvent -= ClickActionButton;
 		}
 	}
+		public void ClickActionButton()
+	{
+		Clicked.Invoke();
+	}
+
+	private void OnDisable()
+	{
+		if (_inputReader != null)
+			if (_hasEvent)
+				_inputReader.InventoryActionButtonEvent -= ClickActionButton;
+	}
 /*	[SerializeField] private LocalizeStringEvent _buttonActionText = default;
 	[SerializeField] private Button _buttonAction = default;
 	[SerializeField] private UIButtonPrompt _buttonPromptSetter = default;
