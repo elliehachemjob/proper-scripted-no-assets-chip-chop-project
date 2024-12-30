@@ -8,6 +8,10 @@ public class UIInspectorDescription : MonoBehaviour
 	[SerializeField] private TextMeshProUGUI _textHealthRestoration = default;
 	[SerializeField] private LocalizeStringEvent _textName = default;
 
+	/*[SerializeField] private LocalizeStringEvent _textDescription = default;
+	[SerializeField] private TextMeshProUGUI _textHealthRestoration = default;
+	[SerializeField] private LocalizeStringEvent _textName = default;
+
 	public void FillDescription(ItemSO itemToInspect)
 	{
 		_textName.StringReference = itemToInspect.Name;
@@ -24,5 +28,5 @@ public class UIInspectorDescription : MonoBehaviour
 		}
 		_textName.gameObject.SetActive(true);
 		_textDescription.gameObject.SetActive(true);
-	}
+	}*/
 }
