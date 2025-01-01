@@ -5,7 +5,26 @@ using TMPro;
 
 public class UIInspectorIngredientFiller : MonoBehaviour
 {
-	[SerializeField] private TextMeshProUGUI _ingredientAmount = default;
+		[SerializeField] private TextMeshProUGUI _ingredientAmount = default;
+	[SerializeField] private GameObject _availableCheckMark = default;
+	[SerializeField] private GameObject _unavailableCheckMark = default;
+	[SerializeField] private GameObject _tooltip = default;
+	[SerializeField] private LocalizeStringEvent _tooltipMessage = default;
+	[SerializeField] private Image _ingredientIcon = default;
+	[SerializeField] private Color _textColorAvailable = default;
+	[SerializeField] private Color _textColorUnavailable = default;
+
+	public void FillIngredient(ItemStack ingredient, bool isAvailable)
+	{
+		if (isAvailable)
+		{
+			_ingredientAmount.color = _textColorAvailable;
+		}
+		else
+		{
+			_ingredientAmount.color = _textColorUnavailable;
+		}
+	/* [SerializeField] private TextMeshProUGUI _ingredientAmount = default;
 	[SerializeField] private GameObject _availableCheckMark = default;
 	[SerializeField] private GameObject _unavailableCheckMark = default;
 	[SerializeField] private GameObject _tooltip = default;
@@ -42,5 +61,5 @@ public class UIInspectorIngredientFiller : MonoBehaviour
 	public void UnHoveredItem()
 	{
 		_tooltip.SetActive(false);
-	}
+	}*/
 }
