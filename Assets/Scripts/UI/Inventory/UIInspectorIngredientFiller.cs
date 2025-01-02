@@ -24,6 +24,24 @@ public class UIInspectorIngredientFiller : MonoBehaviour
 		{
 			_ingredientAmount.color = _textColorUnavailable;
 		}
+		_ingredientAmount.text = ingredient.Amount.ToString();
+		_tooltipMessage.StringReference = ingredient.Item.Name;
+		_tooltipMessage.StringReference.Arguments = new[] { new { Amount = ingredient.Amount } };
+
+		_ingredientIcon.sprite = ingredient.Item.PreviewImage;
+		_availableCheckMark.SetActive(isAvailable);
+		_unavailableCheckMark.SetActive(!isAvailable);
+	}
+
+	public void HoveredItem()
+	{
+		_tooltip.SetActive(true);
+	}
+
+	public void UnHoveredItem()
+	{
+		_tooltip.SetActive(false);
+	}
 	/* [SerializeField] private TextMeshProUGUI _ingredientAmount = default;
 	[SerializeField] private GameObject _availableCheckMark = default;
 	[SerializeField] private GameObject _unavailableCheckMark = default;
