@@ -9,6 +9,12 @@ public class UIInspectorIngredients : MonoBehaviour
 	{
 
 		int maxCount = Mathf.Max(listofIngredients.Count, _instantiatedGameObjects.Count);
+	/* [SerializeField] private List<UIInspectorIngredientFiller> _instantiatedGameObjects = new List<UIInspectorIngredientFiller>();
+
+	public void FillIngredients(List<ItemStack> listofIngredients, bool[] availabilityArray)
+	{
+
+		int maxCount = Mathf.Max(listofIngredients.Count, _instantiatedGameObjects.Count);
 
 		for (int i = 0; i < maxCount; i++)
 		{
@@ -32,5 +38,5 @@ public class UIInspectorIngredients : MonoBehaviour
 				_instantiatedGameObjects[i].gameObject.SetActive(false);
 			}
 		}
-	}
+	}*/
 }
