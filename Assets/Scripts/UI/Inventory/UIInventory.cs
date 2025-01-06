@@ -26,7 +26,37 @@ public class UIInventory : MonoBehaviour
 	[SerializeField] private IntEventChannelSO _restoreHealth = default;
 	[SerializeField] private ItemEventChannelSO _equipItemEvent = default;
 	[SerializeField] private ItemEventChannelSO _cookRecipeEvent = default;
+private InventoryTabSO _selectedTab = default;
+	private bool _isNearPot = false;
+	private int selectedItemId = -1;
 
+	private void OnEnable()
+	{
+		_actionButton.Clicked += OnActionButtonClicked;
+		_tabsPanel.TabChanged += OnChangeTab;
+		_onInteractionEndedEvent.OnEventRaised += InteractionEnded;
+
+		for (int i = 0; i < _availableItemSlots.Count; i++)
+		{
+			_availableItemSlots[i].ItemSelected += InspectItem;
+		}
+
+		_inputReader.TabSwitched += OnSwitchTab;
+	}
+
+	private void OnDisable()
+	{
+		_actionButton.Clicked -= OnActionButtonClicked;
+		_tabsPanel.TabChanged -= OnChangeTab;
+		_onInteractionEndedEvent.OnEventRaised -= InteractionEnded;
+
+		for (int i = 0; i < _availableItemSlots.Count; i++)
+		{
+			_availableItemSlots[i].ItemSelected -= InspectItem;
+		}
+
+		_inputReader.TabSwitched -= OnSwitchTab;
+	}
 	/* public UnityAction Closed;
 
 	[SerializeField] private InputReader _inputReader = default;
