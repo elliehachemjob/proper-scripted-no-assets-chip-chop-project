@@ -57,6 +57,48 @@ private InventoryTabSO _selectedTab = default;
 
 		_inputReader.TabSwitched -= OnSwitchTab;
 	}
+	private void OnSwitchTab(float orientation)
+	{
+		if (orientation != 0)
+		{
+			bool isLeft = orientation < 0;
+			int initialIndex = _tabTypesList.FindIndex(o => o == _selectedTab);
+			if (initialIndex != -1)
+			{
+				if (isLeft)
+				{
+					initialIndex--;
+				}
+				else
+				{
+					initialIndex++;
+				}
+
+				initialIndex = Mathf.Clamp(initialIndex, 0, _tabTypesList.Count - 1);
+			}
+
+			OnChangeTab(_tabTypesList[initialIndex]);
+		}
+	}
+
+	public void FillInventory(InventoryTabType _selectedTabType = InventoryTabType.CookingItem, bool isNearPot = false)
+	{
+		_isNearPot = isNearPot;
+
+		if ((_tabTypesList.Exists(o => o.TabType == _selectedTabType)))
+		{
+			_selectedTab = _tabTypesList.Find(o => o.TabType == _selectedTabType);
+		}
+		else
+		{
+			if (_tabTypesList != null)
+			{
+				if (_tabTypesList.Count > 0)
+				{
+					_selectedTab = _tabTypesList[0];
+				}
+			}
+		}
 	/* public UnityAction Closed;
 
 	[SerializeField] private InputReader _inputReader = default;
