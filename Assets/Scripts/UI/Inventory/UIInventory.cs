@@ -99,6 +99,65 @@ private InventoryTabSO _selectedTab = default;
 				}
 			}
 		}
+		if (_selectedTab != null)
+		{
+			SetTabs(_tabTypesList, _selectedTab);
+			List<ItemStack> listItemsToShow = new List<ItemStack>();
+			listItemsToShow = _currentInventory.Items.FindAll(o => o.Item.ItemType.TabType == _selectedTab);
+
+			FillInvetoryItems(listItemsToShow);
+		}
+		else
+		{
+			Debug.LogError("There's no selected tab");
+		}
+	}
+
+	void InteractionEnded()
+	{
+		_isNearPot = false;
+	}
+
+	void SetTabs(List<InventoryTabSO> typesList, InventoryTabSO selectedType)
+	{
+		_tabsPanel.SetTabs(typesList, selectedType);
+	}
+
+	void FillInvetoryItems(List<ItemStack> listItemsToShow)
+	{
+		if (_availableItemSlots == null)
+			_availableItemSlots = new List<UIInventoryItem>();
+
+		int maxCount = Mathf.Max(listItemsToShow.Count, _availableItemSlots.Count);
+
+		for (int i = 0; i < maxCount; i++)
+		{
+			if (i < listItemsToShow.Count)
+			{
+				bool isSelected = selectedItemId == i;
+				_availableItemSlots[i].SetItem(listItemsToShow[i], isSelected);
+
+			}
+			else if (i < _availableItemSlots.Count)
+			{
+				_availableItemSlots[i].SetInactiveItem();
+			}
+
+		}
+
+		HideItemInformation();
+
+		if (selectedItemId >= 0)
+		{
+			UnselectItem(selectedItemId);
+			selectedItemId = -1;
+		}
+		if (_availableItemSlots.Count > 0)
+		{
+			_availableItemSlots[0].SelectFirstElement();
+		}
+	}
+
 	/* public UnityAction Closed;
 
 	[SerializeField] private InputReader _inputReader = default;
