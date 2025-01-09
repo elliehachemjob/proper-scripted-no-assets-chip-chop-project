@@ -158,6 +158,48 @@ private InventoryTabSO _selectedTab = default;
 		}
 	}
 
+	void UpdateItemInInventory(ItemStack itemToUpdate, bool removeItem)
+	{
+		if (_availableItemSlots == null)
+			_availableItemSlots = new List<UIInventoryItem>();
+
+		if (removeItem)
+		{
+			if (_availableItemSlots.Exists(o => o.currentItem == itemToUpdate))
+			{
+
+				int index = _availableItemSlots.FindIndex(o => o.currentItem == itemToUpdate);
+				_availableItemSlots[index].SetInactiveItem();
+			}
+		}
+		else
+		{
+			int index = 0;
+
+			//if the item has already been created
+			if (_availableItemSlots.Exists(o => o.currentItem == itemToUpdate))
+			{
+				index = _availableItemSlots.FindIndex(o => o.currentItem == itemToUpdate);
+			}
+			//if the item needs to be created
+			else
+			{
+				//if the new item needs to be instantiated
+				if (_currentInventory.Items.Count > _availableItemSlots.Count)
+				{
+					UIInventoryItem instantiatedPrefab = Instantiate(_itemPrefab, _contentParent.transform) as UIInventoryItem;
+					_availableItemSlots.Add(instantiatedPrefab);
+				}
+
+				//find the last instantiated game object not used
+				index = _currentInventory.Items.Count;
+			}
+
+			bool isSelected = selectedItemId == index;
+			_availableItemSlots[index].SetItem(itemToUpdate, isSelected);
+		}
+	}
+
 	/* public UnityAction Closed;
 
 	[SerializeField] private InputReader _inputReader = default;
