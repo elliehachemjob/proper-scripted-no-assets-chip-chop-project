@@ -199,6 +199,122 @@ private InventoryTabSO _selectedTab = default;
 			_availableItemSlots[index].SetItem(itemToUpdate, isSelected);
 		}
 	}
+	public void InspectItem(ItemSO itemToInspect)
+	{
+		if (_availableItemSlots.Exists(o => o.currentItem.Item == itemToInspect))
+		{
+			int itemIndex = _availableItemSlots.FindIndex(o => o.currentItem.Item == itemToInspect);
+
+			//unselect selected Item
+			if (selectedItemId >= 0 && selectedItemId != itemIndex)
+				UnselectItem(selectedItemId);
+
+			//change Selected ID 
+			selectedItemId = itemIndex;
+
+			//show Information
+			ShowItemInformation(itemToInspect);
+
+			//check if interactable
+			bool isInteractable = true;
+			_actionButton.gameObject.SetActive(true);
+			_errorPotMessage.SetActive(false);
+			if (itemToInspect.ItemType.ActionType == ItemInventoryActionType.Cook)
+			{
+				isInteractable = _currentInventory.hasIngredients(itemToInspect.IngredientsList) && _isNearPot;
+				_errorPotMessage.SetActive(!_isNearPot);
+			}
+			else if (itemToInspect.ItemType.ActionType == ItemInventoryActionType.DoNothing)
+			{
+				isInteractable = false;
+				_actionButton.gameObject.SetActive(false);
+			}
+
+			//set button
+			_actionButton.FillInventoryButton(itemToInspect.ItemType, isInteractable);
+		}
+	}
+
+	void ShowItemInformation(ItemSO item)
+	{
+		bool[] availabilityArray = _currentInventory.IngredientsAvailability(item.IngredientsList);
+
+		_inspectorPanel.FillInspector(item, availabilityArray);
+		_inspectorPanel.gameObject.SetActive(true);
+	}
+
+	void HideItemInformation()
+	{
+		_actionButton.gameObject.SetActive(false);
+		_inspectorPanel.gameObject.SetActive(false);
+	}
+
+	void UnselectItem(int itemIndex)
+	{
+		if (_availableItemSlots.Count > itemIndex)
+		{
+			_availableItemSlots[itemIndex].UnselectItem();
+		}
+	}
+
+	void UpdateInventory()
+	{
+		FillInventory(_selectedTab.TabType, _isNearPot);
+	}
+
+	void OnActionButtonClicked()
+	{
+		//find the selected Item
+		if (_availableItemSlots.Count > selectedItemId
+			&& selectedItemId > -1)
+		{
+			ItemSO itemToActOn = ScriptableObject.CreateInstance<ItemSO>();
+			itemToActOn = _availableItemSlots[selectedItemId].currentItem.Item;
+
+			//check the selected Item type
+			//call action function depending on the itemType
+			switch (itemToActOn.ItemType.ActionType)
+			{
+				case ItemInventoryActionType.Cook:
+					CookRecipe(itemToActOn);
+					break;
+				case ItemInventoryActionType.Use:
+					UseItem(itemToActOn);
+					break;
+				case ItemInventoryActionType.Equip:
+					EquipItem(itemToActOn);
+					break;
+				default:
+
+					break;
+			}
+		}
+	}
+
+	void UseItem(ItemSO itemToUse)
+	{
+		if (itemToUse.HealthResorationValue > 0)
+		{ _restoreHealth.RaiseEvent(itemToUse.HealthResorationValue); }
+		_useItemEvent.RaiseEvent(itemToUse);
+		UpdateInventory();
+	}
+
+	void EquipItem(ItemSO itemToUse)
+	{
+		Debug.Log("Equip ITEM " + itemToUse.name);
+		_equipItemEvent.RaiseEvent(itemToUse);
+	}
+
+	void CookRecipe(ItemSO recipeToCook)
+	{
+		_cookRecipeEvent.RaiseEvent(recipeToCook);
+
+		//update inspector
+		InspectItem(recipeToCook);
+
+		//update inventory
+		UpdateInventory();
+	}
 
 	/* public UnityAction Closed;
 
