@@ -315,7 +315,15 @@ private InventoryTabSO _selectedTab = default;
 		//update inventory
 		UpdateInventory();
 	}
+void OnChangeTab(InventoryTabSO tabType)
+	{
+		FillInventory(tabType.TabType, _isNearPot);
+	}
 
+	public void CloseInventory()
+	{
+		Closed.Invoke();
+	}
 	/* public UnityAction Closed;
 
 	[SerializeField] private InputReader _inputReader = default;
