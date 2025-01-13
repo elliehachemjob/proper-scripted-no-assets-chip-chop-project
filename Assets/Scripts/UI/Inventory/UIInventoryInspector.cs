@@ -4,6 +4,8 @@ public class UIInventoryInspector : MonoBehaviour
 {
 	[SerializeField] private UIInspectorDescription _inspectorDescription = default;
 	[SerializeField] private UIInspectorIngredients _recipeIngredients = default;
+	/* [SerializeField] private UIInspectorDescription _inspectorDescription = default;
+	[SerializeField] private UIInspectorIngredients _recipeIngredients = default;
 
 	public void FillInspector(ItemSO itemToInspect, bool[] availabilityArray = null)
 	{
@@ -18,5 +20,5 @@ public class UIInventoryInspector : MonoBehaviour
 		}
 		else
 			_recipeIngredients.gameObject.SetActive(false);
-	}
+	}*/
 }
