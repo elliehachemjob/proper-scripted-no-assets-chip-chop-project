@@ -18,6 +18,17 @@ public class UIInventoryItem : MonoBehaviour
 	[SerializeField] private LocalizeSpriteEvent _bgLocalizedImage = default;
 
 	public UnityAction<ItemSO> ItemSelected;
+
+	/* [SerializeField] private TextMeshProUGUI _itemCount = default;
+	[SerializeField] private Image _itemPreviewImage = default;
+	[SerializeField] private Image _bgImage = default;
+	[SerializeField] private Image _imgHover = default;
+	[SerializeField] private Image _imgSelected = default;
+	[SerializeField] private Image _bgInactiveImage = default;
+	[SerializeField] private Button _itemButton = default;
+	[SerializeField] private LocalizeSpriteEvent _bgLocalizedImage = default;
+
+	public UnityAction<ItemSO> ItemSelected;
 	
 	[HideInInspector] public ItemStack currentItem;
 	
@@ -108,5 +119,5 @@ public class UIInventoryItem : MonoBehaviour
 	{
 		_isSelected = false;
 		_imgSelected.gameObject.SetActive(false);
-	}
+	}*/
 }
