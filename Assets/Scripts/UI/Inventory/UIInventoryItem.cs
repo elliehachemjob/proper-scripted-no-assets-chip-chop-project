@@ -19,6 +19,40 @@ public class UIInventoryItem : MonoBehaviour
 
 	public UnityAction<ItemSO> ItemSelected;
 
+	[HideInInspector] public ItemStack currentItem;
+	
+	bool _isSelected = false;
+
+	public void SetItem(ItemStack itemStack, bool isSelected)
+	{
+		_isSelected = isSelected;
+		_itemPreviewImage.gameObject.SetActive(true);
+		_itemCount.gameObject.SetActive(true);
+		_bgImage.gameObject.SetActive(true);
+		_imgHover.gameObject.SetActive(true);
+		_imgSelected.gameObject.SetActive(true);
+		_itemButton.gameObject.SetActive(true);
+		_bgInactiveImage.gameObject.SetActive(false);
+
+		UnhoverItem();
+		currentItem = itemStack;
+
+		_imgSelected.gameObject.SetActive(isSelected);
+
+		if (itemStack.Item.IsLocalized)
+		{
+			_bgLocalizedImage.enabled = true;
+			_bgLocalizedImage.AssetReference = itemStack.Item.LocalizePreviewImage;
+		}
+		else
+		{
+			_bgLocalizedImage.enabled = false;
+			_itemPreviewImage.sprite = itemStack.Item.PreviewImage;
+		}
+		_itemCount.text = itemStack.Amount.ToString();
+		_bgImage.color = itemStack.Item.ItemType.TypeColor;
+	}
+
 	/* [SerializeField] private TextMeshProUGUI _itemCount = default;
 	[SerializeField] private Image _itemPreviewImage = default;
 	[SerializeField] private Image _bgImage = default;
