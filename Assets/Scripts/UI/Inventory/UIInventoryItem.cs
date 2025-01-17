@@ -52,6 +52,57 @@ public class UIInventoryItem : MonoBehaviour
 		_itemCount.text = itemStack.Amount.ToString();
 		_bgImage.color = itemStack.Item.ItemType.TypeColor;
 	}
+		public void SetInactiveItem()
+	{
+		UnhoverItem();
+		currentItem = null;
+		_itemPreviewImage.gameObject.SetActive(false);
+		_itemCount.gameObject.SetActive(false);
+		_bgImage.gameObject.SetActive(false);
+		_imgHover.gameObject.SetActive(false);
+		_imgSelected.gameObject.SetActive(false);
+		_itemButton.gameObject.SetActive(false);
+		_bgInactiveImage.gameObject.SetActive(true);
+	}
+
+	public void SelectFirstElement()
+	{
+		_isSelected = true;
+		_itemButton.Select();
+		SelectItem();
+	}
+
+	private void OnEnable()
+	{
+		if (_isSelected)
+		{ SelectItem(); }
+	}
+
+	public void HoverItem()
+	{
+		_imgHover.gameObject.SetActive(true);
+	}
+
+	public void UnhoverItem()
+	{
+		_imgHover.gameObject.SetActive(false);
+	}
+
+	public void SelectItem()
+	{
+		_isSelected = true;
+		if (ItemSelected != null && currentItem != null && currentItem.Item != null)
+
+		{
+			_imgSelected.gameObject.SetActive(true);
+			ItemSelected.Invoke(currentItem.Item);
+		}
+		else
+		{
+			_imgSelected.gameObject.SetActive(false);
+		}
+	}
+
 
 	/* [SerializeField] private TextMeshProUGUI _itemCount = default;
 	[SerializeField] private Image _itemPreviewImage = default;
