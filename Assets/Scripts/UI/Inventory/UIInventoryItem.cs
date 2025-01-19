@@ -108,6 +108,11 @@ public class UIInventoryItem : MonoBehaviour
 		_imgSelected.gameObject.SetActive(false);
 	}
 
+	public void UnselectItem()
+	{
+		_isSelected = false;
+		_imgSelected.gameObject.SetActive(false);
+	}
 	/* [SerializeField] private TextMeshProUGUI _itemCount = default;
 	[SerializeField] private Image _itemPreviewImage = default;
 	[SerializeField] private Image _bgImage = default;
