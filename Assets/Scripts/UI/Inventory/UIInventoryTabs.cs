@@ -6,7 +6,23 @@ using UnityEngine.UI;
 
 public class UIInventoryTabs : MonoBehaviour
 {
-	[SerializeField] private List<UIInventoryTab> _instantiatedGameObjects;
+		[SerializeField] private List<UIInventoryTab> _instantiatedGameObjects;
+
+	public event UnityAction<InventoryTabSO> TabChanged;
+
+	private bool _canDisableLayout = false;
+
+	public void SetTabs(List<InventoryTabSO> typesList, InventoryTabSO selectedType)
+	{
+		if (_instantiatedGameObjects == null)
+			_instantiatedGameObjects = new List<UIInventoryTab>();
+
+		if (gameObject.GetComponent<VerticalLayoutGroup>() != null)
+			gameObject.GetComponent<VerticalLayoutGroup>().enabled = true;
+
+		int maxCount = Mathf.Max(typesList.Count, _instantiatedGameObjects.Count);
+	}
+	/*[SerializeField] private List<UIInventoryTab> _instantiatedGameObjects;
 
 	public event UnityAction<InventoryTabSO> TabChanged;
 
@@ -95,5 +111,5 @@ public class UIInventoryTabs : MonoBehaviour
 	void ChangeTab(InventoryTabSO newTabType)
 	{
 		TabChanged.Invoke(newTabType);
-	}
+	}*/
 }
