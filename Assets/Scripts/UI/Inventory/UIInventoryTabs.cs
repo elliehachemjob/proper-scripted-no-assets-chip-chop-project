@@ -72,7 +72,28 @@ public class UIInventoryTabs : MonoBehaviour
 			_instantiatedGameObjects[i].UpdateState(isSelected);
 		}
 	}
-	
+	rivate void OnDisable()
+	{
+		for (int i = 0; i < _instantiatedGameObjects.Count; i++)
+		{
+
+			_instantiatedGameObjects[i].TabClicked -= ChangeTab;
+		}
+	}
+
+	private void OnEnable()
+	{
+		if ((gameObject.GetComponent<VerticalLayoutGroup>() != null) && _canDisableLayout)
+		{
+			gameObject.GetComponent<VerticalLayoutGroup>().enabled = false;
+			_canDisableLayout = false;
+		}
+	}
+
+	void ChangeTab(InventoryTabSO newTabType)
+	{
+		TabChanged.Invoke(newTabType);
+	}
 	/*[SerializeField] private List<UIInventoryTab> _instantiatedGameObjects;
 
 	public event UnityAction<InventoryTabSO> TabChanged;
