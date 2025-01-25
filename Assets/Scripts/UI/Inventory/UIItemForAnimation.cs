@@ -11,6 +11,12 @@ public class UIItemForAnimation : MonoBehaviour
 
 	public event UnityAction AnimationEnded;
 
+/* [SerializeField] private LocalizeSpriteEvent _bgLocalizedImage = default;
+	[SerializeField] private Image _itemPreviewImage = default;
+	[SerializeField] private Image _bgImage = default;
+
+	public event UnityAction AnimationEnded;
+
 	public void SetItem(ItemSO item)
 	{
 		if (item.IsLocalized)
@@ -29,5 +35,5 @@ public class UIItemForAnimation : MonoBehaviour
 	public void OnAnimationEnded()
 	{
 		AnimationEnded.Invoke();
-	}
+	}*/
 }
