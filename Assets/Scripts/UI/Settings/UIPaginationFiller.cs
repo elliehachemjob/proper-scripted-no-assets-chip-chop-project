@@ -21,6 +21,37 @@ public class UIPaginationFiller : MonoBehaviour
 	{
 	}
 
+	public void SetPagination(int paginationCount, int selectedPaginationIndex)
+	{
+		if (_instantiatedImages == null)
+			_instantiatedImages = new List<Image>();
+
+		//instanciate pagination images from the prefab
+		int maxCount = Mathf.Max(paginationCount, _instantiatedImages.Count);
+		if (maxCount > 0)
+		{
+			for (int i = 0; i < maxCount; i++)
+			{
+				if (i >= _instantiatedImages.Count)
+				{
+					Image instantiatedImage = Instantiate(_imagePaginationPrefab, _parentPagination);
+					_instantiatedImages.Add(instantiatedImage);
+				}
+
+				if (i < paginationCount)
+				{
+					_instantiatedImages[i].gameObject.SetActive(true);
+
+				}
+				else
+				{
+					_instantiatedImages[i].gameObject.SetActive(false);
+
+				}
+			}
+			SetCurrentPagination(selectedPaginationIndex);
+		}
+
 	/* [SerializeField] private Image _imagePaginationPrefab = default;
 	[SerializeField] private Transform _parentPagination = default;
 
