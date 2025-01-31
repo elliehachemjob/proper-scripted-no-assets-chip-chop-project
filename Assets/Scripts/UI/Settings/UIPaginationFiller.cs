@@ -52,6 +52,38 @@ public class UIPaginationFiller : MonoBehaviour
 			SetCurrentPagination(selectedPaginationIndex);
 		}
 
+		horizontalLayout = GetComponent<HorizontalLayoutGroup>();
+		if (paginationCount < 10)
+		{ horizontalLayout.spacing = maxSpacing; }
+		else if (paginationCount >= 10 && paginationCount < 20)
+		{
+			horizontalLayout.spacing = (maxSpacing - minSpacing) / 2;
+		}
+		else
+		{
+			horizontalLayout.spacing = minSpacing;
+		}
+
+	}
+
+	public void SetCurrentPagination(int selectedPaginationIndex)
+	{
+		if (_instantiatedImages.Count > selectedPaginationIndex)
+			for (int i = 0; i < _instantiatedImages.Count; i++)
+			{
+				if (i == selectedPaginationIndex)
+				{
+					_instantiatedImages[i].sprite = _filledPagination;
+
+				}
+				else
+				{
+					_instantiatedImages[i].sprite = _emptyPagination;
+				}
+			}
+		else
+			Debug.LogError("Error in pagination number");
+	}
 	/* [SerializeField] private Image _imagePaginationPrefab = default;
 	[SerializeField] private Transform _parentPagination = default;
 
