@@ -5,7 +5,37 @@ using UnityEngine.UI;
 using UnityEngine.Serialization;
 public class UISetButtonNavigation : MonoBehaviour
 {
-	[FormerlySerializedAs("genericButtons")]
+		[FormerlySerializedAs("genericButtons")]
+	UIGenericButton[] _genericButtons = default;
+	[FormerlySerializedAs("listSettingItems")]
+	UISettingItemFiller[] _listSettingItems = default;
+	private void OnEnable()
+	{
+		if (_listSettingItems == null)
+		{
+			_listSettingItems = GetComponentsInChildren<UISettingItemFiller>();
+		}
+		if (_listSettingItems.Length > 0)
+			if (_listSettingItems[0].GetComponent<MultiInputButton>() != null)
+				//select first item
+				_listSettingItems[0].GetComponent<MultiInputButton>().Select();
+	}
+	private void Start()
+	{
+		_listSettingItems = GetComponentsInChildren<UISettingItemFiller>();
+		_genericButtons = GetComponentsInChildren<UIGenericButton>();
+		MultiInputButton buttonToSelectOnDown = default;
+		MultiInputButton buttonToSelectOnUp = default;
+		for (int i = 0; i < _listSettingItems.Length; i++)
+		{
+			Navigation newNavigation = new Navigation();
+
+			newNavigation.mode = Navigation.Mode.Explicit;
+
+			newNavigation.selectOnLeft = _listSettingItems[i].gameObject.GetComponent<MultiInputButton>().navigation.selectOnLeft;
+			newNavigation.selectOnRight = _listSettingItems[i].gameObject.GetComponent<MultiInputButton>().navigation.selectOnRight;
+			
+	/* [FormerlySerializedAs("genericButtons")]
 	UIGenericButton[] _genericButtons = default;
 	[FormerlySerializedAs("listSettingItems")]
 	UISettingItemFiller[] _listSettingItems = default;
@@ -72,5 +102,5 @@ public class UISetButtonNavigation : MonoBehaviour
 
 		}
 
-	}
+	}*/
 }
