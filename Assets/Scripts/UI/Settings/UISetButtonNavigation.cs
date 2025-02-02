@@ -35,6 +35,44 @@ public class UISetButtonNavigation : MonoBehaviour
 			newNavigation.selectOnLeft = _listSettingItems[i].gameObject.GetComponent<MultiInputButton>().navigation.selectOnLeft;
 			newNavigation.selectOnRight = _listSettingItems[i].gameObject.GetComponent<MultiInputButton>().navigation.selectOnRight;
 			
+			if (i + 1 < _listSettingItems.Length)
+			{
+				buttonToSelectOnDown = _listSettingItems[i + 1].gameObject.GetComponent<MultiInputButton>();
+
+			}
+			else if (_genericButtons.Length > 0)
+			{
+
+				buttonToSelectOnDown = _genericButtons[0].gameObject.GetComponent<MultiInputButton>();
+				SetGenericButtonsNavigations(_listSettingItems[i].gameObject.GetComponent<MultiInputButton>());
+			}
+
+			if (i - 1 >= 0)
+				buttonToSelectOnUp = _listSettingItems[i - 1].gameObject.GetComponent<MultiInputButton>();
+
+			newNavigation.selectOnDown = buttonToSelectOnDown;
+			newNavigation.selectOnUp = buttonToSelectOnUp;
+			_listSettingItems[i].gameObject.GetComponent<MultiInputButton>().navigation = newNavigation;
+			_listSettingItems[i].SetNavigation(buttonToSelectOnDown, buttonToSelectOnUp);
+		}
+	}
+	void SetGenericButtonsNavigations(MultiInputButton itemUp)
+	{
+		for (int i = 0; i < _genericButtons.Length; i++)
+		{
+			Navigation newNavigation = new Navigation();
+			newNavigation.mode = Navigation.Mode.Explicit;
+			if (i + 1 < _genericButtons.Length)
+				newNavigation.selectOnRight = _genericButtons[i + 1].gameObject.GetComponent<MultiInputButton>();
+			if (i - 1 > 0)
+				newNavigation.selectOnLeft = _genericButtons[i - 1].gameObject.GetComponent<MultiInputButton>();
+
+			newNavigation.selectOnUp = itemUp;
+
+
+		}
+
+	}
 	/* [FormerlySerializedAs("genericButtons")]
 	UIGenericButton[] _genericButtons = default;
 	[FormerlySerializedAs("listSettingItems")]
