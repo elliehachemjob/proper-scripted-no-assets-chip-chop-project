@@ -75,6 +75,18 @@ public class UISettingFieldsFiller : MonoBehaviour
 
 
 	}
+	int IsFullscreen()
+	{
+		if (Screen.fullScreen)
+		{
+			return 0;
+		}
+		else
+		{
+			return 1;
+		}
+
+	}
 	/*[SerializeField] private UISettingItemFiller[] _settingfieldsList = default;
 
 	public void FillFields(List<SettingField> settingItems)
