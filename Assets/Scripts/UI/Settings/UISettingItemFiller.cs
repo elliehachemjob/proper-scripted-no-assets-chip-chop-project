@@ -22,6 +22,22 @@ public class UISettingItemFiller : MonoBehaviour
 	public event UnityAction OnNextOption = delegate { };
 	public event UnityAction OnPreviousOption = delegate { };
 
+	/*[SerializeField] private SettingFieldType _fieldType = default;
+	[SerializeField] private UIPaginationFiller _pagination = default;
+	[SerializeField] private LocalizeStringEvent _currentSelectedOption_LocalizedEvent = default;
+	[SerializeField] private LocalizeStringEvent _title = default;
+	[SerializeField] private TextMeshProUGUI _currentSelectedOption_Text = default;
+	[SerializeField] private Image _bg = default;
+	[SerializeField] private Color _colorSelected = default;
+	[SerializeField] private Color _colorUnselected = default;
+	[SerializeField] private Sprite _bgSelected = default;
+	[SerializeField] private Sprite _bgUnselected = default;
+	[SerializeField] private MultiInputButton _buttonNext = default;
+	[SerializeField] private MultiInputButton _buttonPrevious = default;
+
+	public event UnityAction OnNextOption = delegate { };
+	public event UnityAction OnPreviousOption = delegate { };
+
 	public void FillSettingField_Localized(int paginationCount, int selectedPaginationIndex, string selectedOption)
 	{
 		_pagination.SetPagination(paginationCount, selectedPaginationIndex);
@@ -85,5 +101,5 @@ public class UISettingItemFiller : MonoBehaviour
 			newNavigation.selectOnRight = button.navigation.selectOnRight;
 			button.navigation = newNavigation;
 		}
-	}
+	}*/
 }
