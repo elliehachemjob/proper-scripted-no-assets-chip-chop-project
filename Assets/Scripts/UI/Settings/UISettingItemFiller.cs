@@ -21,6 +21,35 @@ public class UISettingItemFiller : MonoBehaviour
 
 	public event UnityAction OnNextOption = delegate { };
 	public event UnityAction OnPreviousOption = delegate { };
+	public void FillSettingField_Localized(int paginationCount, int selectedPaginationIndex, string selectedOption)
+	{
+		_pagination.SetPagination(paginationCount, selectedPaginationIndex);
+		_title.StringReference.TableEntryReference = _fieldType.ToString(); // Set title following the Field Type. Field type is the Table Reference
+		_currentSelectedOption_LocalizedEvent.StringReference.TableEntryReference = _fieldType + "_" + selectedOption;
+
+		_currentSelectedOption_LocalizedEvent.enabled = true;
+
+		_buttonNext.interactable = (selectedPaginationIndex < paginationCount - 1);
+		_buttonPrevious.interactable = (selectedPaginationIndex > 0);
+	}
+	
+	public void FillSettingField(int paginationCount, int selectedPaginationIndex, string selectedOption_int)
+	{
+		_pagination.SetPagination(paginationCount, selectedPaginationIndex);
+		_title.StringReference.TableEntryReference = _fieldType.ToString(); // Set title following the Field Type. Field type is the Table Reference
+		_currentSelectedOption_LocalizedEvent.enabled = false;
+		_currentSelectedOption_Text.text = selectedOption_int.ToString();
+
+		_buttonNext.interactable = (selectedPaginationIndex < paginationCount - 1);
+		_buttonPrevious.interactable = (selectedPaginationIndex > 0);
+	}
+
+	public void SelectItem()
+	{
+		_bg.sprite = _bgSelected;
+		_title.GetComponent<TextMeshProUGUI>().color = _colorSelected;
+		_currentSelectedOption_Text.color = _colorSelected;
+	}
 
 	/*[SerializeField] private SettingFieldType _fieldType = default;
 	[SerializeField] private UIPaginationFiller _pagination = default;
