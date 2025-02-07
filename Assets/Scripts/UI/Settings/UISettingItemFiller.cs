@@ -50,6 +50,23 @@ public class UISettingItemFiller : MonoBehaviour
 		_title.GetComponent<TextMeshProUGUI>().color = _colorSelected;
 		_currentSelectedOption_Text.color = _colorSelected;
 	}
+public void UnselectItem()
+	{
+		_bg.sprite = _bgUnselected;
+
+		_title.GetComponent<TextMeshProUGUI>().color = _colorUnselected;
+		_currentSelectedOption_Text.color = _colorUnselected;
+	}
+
+	public void NextOption()
+	{
+		OnNextOption.Invoke();
+	}
+
+	public void PreviousOption()
+	{
+		OnPreviousOption.Invoke();
+	}
 
 	/*[SerializeField] private SettingFieldType _fieldType = default;
 	[SerializeField] private UIPaginationFiller _pagination = default;
