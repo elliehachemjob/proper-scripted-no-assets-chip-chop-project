@@ -67,7 +67,22 @@ public void UnselectItem()
 	{
 		OnPreviousOption.Invoke();
 	}
-
+	public void SetNavigation(MultiInputButton buttonToSelectOnDown, MultiInputButton buttonToSelectOnUp)
+	{
+		MultiInputButton[] buttonNavigation = GetComponentsInChildren<MultiInputButton>();
+		foreach (MultiInputButton button in buttonNavigation)
+		{
+			Navigation newNavigation = new Navigation();
+			newNavigation.mode = Navigation.Mode.Explicit;
+			if (buttonToSelectOnDown != null)
+				newNavigation.selectOnDown = buttonToSelectOnDown;
+			if (buttonToSelectOnDown != null)
+				newNavigation.selectOnUp = buttonToSelectOnUp;
+			newNavigation.selectOnLeft = button.navigation.selectOnLeft;
+			newNavigation.selectOnRight = button.navigation.selectOnRight;
+			button.navigation = newNavigation;
+		}
+	}
 	/*[SerializeField] private SettingFieldType _fieldType = default;
 	[SerializeField] private UIPaginationFiller _pagination = default;
 	[SerializeField] private LocalizeStringEvent _currentSelectedOption_LocalizedEvent = default;
