@@ -8,7 +8,32 @@ using UnityEngine.UI;
 [System.Serializable]
 public enum SettingFieldType
 {
-	Language,
+		Language,
+	Volume_SFx,
+	Volume_Music,
+	Resolution,
+	FullScreen,
+	ShadowDistance,
+	AntiAliasing,
+	ShadowQuality,
+	Volume_Master,
+
+}
+[System.Serializable]
+public class SettingTab
+{
+	public SettingsType settingTabsType;
+	public LocalizedString title;
+}
+
+[System.Serializable]
+public class SettingField
+{
+	public SettingsType settingTabsType;
+	public SettingFieldType settingFieldType;
+	public LocalizedString title;
+}
+	/*Language,
 	Volume_SFx,
 	Volume_Music,
 	Resolution,
@@ -146,6 +171,5 @@ public class UISettingsController : MonoBehaviour
 		_currentSettings.SaveAudioSettings(musicVolume, sfxVolume, masterVolume);
 
 		SaveSettingsEvent.RaiseEvent();
-	}
-
+	}*/
 }
