@@ -33,6 +33,53 @@ public class SettingField
 	public SettingFieldType settingFieldType;
 	public LocalizedString title;
 }
+public enum SettingsType
+{
+	Language,
+	Graphics,
+	Audio,
+}
+public class UISettingsController : MonoBehaviour
+{
+	[SerializeField] private UISettingsLanguageComponent _languageComponent;
+	[SerializeField] private UISettingsGraphicsComponent _graphicsComponent;
+	[SerializeField] private UISettingsAudioComponent _audioComponent;
+	[SerializeField] private UISettingTabsFiller _settingTabFiller = default;
+	[SerializeField] private SettingsSO _currentSettings = default;
+	[SerializeField] private List<SettingsType> _settingTabsList = new List<SettingsType>();
+	private SettingsType _selectedTab = SettingsType.Audio;
+	[SerializeField] private InputReader _inputReader = default;
+	[SerializeField] private VoidEventChannelSO SaveSettingsEvent = default;
+	public UnityAction Closed;
+	private void OnEnable()
+	{
+		_languageComponent._save += SaveLaguageSettings;
+		_audioComponent._save += SaveAudioSettings;
+		_graphicsComponent._save += SaveGraphicsSettings;
+
+		_inputReader.MenuCloseEvent += CloseScreen;
+		_inputReader.TabSwitched += SwitchTab;
+
+		_settingTabFiller.FillTabs(_settingTabsList);
+		_settingTabFiller.ChooseTab += OpenSetting;
+
+		OpenSetting(SettingsType.Audio);
+
+	}
+	private void OnDisable()
+	{
+		_inputReader.MenuCloseEvent -= CloseScreen;
+		_inputReader.TabSwitched -= SwitchTab;
+
+		_languageComponent._save -= SaveLaguageSettings;
+		_audioComponent._save -= SaveAudioSettings;
+		_graphicsComponent._save -= SaveGraphicsSettings;
+	}
+	public void CloseScreen()
+	{
+		Closed.Invoke();
+	}
+
 	/*Language,
 	Volume_SFx,
 	Volume_Music,
