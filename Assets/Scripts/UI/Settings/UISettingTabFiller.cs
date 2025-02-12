@@ -24,6 +24,24 @@ public class UISettingTabFiller : MonoBehaviour
 		else
 		{ UnselectTab(); }
 	}
+/*	[SerializeField] private LocalizeStringEvent _localizedTabTitle;
+	[SerializeField] private Image _bgSelectedTab;
+	[SerializeField] private Color _colorSelectedTab;
+	[SerializeField] private Color _colorUnselectedTab;
+
+	SettingsType _currentTabType;
+
+	public UnityAction<SettingsType> Clicked;
+
+	public void SetTab(SettingsType settingTab, bool isSelected)
+	{
+		_localizedTabTitle.StringReference.TableEntryReference = settingTab.ToString();
+		_currentTabType = settingTab;
+		if (isSelected)
+		{ SelectTab(); }
+		else
+		{ UnselectTab(); }
+	}
 	public void SetTab(SettingsType tabType)
 	{
 		bool isSelected = (_currentTabType == tabType);
@@ -48,5 +66,5 @@ public class UISettingTabFiller : MonoBehaviour
 	{
 		Clicked.Invoke(_currentTabType);
 
-	}
+	}*/
 }
