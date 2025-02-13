@@ -24,6 +24,27 @@ public class UISettingTabFiller : MonoBehaviour
 		else
 		{ UnselectTab(); }
 	}
+public void SetTab(SettingsType tabType)
+	{
+		bool isSelected = (_currentTabType == tabType);
+		if (isSelected)
+		{ SelectTab(); }
+		else
+		{ UnselectTab(); }
+	}
+	void SelectTab()
+	{
+		_bgSelectedTab.enabled = true;
+		_localizedTabTitle.GetComponent<TextMeshProUGUI>().color = _colorSelectedTab;
+
+	}
+	void UnselectTab()
+	{
+		_bgSelectedTab.enabled = false;
+		_localizedTabTitle.GetComponent<TextMeshProUGUI>().color = _colorUnselectedTab;
+
+	}
+
 /*	[SerializeField] private LocalizeStringEvent _localizedTabTitle;
 	[SerializeField] private Image _bgSelectedTab;
 	[SerializeField] private Color _colorSelectedTab;
