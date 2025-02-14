@@ -44,7 +44,11 @@ public void SetTab(SettingsType tabType)
 		_localizedTabTitle.GetComponent<TextMeshProUGUI>().color = _colorUnselectedTab;
 
 	}
+	public void Click()
+	{
+		Clicked.Invoke(_currentTabType);
 
+	}
 /*	[SerializeField] private LocalizeStringEvent _localizedTabTitle;
 	[SerializeField] private Image _bgSelectedTab;
 	[SerializeField] private Color _colorSelectedTab;
@@ -83,9 +87,9 @@ public void SetTab(SettingsType tabType)
 		_localizedTabTitle.GetComponent<TextMeshProUGUI>().color = _colorUnselectedTab;
 
 	}
-	public void Click()
+}	public void Click()
 	{
 		Clicked.Invoke(_currentTabType);
 
 	}*/
-}
+
