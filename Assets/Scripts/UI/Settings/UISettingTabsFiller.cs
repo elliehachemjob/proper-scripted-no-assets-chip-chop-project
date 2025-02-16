@@ -24,6 +24,18 @@ public class UISettingTabsFiller : MonoBehaviour
 			_settingTabsList[i].Clicked -= ChangeTab;
 		}
 	}
+	public void SelectTab(SettingsType tabType)
+	{
+		for (int i = 0; i < _settingTabsList.Length; i++)
+		{
+			_settingTabsList[i].SetTab(tabType);
+		}
+
+	}
+	public void ChangeTab(SettingsType tabType)
+	{
+		ChooseTab.Invoke(tabType);
+	}
 /* public UnityAction<SettingsType> ChooseTab;
 	[SerializeField]
 	private UISettingTabFiller[] _settingTabsList = default;
