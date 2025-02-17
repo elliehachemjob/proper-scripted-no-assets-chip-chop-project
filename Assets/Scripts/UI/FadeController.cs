@@ -16,6 +16,18 @@ public class FadeController : MonoBehaviour
 	{
 		_fadeChannelSO.OnEventRaised -= InitiateFade;
 	}
+	/* [SerializeField] private FadeChannelSO _fadeChannelSO;
+	[SerializeField] private Image _imageComponent;
+
+	private void OnEnable()
+	{
+		_fadeChannelSO.OnEventRaised += InitiateFade;
+	}
+
+	private void OnDisable()
+	{
+		_fadeChannelSO.OnEventRaised -= InitiateFade;
+	}
 
 	/// <summary>
 	/// Controls the fade-in and fade-out.
@@ -26,5 +38,5 @@ public class FadeController : MonoBehaviour
 	private void InitiateFade(bool fadeIn, float duration, Color desiredColor)
 	{
 		_imageComponent.DOBlendableColor(desiredColor, duration);
-	}
+	}*/
 }
