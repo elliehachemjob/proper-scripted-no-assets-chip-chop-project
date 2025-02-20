@@ -17,7 +17,10 @@ public class LoadingInterfaceController : MonoBehaviour
 	{
 		_toggleLoadingScreen.OnEventRaised -= ToggleLoadingScreen;
 	}
-
+	private void ToggleLoadingScreen(bool state)
+	{
+		_loadingInterface.SetActive(state);
+	}
 	/* [SerializeField] private GameObject _loadingInterface = default;
 
 	[Header("Listening on")]
