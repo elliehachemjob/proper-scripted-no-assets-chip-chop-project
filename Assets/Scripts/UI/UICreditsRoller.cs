@@ -4,6 +4,17 @@ using System.Collections;
 
 public class UICreditsRoller : MonoBehaviour
 {
+[SerializeField, Tooltip("Set speed of a rolling effect")] private float _speedPreset = 100f; //normal rolling speed
+	[SerializeField, Tooltip("This is actuall speed of rolling")] private float _speed = 100f; //actual speed of rolling
+	[SerializeField] private bool _rollAgain = false;
+
+	[Header("References")]
+	[SerializeField] private InputReader _inputReader = default;
+	[SerializeField] private RectTransform _textCredits = default;
+	[SerializeField] private RectTransform _mask = default;
+
+
+	/*
 	[SerializeField, Tooltip("Set speed of a rolling effect")] private float _speedPreset = 100f; //normal rolling speed
 	[SerializeField, Tooltip("This is actuall speed of rolling")] private float _speed = 100f; //actual speed of rolling
 	[SerializeField] private bool _rollAgain = false;
@@ -84,5 +95,5 @@ public class UICreditsRoller : MonoBehaviour
 		{
 			OnRollingEnded.Invoke();
 		}
-	}
+	}*/
 }
