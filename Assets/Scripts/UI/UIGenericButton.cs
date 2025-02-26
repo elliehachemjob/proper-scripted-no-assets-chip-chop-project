@@ -32,6 +32,23 @@ public class UIGenericButton : MonoBehaviour
 		if (isSelected)
 			SelectButton();
 	}
+		public void SetButton(string tableEntryReference, bool isSelected)
+	{
+		_buttonText.StringReference.TableEntryReference = tableEntryReference;
+
+		if (isSelected)
+			SelectButton();
+	}
+
+	void SelectButton()
+	{
+		_button.Select();
+	}
+
+	public void Click()
+	{
+		Clicked.Invoke();
+	}
 
 	/* [SerializeField] private LocalizeStringEvent _buttonText = default;
 	[SerializeField] private MultiInputButton _button = default;
