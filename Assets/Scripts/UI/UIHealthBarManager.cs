@@ -21,6 +21,25 @@ public class UIHealthBarManager : MonoBehaviour
 		_UIUpdateNeeded.OnEventRaised -= UpdateHeartImages;
 	}
 
+	/* [SerializeField] private HealthSO _protagonistHealth = default; //the HealthBar is watching this object, which is the health of the player
+	[SerializeField] private HealthConfigSO _healthConfig = default;
+	[SerializeField] private UIHeartDisplay[] _heartImages = default;
+
+	[Header("Listening to")]
+	[SerializeField] private VoidEventChannelSO _UIUpdateNeeded = default; //The player's Damageable issues this
+
+	private void OnEnable()
+	{
+		_UIUpdateNeeded.OnEventRaised += UpdateHeartImages;
+		
+		InitializeHealthBar();
+	}
+
+	private void OnDestroy()
+	{
+		_UIUpdateNeeded.OnEventRaised -= UpdateHeartImages;
+	}
+
 	private void InitializeHealthBar()
 	{
 		_protagonistHealth.SetMaxHealth(_healthConfig.InitialHealth);
@@ -52,5 +71,5 @@ public class UIHealthBarManager : MonoBehaviour
 			}
 			_heartImages[i].SetImage(heartPercent);
 		}
-	}
+	}*/
 }
