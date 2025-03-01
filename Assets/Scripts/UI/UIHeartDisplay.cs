@@ -20,6 +20,23 @@ public class UIHeartDisplay : MonoBehaviour
 		_combatStateEvent.OnEventRaised -= OnCombatState;
 	}
 
+	/* [SerializeField] Image _slidingImage = default;
+	[SerializeField] Image _combatBackgroundImage = default;
+	[SerializeField] Image _backgroundImage = default;
+
+	[Header("Listening on")]
+	[SerializeField] BoolEventChannelSO _combatStateEvent = default;
+
+	private void OnEnable()
+	{
+		_combatStateEvent.OnEventRaised += OnCombatState;
+	}
+
+	private void OnDisable()
+	{
+		_combatStateEvent.OnEventRaised -= OnCombatState;
+	}
+
 	public void SetImage(float percent)
 	{
 		_slidingImage.fillAmount = percent;
@@ -36,5 +53,5 @@ public class UIHeartDisplay : MonoBehaviour
 	private void OnCombatState(bool isCombat)
 	{
 		_combatBackgroundImage.gameObject.SetActive(isCombat);
-	}
+	}*/
 }
