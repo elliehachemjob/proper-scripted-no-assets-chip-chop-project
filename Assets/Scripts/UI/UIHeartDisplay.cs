@@ -20,6 +20,23 @@ public class UIHeartDisplay : MonoBehaviour
 		_combatStateEvent.OnEventRaised -= OnCombatState;
 	}
 
+public void SetImage(float percent)
+	{
+		_slidingImage.fillAmount = percent;
+		if (percent == 0f)
+		{
+			_backgroundImage.color = new Color(_backgroundImage.color.r, _backgroundImage.color.g, _backgroundImage.color.b, 0.5f);
+		}
+		else
+		{
+			_backgroundImage.color = new Color(_backgroundImage.color.r, _backgroundImage.color.g, _backgroundImage.color.b, 1f);
+		}
+	}
+
+	private void OnCombatState(bool isCombat)
+	{
+		_combatBackgroundImage.gameObject.SetActive(isCombat);
+	}
 	/* [SerializeField] Image _slidingImage = default;
 	[SerializeField] Image _combatBackgroundImage = default;
 	[SerializeField] Image _backgroundImage = default;
