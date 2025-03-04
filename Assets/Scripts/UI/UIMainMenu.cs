@@ -4,7 +4,15 @@ using UnityEngine.UI;
 
 public class UIMainMenu : MonoBehaviour
 {
-	[SerializeField] private Button _continueButton = default;
+		[SerializeField] private Button _continueButton = default;
+	[SerializeField] private Button _NewGameButton = default;
+
+	public UnityAction NewGameButtonAction;
+	public UnityAction ContinueButtonAction;
+	public UnityAction SettingsButtonAction;
+	public UnityAction CreditsButtonAction;
+	public UnityAction ExitButtonAction;
+/* 	[SerializeField] private Button _continueButton = default;
 	[SerializeField] private Button _NewGameButton = default;
 
 	public UnityAction NewGameButtonAction;
@@ -49,5 +57,5 @@ public class UIMainMenu : MonoBehaviour
 	public void ExitButton()
 	{
 		ExitButtonAction.Invoke();
-	}
+	}*/
 }
