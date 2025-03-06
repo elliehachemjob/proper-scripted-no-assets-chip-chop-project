@@ -39,7 +39,15 @@ public class UIMainMenu : MonoBehaviour
 	{
 		SettingsButtonAction.Invoke();
 	}
+public void CreditsButton()
+	{
+		CreditsButtonAction.Invoke();
+	}
 
+	public void ExitButton()
+	{
+		ExitButtonAction.Invoke();
+	}
 /* 	[SerializeField] private Button _continueButton = default;
 	[SerializeField] private Button _NewGameButton = default;
 
