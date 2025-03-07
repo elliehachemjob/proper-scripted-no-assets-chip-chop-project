@@ -23,6 +23,23 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private InputReader _inputReader = default;
 	[SerializeField] private ActorSO _mainProtagonist = default;
 
+	/* [Header("Scene UI")]
+	[SerializeField] private MenuSelectionHandler _selectionHandler = default;
+	[SerializeField] private UIPopup _popupPanel = default;
+	[SerializeField] private UIDialogueManager _dialogueController = default;
+	[SerializeField] private UIInventory _inventoryPanel = default;
+	[SerializeField] private UIInteraction _interactionPanel = default;
+	[SerializeField] private GameObject _switchTabDisplay = default;
+	[SerializeField] private UIItemForAnimation _cookingAnimation = default;
+	[SerializeField] private UIPause _pauseScreen = default;
+	[SerializeField] private UISettingsController _settingScreen = default;
+
+	[Header("Gameplay")]
+	[SerializeField] private GameStateSO _gameStateManager = default;
+	[SerializeField] private MenuSO _mainMenu = default;
+	[SerializeField] private InputReader _inputReader = default;
+	[SerializeField] private ActorSO _mainProtagonist = default;
+
 	[Header("Listening on")]
 	[SerializeField] private VoidEventChannelSO _onSceneReady = default;
 
@@ -290,5 +307,5 @@ public class UIManager : MonoBehaviour
 	{
 		_cookingAnimation.AnimationEnded -= StopCookingAnimation;
 		_cookingAnimation.gameObject.SetActive(false);
-	}
+	}*/
 }
