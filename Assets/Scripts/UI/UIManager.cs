@@ -22,6 +22,38 @@ public class UIManager : MonoBehaviour
 	[SerializeField] private MenuSO _mainMenu = default;
 	[SerializeField] private InputReader _inputReader = default;
 	[SerializeField] private ActorSO _mainProtagonist = default;
+	[Header("Listening on")]
+	[SerializeField] private VoidEventChannelSO _onSceneReady = default;
+
+	[Header("Dialogue Events")]
+	[SerializeField] private DialogueLineChannelSO _openUIDialogueEvent = default;
+	[SerializeField] private IntEventChannelSO _closeUIDialogueEvent = default;
+
+	[Header("Inventory Events")]
+	[SerializeField] private VoidEventChannelSO _openInventoryScreenForCookingEvent = default;
+	[SerializeField] private ItemEventChannelSO _cookRecipeEvent = default;
+
+	[Header("Interaction Events")]
+	[SerializeField] private InteractionUIEventChannelSO _setInteractionEvent = default;
+
+	[Header("Broadcasting on ")]
+	[SerializeField] private LoadEventChannelSO _loadMenuEvent = default;
+	[SerializeField] private VoidEventChannelSO _onInteractionEndedEvent = default;
+
+	bool isForCooking = false;
+
+	private void OnEnable()
+	{
+		_onSceneReady.OnEventRaised += ResetUI;
+		_openUIDialogueEvent.OnEventRaised += OpenUIDialogue;
+		_closeUIDialogueEvent.OnEventRaised += CloseUIDialogue;
+		_inputReader.MenuPauseEvent += OpenUIPause; // subscription to open Pause UI event happens in OnEnabled, but the close Event is only subscribed to when the popup is open
+		_openInventoryScreenForCookingEvent.OnEventRaised += SetInventoryScreenForCooking;
+		_setInteractionEvent.OnEventRaised += SetInteractionPanel;
+		_inputReader.OpenInventoryEvent += SetInventoryScreen;
+		_inventoryPanel.Closed += CloseInventoryScreen;
+		_cookRecipeEvent.OnEventRaised += PlayCookingAnimation;
+	}
 
 	/* [Header("Scene UI")]
 	[SerializeField] private MenuSelectionHandler _selectionHandler = default;
