@@ -54,7 +54,45 @@ public class UIManager : MonoBehaviour
 		_inventoryPanel.Closed += CloseInventoryScreen;
 		_cookRecipeEvent.OnEventRaised += PlayCookingAnimation;
 	}
+private void OnDisable()
+	{
+		_onSceneReady.OnEventRaised -= ResetUI;
+		_openUIDialogueEvent.OnEventRaised -= OpenUIDialogue;
+		_closeUIDialogueEvent.OnEventRaised -= CloseUIDialogue;
+		_inputReader.MenuPauseEvent -= OpenUIPause;
+		_openInventoryScreenForCookingEvent.OnEventRaised -= SetInventoryScreenForCooking;
+		_setInteractionEvent.OnEventRaised -= SetInteractionPanel;
+		_inputReader.OpenInventoryEvent -= SetInventoryScreen;
+		_inventoryPanel.Closed -= CloseInventoryScreen;
+		_cookRecipeEvent.OnEventRaised -= PlayCookingAnimation;
+	}
 
+	void ResetUI()
+	{
+		_dialogueController.gameObject.SetActive(false);
+		_inventoryPanel.gameObject.SetActive(false);
+		_pauseScreen.gameObject.SetActive(false);
+		_interactionPanel.gameObject.SetActive(false);
+		_switchTabDisplay.SetActive(false);
+		_cookingAnimation.gameObject.SetActive(false);
+
+		Time.timeScale = 1;
+	}
+
+	void OpenUIDialogue(LocalizedString dialogueLine, ActorSO actor)
+	{
+		bool isProtagonistTalking = (actor == _mainProtagonist);
+		_dialogueController.SetDialogue(dialogueLine, actor, isProtagonistTalking);
+		_interactionPanel.gameObject.SetActive(false);
+		_dialogueController.gameObject.SetActive(true);
+	}
+
+	void CloseUIDialogue(int dialogueType)
+	{
+		_selectionHandler.Unselect();
+		_dialogueController.gameObject.SetActive(false);
+		_onInteractionEndedEvent.RaiseEvent();
+	}
 	/* [Header("Scene UI")]
 	[SerializeField] private MenuSelectionHandler _selectionHandler = default;
 	[SerializeField] private UIPopup _popupPanel = default;
