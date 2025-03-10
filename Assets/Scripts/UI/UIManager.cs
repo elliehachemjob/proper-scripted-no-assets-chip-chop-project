@@ -93,6 +93,44 @@ private void OnDisable()
 		_dialogueController.gameObject.SetActive(false);
 		_onInteractionEndedEvent.RaiseEvent();
 	}
+oid OpenUIPause()
+	{
+		_inputReader.MenuPauseEvent -= OpenUIPause; // you can open UI pause menu again, if it's closed
+
+		Time.timeScale = 0; // Pause time
+
+		_pauseScreen.SettingsScreenOpened += OpenSettingScreen;//once the UI Pause popup is open, listen to open Settings 
+		_pauseScreen.BackToMainRequested += ShowBackToMenuConfirmationPopup;//once the UI Pause popup is open, listen to back to menu button
+		_pauseScreen.Resumed += CloseUIPause;//once the UI Pause popup is open, listen to unpause event
+
+		_pauseScreen.gameObject.SetActive(true);
+
+		_inputReader.EnableMenuInput();
+		_gameStateManager.UpdateGameState(GameState.Pause);
+	}
+
+	void CloseUIPause()
+	{
+		Time.timeScale = 1; // unpause time
+
+		_inputReader.MenuPauseEvent += OpenUIPause; // you can open UI pause menu again, if it's closed
+
+		// once the popup is closed, you can't listen to the following events 
+		_pauseScreen.SettingsScreenOpened -= OpenSettingScreen;//once the UI Pause popup is open, listen to open Settings 
+		_pauseScreen.BackToMainRequested -= ShowBackToMenuConfirmationPopup;//once the UI Pause popup is open, listen to back to menu button
+		_pauseScreen.Resumed -= CloseUIPause;//once the UI Pause popup is open, listen to unpause event
+
+		_pauseScreen.gameObject.SetActive(false);
+
+		_gameStateManager.ResetToPreviousGameState();
+		
+		if (_gameStateManager.CurrentGameState == GameState.Gameplay
+			|| _gameStateManager.CurrentGameState == GameState.Combat)
+			{
+				_inputReader.EnableGameplayInput();
+			}
+
+
 	/* [Header("Scene UI")]
 	[SerializeField] private MenuSelectionHandler _selectionHandler = default;
 	[SerializeField] private UIPopup _popupPanel = default;
