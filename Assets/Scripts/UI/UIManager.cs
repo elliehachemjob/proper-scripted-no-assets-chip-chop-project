@@ -129,7 +129,46 @@ oid OpenUIPause()
 			{
 				_inputReader.EnableGameplayInput();
 			}
+	_selectionHandler.Unselect();
+	}
 
+	void OpenSettingScreen()
+	{
+		_settingScreen.Closed += CloseSettingScreen; // sub to close setting event with event 
+
+		_pauseScreen.gameObject.SetActive(false); // Set pause screen to inactive
+
+		_settingScreen.gameObject.SetActive(true);// set Setting screen to active 
+
+		// time is still set to 0 and Input is still set to menuInput 
+	}
+
+	void CloseSettingScreen()
+	{
+		//unsub from close setting events 
+		_settingScreen.Closed -= CloseSettingScreen;
+
+		_selectionHandler.Unselect();
+		_pauseScreen.gameObject.SetActive(true); // Set pause screen to inactive
+
+		_settingScreen.gameObject.SetActive(false);
+
+		// time is still set to 0 and Input is still set to menuInput 
+		//going out from setting screen gets us back to the pause screen
+	}
+
+	void ShowBackToMenuConfirmationPopup()
+	{
+		_pauseScreen.gameObject.SetActive(false); // Set pause screen to inactive
+
+		_popupPanel.ClosePopupAction += HideBackToMenuConfirmationPopup;
+
+		_popupPanel.ConfirmationResponseAction += BackToMainMenu;
+
+		_inputReader.EnableMenuInput();
+		_popupPanel.gameObject.SetActive(true);
+		_popupPanel.SetPopup(PopupType.BackToMenu);
+	}
 
 	/* [Header("Scene UI")]
 	[SerializeField] private MenuSelectionHandler _selectionHandler = default;
