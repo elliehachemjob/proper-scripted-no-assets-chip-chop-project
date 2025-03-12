@@ -169,7 +169,29 @@ oid OpenUIPause()
 		_popupPanel.gameObject.SetActive(true);
 		_popupPanel.SetPopup(PopupType.BackToMenu);
 	}
+	void BackToMainMenu(bool confirm)
+	{
+		HideBackToMenuConfirmationPopup();// hide confirmation screen, show close UI pause, 
 
+		if (confirm)
+		{
+			CloseUIPause();//close ui pause to unsub from all events 
+			_loadMenuEvent.RaiseEvent(_mainMenu, false); //load main menu
+		}
+	}
+	
+	void HideBackToMenuConfirmationPopup()
+	{
+		_popupPanel.ClosePopupAction -= HideBackToMenuConfirmationPopup;
+		_popupPanel.ConfirmationResponseAction -= BackToMainMenu;
+
+		_popupPanel.gameObject.SetActive(false);
+		_selectionHandler.Unselect();
+		_pauseScreen.gameObject.SetActive(true); // Set pause screen to inactive
+
+		// time is still set to 0 and Input is still set to menuInput 
+		//going out from confirmaiton popup screen gets us back to the pause screen
+	}
 	/* [Header("Scene UI")]
 	[SerializeField] private MenuSelectionHandler _selectionHandler = default;
 	[SerializeField] private UIPopup _popupPanel = default;
