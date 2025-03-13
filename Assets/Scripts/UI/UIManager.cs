@@ -192,6 +192,41 @@ oid OpenUIPause()
 		// time is still set to 0 and Input is still set to menuInput 
 		//going out from confirmaiton popup screen gets us back to the pause screen
 	}
+		void SetInventoryScreenForCooking()
+	{
+		if (_gameStateManager.CurrentGameState == GameState.Gameplay)
+		{
+			isForCooking = true;
+			_interactionPanel.gameObject.SetActive(false);
+			OpenInventoryScreen();
+		}
+	}
+
+	void SetInventoryScreen()
+	{
+		if (_gameStateManager.CurrentGameState == GameState.Gameplay)
+		{
+			isForCooking = false;
+			OpenInventoryScreen();
+		}
+	}
+
+	void OpenInventoryScreen()
+	{
+		_inputReader.MenuPauseEvent -= OpenUIPause; // player cant open the UI Pause again when they are in inventory  
+		_inputReader.MenuUnpauseEvent -= CloseUIPause; // player can close the UI Pause popup when they are in inventory 
+
+		_inputReader.MenuCloseEvent += CloseInventoryScreen;
+		_inputReader.CloseInventoryEvent += CloseInventoryScreen;
+		if (isForCooking)
+		{
+			_inventoryPanel.FillInventory(InventoryTabType.Recipe, true);
+
+		}
+		else
+		{
+			_inventoryPanel.FillInventory();
+		}
 	/* [Header("Scene UI")]
 	[SerializeField] private MenuSelectionHandler _selectionHandler = default;
 	[SerializeField] private UIPopup _popupPanel = default;
