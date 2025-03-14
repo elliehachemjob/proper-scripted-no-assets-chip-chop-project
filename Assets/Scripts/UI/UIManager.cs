@@ -227,6 +227,32 @@ oid OpenUIPause()
 		{
 			_inventoryPanel.FillInventory();
 		}
+			_inventoryPanel.gameObject.SetActive(true);
+		_switchTabDisplay.SetActive(true);
+		_inputReader.EnableMenuInput();
+
+		_gameStateManager.UpdateGameState(GameState.Inventory);
+	}
+
+	void CloseInventoryScreen()
+	{
+		_inputReader.MenuPauseEvent += OpenUIPause; // you cant open the UI Pause again when you are in inventory  
+
+		_inputReader.MenuCloseEvent -= CloseInventoryScreen;
+		_inputReader.CloseInventoryEvent -= CloseInventoryScreen;
+
+		_switchTabDisplay.SetActive(false);
+		_inventoryPanel.gameObject.SetActive(false);
+
+		if (isForCooking)
+		{
+			_onInteractionEndedEvent.RaiseEvent();
+		}
+		_selectionHandler.Unselect();
+		_gameStateManager.ResetToPreviousGameState();
+		if (_gameStateManager.CurrentGameState == GameState.Gameplay || _gameStateManager.CurrentGameState == GameState.Combat)
+			_inputReader.EnableGameplayInput();
+	}
 	/* [Header("Scene UI")]
 	[SerializeField] private MenuSelectionHandler _selectionHandler = default;
 	[SerializeField] private UIPopup _popupPanel = default;
