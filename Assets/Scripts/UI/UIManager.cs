@@ -253,6 +253,37 @@ oid OpenUIPause()
 		if (_gameStateManager.CurrentGameState == GameState.Gameplay || _gameStateManager.CurrentGameState == GameState.Combat)
 			_inputReader.EnableGameplayInput();
 	}
+void SetInteractionPanel(bool isOpen, InteractionType interactionType)
+	{
+		if (_gameStateManager.CurrentGameState != GameState.Combat)
+		{
+			if (isOpen)
+			{
+				_interactionPanel.FillInteractionPanel(interactionType);
+			}
+
+			_interactionPanel.gameObject.SetActive(isOpen);
+		}
+		else if (!isOpen)
+		{
+			_interactionPanel.gameObject.SetActive(isOpen);
+		}
+	}
+
+	public void PlayCookingAnimation(ItemSO itemToCook)
+	{
+		CloseInventoryScreen();
+		_cookingAnimation.SetItem(itemToCook);
+		_cookingAnimation.gameObject.SetActive(true);
+		_cookingAnimation.AnimationEnded += StopCookingAnimation;
+	}
+
+	public void StopCookingAnimation()
+	{
+		_cookingAnimation.AnimationEnded -= StopCookingAnimation;
+		_cookingAnimation.gameObject.SetActive(false);
+	}
+
 	/* [Header("Scene UI")]
 	[SerializeField] private MenuSelectionHandler _selectionHandler = default;
 	[SerializeField] private UIPopup _popupPanel = default;
