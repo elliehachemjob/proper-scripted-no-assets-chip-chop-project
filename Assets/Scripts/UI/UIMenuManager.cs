@@ -5,7 +5,26 @@ using UnityEngine.UI;
 
 public class UIMenuManager : MonoBehaviour
 {
-	[SerializeField] private UIPopup _popupPanel = default;
+		[SerializeField] private UIPopup _popupPanel = default;
+	[SerializeField] private UISettingsController _settingsPanel = default;
+	[SerializeField] private UICredits _creditsPanel = default;
+	[SerializeField] private UIMainMenu _mainMenuPanel = default;
+
+	[SerializeField] private SaveSystem _saveSystem = default;
+
+	[SerializeField] private InputReader _inputReader = default;
+
+
+	[Header("Broadcasting on")]
+	[SerializeField]
+	private VoidEventChannelSO _startNewGameEvent = default;
+	[SerializeField]
+	private VoidEventChannelSO _continueGameEvent = default;
+
+
+
+	private bool _hasSaveData;
+	/* [SerializeField] private UIPopup _popupPanel = default;
 	[SerializeField] private UISettingsController _settingsPanel = default;
 	[SerializeField] private UICredits _creditsPanel = default;
 	[SerializeField] private UIMainMenu _mainMenuPanel = default;
@@ -160,7 +179,5 @@ public class UIMenuManager : MonoBehaviour
 		_popupPanel.ConfirmationResponseAction -= HideExitConfirmationPopup;
 		_popupPanel.ConfirmationResponseAction -= StartNewGamePopupResponse;
 
-	}
-
-
+	}*/
 }
