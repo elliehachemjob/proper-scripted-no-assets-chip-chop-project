@@ -20,10 +20,46 @@ public class UIMenuManager : MonoBehaviour
 	private VoidEventChannelSO _startNewGameEvent = default;
 	[SerializeField]
 	private VoidEventChannelSO _continueGameEvent = default;
-
-
-
 	private bool _hasSaveData;
+
+	private IEnumerator Start()
+	{
+		_inputReader.EnableMenuInput();
+		yield return new WaitForSeconds(0.4f); //waiting time for all scenes to be loaded 
+		SetMenuScreen();
+	}
+	void SetMenuScreen()
+	{
+		_hasSaveData = _saveSystem.LoadSaveDataFromDisk();
+		_mainMenuPanel.SetMenuScreen(_hasSaveData);
+		_mainMenuPanel.ContinueButtonAction += _continueGameEvent.RaiseEvent;
+		_mainMenuPanel.NewGameButtonAction += ButtonStartNewGameClicked;
+		_mainMenuPanel.SettingsButtonAction += OpenSettingsScreen;
+		_mainMenuPanel.CreditsButtonAction += OpenCreditsScreen;
+		_mainMenuPanel.ExitButtonAction += ShowExitConfirmationPopup;
+
+	}
+
+	void ButtonStartNewGameClicked()
+	{
+		if (!_hasSaveData)
+		{
+			ConfirmStartNewGame();
+
+		}
+		else
+		{
+			ShowStartNewGameConfirmationPopup();
+
+		}
+
+	}
+
+	void ConfirmStartNewGame()
+	{
+		_startNewGameEvent.RaiseEvent();
+	}
+
 	/* [SerializeField] private UIPopup _popupPanel = default;
 	[SerializeField] private UISettingsController _settingsPanel = default;
 	[SerializeField] private UICredits _creditsPanel = default;
