@@ -59,6 +59,36 @@ public class UIMenuManager : MonoBehaviour
 	{
 		_startNewGameEvent.RaiseEvent();
 	}
+		void ShowStartNewGameConfirmationPopup()
+	{
+		_popupPanel.ConfirmationResponseAction += StartNewGamePopupResponse;
+		_popupPanel.ClosePopupAction += HidePopup;
+
+		_popupPanel.gameObject.SetActive(true);
+		_popupPanel.SetPopup(PopupType.NewGame);
+
+	}
+
+	void StartNewGamePopupResponse(bool startNewGameConfirmed)
+	{
+
+		_popupPanel.ConfirmationResponseAction -= StartNewGamePopupResponse;
+		_popupPanel.ClosePopupAction -= HidePopup;
+
+		_popupPanel.gameObject.SetActive(false);
+
+		if (startNewGameConfirmed)
+		{
+			ConfirmStartNewGame();
+		}
+		else
+		{
+			_continueGameEvent.RaiseEvent();
+		}
+
+		_mainMenuPanel.SetMenuScreen(_hasSaveData);
+
+	}
 
 	/* [SerializeField] private UIPopup _popupPanel = default;
 	[SerializeField] private UISettingsController _settingsPanel = default;
