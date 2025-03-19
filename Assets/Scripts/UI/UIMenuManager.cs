@@ -89,7 +89,37 @@ public class UIMenuManager : MonoBehaviour
 		_mainMenuPanel.SetMenuScreen(_hasSaveData);
 
 	}
+	void HidePopup()
+	{
+		_popupPanel.ClosePopupAction -= HidePopup;
+		_popupPanel.gameObject.SetActive(false);
+		_mainMenuPanel.SetMenuScreen(_hasSaveData);
 
+	}
+
+	public void OpenSettingsScreen()
+	{
+		_settingsPanel.gameObject.SetActive(true);
+		_settingsPanel.Closed += CloseSettingsScreen;
+
+	}
+	public void CloseSettingsScreen()
+	{
+		_settingsPanel.Closed -= CloseSettingsScreen;
+		_settingsPanel.gameObject.SetActive(false);
+		_mainMenuPanel.SetMenuScreen(_hasSaveData);
+
+	}
+	public void OpenCreditsScreen()
+	{
+		_creditsPanel.gameObject.SetActive(true);
+
+		_creditsPanel.OnCloseCredits += CloseCreditsScreen;
+
+
+
+
+	}
 	/* [SerializeField] private UIPopup _popupPanel = default;
 	[SerializeField] private UISettingsController _settingsPanel = default;
 	[SerializeField] private UICredits _creditsPanel = default;
