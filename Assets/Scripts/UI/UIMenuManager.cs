@@ -120,6 +120,36 @@ public class UIMenuManager : MonoBehaviour
 
 
 	}
+	public void CloseCreditsScreen()
+	{
+		_creditsPanel.OnCloseCredits -= CloseCreditsScreen;
+		_creditsPanel.gameObject.SetActive(false);
+		_mainMenuPanel.SetMenuScreen(_hasSaveData);
+
+	}
+
+
+	public void ShowExitConfirmationPopup()
+	{
+		_popupPanel.ConfirmationResponseAction += HideExitConfirmationPopup;
+		_popupPanel.gameObject.SetActive(true);
+		_popupPanel.SetPopup(PopupType.Quit);
+
+
+
+	}
+	void HideExitConfirmationPopup(bool quitConfirmed)
+	{
+		_popupPanel.ConfirmationResponseAction -= HideExitConfirmationPopup;
+		_popupPanel.gameObject.SetActive(false);
+		if (quitConfirmed)
+		{
+			Application.Quit();
+		}
+		_mainMenuPanel.SetMenuScreen(_hasSaveData);
+
+
+	}
 	/* [SerializeField] private UIPopup _popupPanel = default;
 	[SerializeField] private UISettingsController _settingsPanel = default;
 	[SerializeField] private UICredits _creditsPanel = default;
