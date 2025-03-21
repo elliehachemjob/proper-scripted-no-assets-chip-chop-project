@@ -150,6 +150,12 @@ public class UIMenuManager : MonoBehaviour
 
 
 	}
+		private void OnDestroy()
+	{
+		_popupPanel.ConfirmationResponseAction -= HideExitConfirmationPopup;
+		_popupPanel.ConfirmationResponseAction -= StartNewGamePopupResponse;
+
+	}
 	/* [SerializeField] private UIPopup _popupPanel = default;
 	[SerializeField] private UISettingsController _settingsPanel = default;
 	[SerializeField] private UICredits _creditsPanel = default;
