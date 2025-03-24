@@ -39,6 +39,26 @@ public class UIPopup : MonoBehaviour
         _inputReader.MenuCloseEvent -= ClosePopupButtonClicked;
     }
 
+}
+   /* [SerializeField] private LocalizeStringEvent _titleText = default;
+    [SerializeField] private LocalizeStringEvent _descriptionText = default;
+    [SerializeField] private Button _buttonClose = default;
+    [SerializeField] private UIGenericButton _popupButton1 = default;
+    [SerializeField] private UIGenericButton _popupButton2 = default;
+    [SerializeField] private InputReader _inputReader = default;
+
+    private PopupType _actualType;
+
+    public event UnityAction<bool> ConfirmationResponseAction;
+    public event UnityAction ClosePopupAction;
+
+    private void OnDisable()
+    {
+        _popupButton2.Clicked -= CancelButtonClicked;
+        _popupButton1.Clicked -= ConfirmButtonClicked;
+        _inputReader.MenuCloseEvent -= ClosePopupButtonClicked;
+    }
+
     public void SetPopup(PopupType popupType)
     {
         _actualType = popupType;
@@ -108,4 +128,4 @@ public class UIPopup : MonoBehaviour
     {
         ConfirmationResponseAction.Invoke(false);
     }
-}
+}*/
