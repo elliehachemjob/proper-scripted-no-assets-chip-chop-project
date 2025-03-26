@@ -87,6 +87,28 @@ public class UIPopup : MonoBehaviour
 
             _popupButton1.Clicked += ConfirmButtonClicked;
         }
+_buttonClose.gameObject.SetActive(hasExitButton);
+
+        if (hasExitButton) // can exit : Has to take the decision or aknowledge the information
+        {
+            _inputReader.MenuCloseEvent += ClosePopupButtonClicked;
+        }
+    }
+
+    public void ClosePopupButtonClicked()
+    {
+        ClosePopupAction.Invoke();
+    }
+
+    void ConfirmButtonClicked()
+    {
+        ConfirmationResponseAction.Invoke(true);
+    }
+
+    void CancelButtonClicked()
+    {
+        ConfirmationResponseAction.Invoke(false);
+    }
 
    /* [SerializeField] private LocalizeStringEvent _titleText = default;
     [SerializeField] private LocalizeStringEvent _descriptionText = default;
