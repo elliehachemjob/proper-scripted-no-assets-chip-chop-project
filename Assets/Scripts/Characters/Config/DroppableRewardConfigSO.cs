@@ -17,7 +17,6 @@ public class DroppableRewardConfigSO : ScriptableObject
 	{
 		return null; 
 	}
-}
 	/* [Tooltip("Item scattering distance from the source of dropping.")]
 	[SerializeField] private float _scatteringDistance = default;
 	[Tooltip("The list of drop goup that can be dropped by this critter when killed")]
