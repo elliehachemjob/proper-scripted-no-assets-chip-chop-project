@@ -4,7 +4,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "DroppableRewardConfig", menuName = "EntityConfig/Special Reward Dropping Rate Config")]
 public class SpecialDroppableRewardConfigSO : DroppableRewardConfigSO
 {
-	[Tooltip("Current count of dropped items")]
+	/*[Tooltip("Current count of dropped items")]
 	[SerializeField] private int _specialDroppableCurrentCount = 0;
 	[Tooltip("Max count where the special droppable needs to be dropped")]
 	[SerializeField] private int _specialDroppableMaxCount = 0;
@@ -17,5 +17,5 @@ public class SpecialDroppableRewardConfigSO : DroppableRewardConfigSO
 			return _specialItem;
 		else
 			return null; 
-	}
+	}*/
 }
