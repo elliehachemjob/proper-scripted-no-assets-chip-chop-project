@@ -39,7 +39,18 @@ public class PathwayMovementAction : NPCMovementAction
 	{
 
 	}
-
+private Vector3 GetNextDestination()
+	{
+		Vector3 nextDestination = _agent.transform.position;
+		if (_wayppoints.Count > 0)
+		{
+			//We check the modulo so when we reach the end of the array we go back to the first element
+			_wayPointIndex = (_wayPointIndex + 1) % _wayppoints.Count;
+			nextDestination = _wayppoints[_wayPointIndex].waypoint;
+		}
+		//Debug.Log("the next destination index = " +_wayPointIndex + "value = " + nextDestination);
+		return nextDestination;
+	}
 	/* private NavMeshAgent _agent;
 	private bool _isActiveAgent;
 	private List<WaypointData> _wayppoints;
