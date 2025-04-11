@@ -28,6 +28,31 @@ public class RoamingMovementAction : NPCMovementAction
 		_roamingSpeed = config.Speed;
 		_roamingDistance = config.Radius;
 	}
+	private NavMeshAgent _agent;
+	private bool _isActiveAgent;
+	private Vector3 _startPosition;
+
+	private float _roamingSpeed;
+	private float _roamingDistance;
+
+	private Vector3 _roamingTargetPosition;
+
+	public RoamingMovementAction(
+		RoamingAroundCenterConfigSO config, NavMeshAgent agent, Vector3 startPosition)
+	{
+		_agent = agent;
+		_isActiveAgent = _agent != null && _agent.isActiveAndEnabled && _agent.isOnNavMesh;
+		if (config.FromSpawningPoint)
+		{
+			_startPosition = startPosition;
+		}
+		else
+		{
+			_startPosition = config.CustomCenter;
+		}
+		_roamingSpeed = config.Speed;
+		_roamingDistance = config.Radius;
+	}
 
 	/* private NavMeshAgent _agent;
 	private bool _isActiveAgent;
