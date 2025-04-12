@@ -53,7 +53,26 @@ public class RoamingMovementAction : NPCMovementAction
 		_roamingSpeed = config.Speed;
 		_roamingDistance = config.Radius;
 	}
+public override void OnUpdate()
+	{
 
+	}
+
+	public override void OnStateEnter()
+	{
+		if (_isActiveAgent)
+		{
+			_roamingTargetPosition = GetRoamingPositionAroundPosition(_startPosition);
+			_agent.speed = _roamingSpeed;
+			_agent.isStopped = false;
+			_agent.SetDestination(_roamingTargetPosition);
+		}
+	}
+
+	public override void OnStateExit()
+	{
+
+	}
 	/* private NavMeshAgent _agent;
 	private bool _isActiveAgent;
 	private Vector3 _startPosition;
