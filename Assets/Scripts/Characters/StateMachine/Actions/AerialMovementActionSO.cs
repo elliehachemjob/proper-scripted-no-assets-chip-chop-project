@@ -29,6 +29,27 @@ public class AerialMovementAction : StateAction
 	{
 		_protagonist = stateMachine.GetComponent<Protagonist>();
 	}
+	/* public float Speed => _speed;
+	public float Acceleration => _acceleration;
+
+	[Tooltip("Desired horizontal movement speed while in the air")]
+	[SerializeField] [Range(0.1f, 100f)] private float _speed = 10f;
+	[Tooltip("The acceleration applied to reach the desired speed")]
+	[SerializeField] [Range(0.1f, 100f)] private float _acceleration = 20f;
+
+	protected override StateAction CreateAction() => new AerialMovementAction();
+}
+
+public class AerialMovementAction : StateAction
+{
+	private new AerialMovementActionSO OriginSO => (AerialMovementActionSO)base.OriginSO;
+
+	private Protagonist _protagonist;
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_protagonist = stateMachine.GetComponent<Protagonist>();
+	}
 
 	public override void OnUpdate()
 	{
@@ -78,4 +99,4 @@ public class AerialMovementAction : StateAction
 		if (Mathf.Sign(value) != sign)
 			value = 0;
 	}
-}
+}*/}
