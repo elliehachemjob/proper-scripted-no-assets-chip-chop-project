@@ -29,6 +29,38 @@ public class AerialMovementAction : StateAction
 	{
 		_protagonist = stateMachine.GetComponent<Protagonist>();
 	}
+	public override void OnUpdate()
+	{
+		Vector3 velocity = _protagonist.movementVector;
+		Vector3 input = _protagonist.movementInput;
+		float speed = OriginSO.Speed;
+		float acceleration = OriginSO.Acceleration;
+
+		SetVelocityPerAxis(ref velocity.x, input.x, acceleration, speed);
+		SetVelocityPerAxis(ref velocity.z, input.z, acceleration, speed);
+
+		_protagonist.movementVector = velocity;
+	}
+
+	private void SetVelocityPerAxis(ref float currentAxisSpeed, float axisInput, float acceleration, float targetSpeed)
+	{
+		if (axisInput == 0f)
+		{
+			if (currentAxisSpeed != 0f)
+			{
+				ApplyAirResistance(ref currentAxisSpeed);
+			}
+		}
+		else
+		{
+			(float absVel, float absInput) = (Mathf.Abs(currentAxisSpeed), Mathf.Abs(axisInput));
+			(float signVel, float signInput) = (Mathf.Sign(currentAxisSpeed), Mathf.Sign(axisInput));
+			targetSpeed *= absInput;
+
+			if (signVel != signInput || absVel < targetSpeed)
+			{
+				currentAxisSpeed += axisInput * acceleration;
+				currentAxisSpeed = 
 	/* public float Speed => _speed;
 	public float Acceleration => _acceleration;
 
