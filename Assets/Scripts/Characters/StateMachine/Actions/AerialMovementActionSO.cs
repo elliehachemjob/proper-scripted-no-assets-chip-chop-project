@@ -61,6 +61,23 @@ public class AerialMovementAction : StateAction
 			{
 				currentAxisSpeed += axisInput * acceleration;
 				currentAxisSpeed = 
+						}
+			else
+			{
+				ApplyAirResistance(ref currentAxisSpeed);
+			}
+		}
+	}
+
+	private void ApplyAirResistance(ref float value)
+	{
+		float sign = Mathf.Sign(value);
+
+		value -= sign * Protagonist.AIR_RESISTANCE * Time.deltaTime;
+		if (Mathf.Sign(value) != sign)
+			value = 0;
+	}
+}
 	/* public float Speed => _speed;
 	public float Acceleration => _acceleration;
 
