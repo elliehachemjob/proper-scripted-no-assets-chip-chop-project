@@ -148,4 +148,4 @@ public class AerialMovementAction : StateAction
 		if (Mathf.Sign(value) != sign)
 			value = 0;
 	}
-}*/}
+}*/

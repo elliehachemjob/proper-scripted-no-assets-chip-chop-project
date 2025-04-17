@@ -23,6 +23,21 @@ public class AnimatorMoveSpeedAction : StateAction
 
 	private AnimatorParameterActionSO _originSO => (AnimatorParameterActionSO)base.OriginSO; // The SO this StateAction spawned from
 	private int _parameterHash;
+}
+/* {
+	public string parameterName = default;
+
+	protected override StateAction CreateAction() => new AnimatorMoveSpeedAction(Animator.StringToHash(parameterName));
+}
+
+public class AnimatorMoveSpeedAction : StateAction
+{
+	//Component references
+	private Animator _animator;
+	private Protagonist _protagonist;
+
+	private AnimatorParameterActionSO _originSO => (AnimatorParameterActionSO)base.OriginSO; // The SO this StateAction spawned from
+	private int _parameterHash;
 
 	public AnimatorMoveSpeedAction(int parameterHash)
 	{
@@ -42,3 +57,4 @@ public class AnimatorMoveSpeedAction : StateAction
 		_animator.SetFloat(_parameterHash, normalisedSpeed);
 	}
 }
+*/
