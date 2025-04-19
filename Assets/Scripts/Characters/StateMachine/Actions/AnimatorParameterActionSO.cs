@@ -26,6 +26,24 @@ public class AnimatorParameterActionSO : StateActionSO
 		Bool, Int, Float, Trigger,
 	}
 }
+/* public class AnimatorParameterActionSO : StateActionSO
+{
+	public ParameterType parameterType = default;
+	public string parameterName = default;
+
+	public bool boolValue = default;
+	public int intValue = default;
+	public float floatValue = default;
+
+	public Moment whenToRun = default; // Allows this StateActionSO type to be reused for all 3 state moments
+
+	protected override StateAction CreateAction() => new AnimatorParameterAction(Animator.StringToHash(parameterName));
+
+	public enum ParameterType
+	{
+		Bool, Int, Float, Trigger,
+	}
+}
 
 public class AnimatorParameterAction : StateAction
 {
@@ -77,3 +95,4 @@ public class AnimatorParameterAction : StateAction
 
 	public override void OnUpdate() { }
 }
+*/
