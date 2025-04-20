@@ -25,6 +25,23 @@ public class AnimatorParameterActionSO : StateActionSO
 	{
 		Bool, Int, Float, Trigger,
 	}
+	public class AnimatorParameterAction : StateAction
+{
+	//Component references
+	private Animator _animator;
+	private AnimatorParameterActionSO _originSO => (AnimatorParameterActionSO)base.OriginSO; // The SO this StateAction spawned from
+	private int _parameterHash;
+
+	public AnimatorParameterAction(int parameterHash)
+	{
+		_parameterHash = parameterHash;
+	}
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_animator = stateMachine.GetComponent<Animator>();
+	}
+
 }
 /* public class AnimatorParameterActionSO : StateActionSO
 {
