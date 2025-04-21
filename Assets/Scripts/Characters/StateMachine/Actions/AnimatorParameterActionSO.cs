@@ -41,6 +41,17 @@ public class AnimatorParameterActionSO : StateActionSO
 	{
 		_animator = stateMachine.GetComponent<Animator>();
 	}
+public override void OnStateEnter()
+	{
+		if (_originSO.whenToRun == SpecificMoment.OnStateEnter)
+			SetParameter();
+	}
+
+	public override void OnStateExit()
+	{
+		if (_originSO.whenToRun == SpecificMoment.OnStateExit)
+			SetParameter();
+	}
 
 }
 /* public class AnimatorParameterActionSO : StateActionSO
