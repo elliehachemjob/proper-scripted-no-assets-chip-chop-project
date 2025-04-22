@@ -52,6 +52,28 @@ public override void OnStateEnter()
 		if (_originSO.whenToRun == SpecificMoment.OnStateExit)
 			SetParameter();
 	}
+		private void SetParameter()
+	{
+		switch (_originSO.parameterType)
+		{
+			case AnimatorParameterActionSO.ParameterType.Bool:
+				_animator.SetBool(_parameterHash, _originSO.boolValue);
+				break;
+			case AnimatorParameterActionSO.ParameterType.Int:
+				_animator.SetInteger(_parameterHash, _originSO.intValue);
+				break;
+			case AnimatorParameterActionSO.ParameterType.Float:
+				_animator.SetFloat(_parameterHash, _originSO.floatValue);
+				break;
+			case AnimatorParameterActionSO.ParameterType.Trigger:
+				_animator.SetTrigger(_parameterHash);
+				break;
+		}
+	}
+
+	public override void OnUpdate() { }
+}
+
 
 }
 /* public class AnimatorParameterActionSO : StateActionSO
