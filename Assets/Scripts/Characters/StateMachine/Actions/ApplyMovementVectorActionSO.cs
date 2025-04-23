@@ -9,6 +9,11 @@ public class ApplyMovementVectorAction : StateAction
 {
 	//Component references
 	private Protagonist _protagonistScript;
+	private CharacterController _characterController;}
+/*public class ApplyMovementVectorAction : StateAction
+{
+	//Component references
+	private Protagonist _protagonistScript;
 	private CharacterController _characterController;
 
 	public override void Awake(StateMachine stateMachine)
@@ -22,4 +27,4 @@ public class ApplyMovementVectorAction : StateAction
 		_characterController.Move(_protagonistScript.movementVector * Time.deltaTime);
 		_protagonistScript.movementVector = _characterController.velocity;
 	}
-}
+}*/
