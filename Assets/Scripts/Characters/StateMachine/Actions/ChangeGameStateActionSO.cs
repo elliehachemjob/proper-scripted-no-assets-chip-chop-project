@@ -30,6 +30,27 @@ public class ChangeGameStateAction : StateAction
 		_gameStateSO = gameStateSO;
 		_whenToRun = whenToRun;
 	}
+	/*[SerializeField] GameState _newGameState = default;
+	[SerializeField] Moment _whenToRun = default;
+	[SerializeField] private GameStateSO _gameState = default;
+	
+	protected override StateAction CreateAction() => new ChangeGameStateAction(_newGameState, _gameState, _whenToRun);
+}
+
+public class ChangeGameStateAction : StateAction
+{
+	[Tooltip("GameState to change to")]
+	private GameState _newGameState = default;
+	private GameStateSO _gameStateSO = default;
+	private Moment _whenToRun = default;
+	private Transform _transform = default;
+
+	public ChangeGameStateAction(GameState newGameState, GameStateSO gameStateSO, Moment whenToRun)
+	{
+		_newGameState = newGameState;
+		_gameStateSO = gameStateSO;
+		_whenToRun = whenToRun;
+	}
 
 	public override void Awake(StateMachine stateMachine)
 	{
@@ -71,4 +92,5 @@ public class ChangeGameStateAction : StateAction
 	}
 	
 	public override void OnUpdate(){ }
+}*/
 }
