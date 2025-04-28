@@ -30,6 +30,29 @@ public class ChangeGameStateAction : StateAction
 		_gameStateSO = gameStateSO;
 		_whenToRun = whenToRun;
 	}
+	public override void Awake(StateMachine stateMachine)
+	{
+		_transform = stateMachine.transform;
+	}
+
+	void ChangeState()
+	{
+		switch (_newGameState)
+		{
+			case GameState.Combat:
+				_gameStateSO.AddAlertEnemy(_transform);
+				break;
+
+			case GameState.Gameplay:
+				_gameStateSO.RemoveAlertEnemy(_transform);
+				break;
+
+			default:
+				_gameStateSO.UpdateGameState(_newGameState);
+				break;
+		}
+	}
+
 	/*[SerializeField] GameState _newGameState = default;
 	[SerializeField] Moment _whenToRun = default;
 	[SerializeField] private GameStateSO _gameState = default;
