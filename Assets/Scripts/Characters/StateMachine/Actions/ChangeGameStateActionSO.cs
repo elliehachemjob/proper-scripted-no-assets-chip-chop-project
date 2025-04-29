@@ -52,7 +52,23 @@ public class ChangeGameStateAction : StateAction
 				break;
 		}
 	}
+public override void OnStateEnter()
+	{
+		if (_whenToRun == Moment.OnStateEnter)
+		{
+			ChangeState();
+		}
+	}
 
+	public override void OnStateExit()
+	{
+		if (_whenToRun == Moment.OnStateExit)
+		{
+			ChangeState();
+		}
+	}
+	
+	public override void OnUpdate(){ }
 	/*[SerializeField] GameState _newGameState = default;
 	[SerializeField] Moment _whenToRun = default;
 	[SerializeField] private GameStateSO _gameState = default;
