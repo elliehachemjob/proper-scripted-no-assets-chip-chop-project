@@ -25,6 +25,25 @@ public class ChasingTargetAction : StateAction
 	private NavMeshAgent _agent;
 	private bool _isActiveAgent;
 
+	/* [Tooltip("Target transform anchor.")]
+	[SerializeField] private TransformAnchor _targetTransform = default;
+
+	[Tooltip("NPC chasing speed")]
+	[SerializeField] private float _chasingSpeed = default;
+
+	public Vector3 TargetPosition => _targetTransform.Value.position;
+	public float ChasingSpeed => _chasingSpeed;
+
+	protected override StateAction CreateAction() => new ChasingTargetAction();
+}
+
+public class ChasingTargetAction : StateAction
+{
+	private Critter _critter;
+	private ChasingTargetActionSO _config;
+	private NavMeshAgent _agent;
+	private bool _isActiveAgent;
+
 
 
 	public override void Awake(StateMachine stateMachine)
@@ -51,5 +70,5 @@ public class ChasingTargetAction : StateAction
 		}
 	}
 
-
+*/
 }
