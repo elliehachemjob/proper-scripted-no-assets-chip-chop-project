@@ -25,6 +25,21 @@ public class ChasingTargetAction : StateAction
 	private NavMeshAgent _agent;
 	private bool _isActiveAgent;
 
+	public override void Awake(StateMachine stateMachine)
+	{
+		_config = (ChasingTargetActionSO)OriginSO;
+		_agent = stateMachine.gameObject.GetComponent<NavMeshAgent>();
+		_isActiveAgent = _agent != null && _agent.isActiveAndEnabled && _agent.isOnNavMesh;
+	}
+
+	public override void OnUpdate()
+	{
+		if (_isActiveAgent)
+		{
+			_agent.isStopped = false;
+			_agent.SetDestination(_config.TargetPosition);
+		}
+	}
 	/* [Tooltip("Target transform anchor.")]
 	[SerializeField] private TransformAnchor _targetTransform = default;
 
