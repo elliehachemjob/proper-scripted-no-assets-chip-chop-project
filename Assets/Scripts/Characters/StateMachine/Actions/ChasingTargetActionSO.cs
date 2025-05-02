@@ -40,6 +40,14 @@ public class ChasingTargetAction : StateAction
 			_agent.SetDestination(_config.TargetPosition);
 		}
 	}
+		public override void OnStateEnter()
+	{
+		if (_isActiveAgent)
+		{
+			_agent.speed = _config.ChasingSpeed;
+		}
+	}
+
 	/* [Tooltip("Target transform anchor.")]
 	[SerializeField] private TransformAnchor _targetTransform = default;
 
