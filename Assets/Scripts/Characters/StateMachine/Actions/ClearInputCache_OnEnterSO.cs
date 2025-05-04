@@ -8,7 +8,20 @@ public class ClearInputCache_OnEnterSO : StateActionSO
 {
 	protected override StateAction CreateAction() => new ClearInputCache_OnEnter();
 }
+public class ClearInputCache_OnEnter : StateAction
+{
+	private Protagonist _protagonist;
+	private InteractionManager _interactionManager;
 
+	public override void Awake(StateMachine stateMachine)
+	{
+		_protagonist = stateMachine.GetComponent<Protagonist>();
+		_interactionManager = stateMachine.GetComponentInChildren<InteractionManager>();
+	}
+
+	public override void OnUpdate()
+	{
+	}}
 /* public class ClearInputCache_OnEnterSO : StateActionSO
 {
 	protected override StateAction CreateAction() => new ClearInputCache_OnEnter();
