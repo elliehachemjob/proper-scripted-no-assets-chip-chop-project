@@ -3,7 +3,13 @@ using UOP1.StateMachine;
 using UOP1.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(fileName = "ClearInputCache_OnEnter", menuName = "State Machines/Actions/Clear Input Cache On Enter")]
+
 public class ClearInputCache_OnEnterSO : StateActionSO
+{
+	protected override StateAction CreateAction() => new ClearInputCache_OnEnter();
+}
+
+/* public class ClearInputCache_OnEnterSO : StateActionSO
 {
 	protected override StateAction CreateAction() => new ClearInputCache_OnEnter();
 }
@@ -27,5 +33,5 @@ public class ClearInputCache_OnEnter : StateAction
 	{
 		_protagonist.jumpInput = false;
 		_interactionManager.currentInteractionType = InteractionType.None;
-	}
+	}?8
 }
