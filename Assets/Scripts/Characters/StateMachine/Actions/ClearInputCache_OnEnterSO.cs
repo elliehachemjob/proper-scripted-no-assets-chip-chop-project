@@ -21,7 +21,13 @@ public class ClearInputCache_OnEnter : StateAction
 
 	public override void OnUpdate()
 	{
-	}}
+	}
+	public override void OnStateEnter()
+	{
+		_protagonist.jumpInput = false;
+		_interactionManager.currentInteractionType = InteractionType.None;
+	}?8
+	}
 /* public class ClearInputCache_OnEnterSO : StateActionSO
 {
 	protected override StateAction CreateAction() => new ClearInputCache_OnEnter();
@@ -46,5 +52,5 @@ public class ClearInputCache_OnEnter : StateAction
 	{
 		_protagonist.jumpInput = false;
 		_interactionManager.currentInteractionType = InteractionType.None;
-	}?8
+	}
 }
