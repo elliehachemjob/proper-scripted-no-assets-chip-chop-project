@@ -4,13 +4,23 @@ using UOP1.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(fileName = "CritterFaceProtagonist", menuName = "State Machines/Actions/Critter Face Protagonist")]
 public class CritterFaceProtagonistSO : StateActionSO
-{
+
+?{
 	public TransformAnchor playerAnchor;
 	protected override StateAction CreateAction() => new CritterFaceProtagonist();
 }
 
 public class CritterFaceProtagonist : StateAction
-{
+
+	TransformAnchor _protagonist;
+	Transform _actor;
+	public override void Awake(StateMachine stateMachine)
+	{
+		_actor = stateMachine.transform;
+		_protagonist = ((CritterFaceProtagonistSO)OriginSO).playerAnchor;
+	}
+
+/*{
 	TransformAnchor _protagonist;
 	Transform _actor;
 	public override void Awake(StateMachine stateMachine)
@@ -35,4 +45,4 @@ public class CritterFaceProtagonist : StateAction
 	{
 
 	}
-}
+}*/

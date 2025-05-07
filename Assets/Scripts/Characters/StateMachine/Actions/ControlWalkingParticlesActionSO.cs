@@ -24,7 +24,9 @@ public class ControlWalkingParticlesAction : StateAction
 	public override void OnStateExit()
 	{
 		_dustController.DisableWalkParticles();
-	}}
+	}
+		public override void OnUpdate() { }
+	}
 
 /* public class ControlWalkingParticlesActionSO : StateActionSO<ControlWalkingParticlesAction> { }
 
