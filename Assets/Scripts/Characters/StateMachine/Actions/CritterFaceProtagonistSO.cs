@@ -19,7 +19,22 @@ public class CritterFaceProtagonist : StateAction
 		_actor = stateMachine.transform;
 		_protagonist = ((CritterFaceProtagonistSO)OriginSO).playerAnchor;
 	}
+public override void OnUpdate()
+	{
+		if (_protagonist.isSet)
+		{
+			Vector3 relativePos = _protagonist.Value.position - _actor.position;
+			relativePos.y = 0f; // Force rotation to be only on Y axis.
 
+			Quaternion rotation = Quaternion.LookRotation(relativePos);
+			_actor.rotation = rotation;
+		}
+	}
+
+	public override void OnStateEnter()
+	{
+
+	}
 /*{
 	TransformAnchor _protagonist;
 	Transform _actor;
