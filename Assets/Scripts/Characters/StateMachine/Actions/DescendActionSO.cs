@@ -7,6 +7,22 @@ public class DescendActionSO : StateActionSO<DescendAction> { }
 
 public class DescendAction : StateAction
 {
+
+	public class DescendActionSO : StateActionSO<DescendAction> { }
+
+public class DescendAction : StateAction
+{
+	//Component references
+	private Protagonist _protagonistScript;
+
+	private float _verticalMovement;
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_protagonistScript = stateMachine.GetComponent<Protagonist>();
+	}
+
+	/*
 	//Component references
 	private Protagonist _protagonistScript;
 
@@ -36,5 +52,5 @@ public class DescendAction : StateAction
 		_verticalMovement = Mathf.Clamp(_verticalMovement, Protagonist.MAX_FALL_SPEED, Protagonist.MAX_RISE_SPEED);
 
 		_protagonistScript.movementVector.y = _verticalMovement;
-	}
+	}*/
 }
