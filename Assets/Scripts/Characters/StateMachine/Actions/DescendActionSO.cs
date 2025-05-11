@@ -21,6 +21,14 @@ public class DescendAction : StateAction
 	{
 		_protagonistScript = stateMachine.GetComponent<Protagonist>();
 	}
+public override void OnStateEnter()
+	{
+		_verticalMovement = _protagonistScript.movementVector.y;
+
+		//Prevents a double jump if the player keeps holding the jump button
+		//Basically it "consumes" the input
+		_protagonistScript.jumpInput = false;
+	}
 
 	/*
 	//Component references
