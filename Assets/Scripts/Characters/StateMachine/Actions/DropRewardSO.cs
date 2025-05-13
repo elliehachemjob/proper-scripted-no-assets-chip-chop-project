@@ -4,7 +4,25 @@ using UOP1.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(fileName = "DropReward", menuName = "State Machines/Actions/Drop Reward")]
 public class DropRewardSO : StateActionSO
+
 {
+	protected override StateAction CreateAction() => new DropReward();
+}
+
+public class DropReward : StateAction
+{
+	private DroppableRewardConfigSO _dropRewardConfig;
+	private Transform _currentTransform;
+
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_dropRewardConfig = stateMachine.GetComponent<Damageable>().DroppableRewardConfig;
+		_currentTransform = stateMachine.transform;
+	}
+}
+/*{
+
 	protected override StateAction CreateAction() => new DropReward();
 }
 
@@ -76,4 +94,4 @@ public class DropReward : StateAction
 			Quaternion.identity);
 		collectibleItem.GetComponent<CollectableItem>().AnimateItem();
 	}
-}
+}*/
