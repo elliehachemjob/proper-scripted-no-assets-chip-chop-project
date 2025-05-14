@@ -21,6 +21,37 @@ public class DropReward : StateAction
 		_currentTransform = stateMachine.transform;
 	}
 }
+
+public override void OnUpdate()
+	{
+
+	}
+
+	public override void OnStateEnter()
+	{
+		DropAllRewards(_currentTransform.position);
+	}
+
+	private void DropAllRewards(Vector3 position)
+	{
+		DropGroup specialDropItem = _dropRewardConfig.DropSpecialItem(); 
+		if (specialDropItem != null) // drops a special item if any 
+			DropOneReward(specialDropItem, position);
+		// Drop items
+		foreach (DropGroup dropGroup in _dropRewardConfig.DropGroups)
+		{
+			float randValue = Random.value;
+			if (dropGroup.DropRate >= randValue)
+			{
+				DropOneReward(dropGroup, position);
+			}
+			else
+			{
+				break;
+			}
+		}
+	}
+
 /*{
 
 	protected override StateAction CreateAction() => new DropReward();
