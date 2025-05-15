@@ -50,6 +50,26 @@ public override void OnUpdate()
 				break;
 			}
 		}
+
+		private void DropOneReward(DropGroup dropGroup, Vector3 position)
+	{
+		float dropDice = Random.value;
+		float _currentRate = 0.0f;
+
+		ItemSO item = null;
+		GameObject itemPrefab = null;
+
+		foreach (DropItem dropItem in dropGroup.Drops)
+		{
+			_currentRate += dropItem.ItemDropRate;
+			if (_currentRate >= dropDice)
+			{
+				item = dropItem.Item;
+				itemPrefab = dropItem.Item.Prefab;
+				break;
+			}
+		}
+
 	}
 
 /*{
