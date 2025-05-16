@@ -71,7 +71,13 @@ public override void OnUpdate()
 		}
 
 	}
-
+float randAngle = Random.value * Mathf.PI * 2;
+		GameObject collectibleItem = GameObject.Instantiate(itemPrefab,
+			position + itemPrefab.transform.localPosition +
+			_dropRewardConfig.ScatteringDistance * (Mathf.Cos(randAngle) * Vector3.forward + Mathf.Sin(randAngle) * Vector3.right),
+			Quaternion.identity);
+		collectibleItem.GetComponent<CollectableItem>().AnimateItem();
+	}
 /*{
 
 	protected override StateAction CreateAction() => new DropReward();
