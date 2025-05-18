@@ -17,7 +17,38 @@ public class GetHitFlashingEffectAction : StateAction
 
 	private Material _material;
 	private Color _baseTintColor;
-	private float _innerFlashingTime;}
+	private float _innerFlashingTime;
+	
+public override void Awake(StateMachine stateMachine)
+	{
+		Damageable attackableEntity = stateMachine.GetComponent<Damageable>();
+		GetHitEffectConfigSO getHitEffectConfig = attackableEntity.GetHitEffectConfig;
+
+		// Take the last one if many.
+		_material = attackableEntity.MainMeshRenderer.materials[attackableEntity.MainMeshRenderer.materials.Length - 1];
+		_getHitFlashingDuration = getHitEffectConfig.GetHitFlashingDuration;
+		_getHitFlashingSpeed = getHitEffectConfig.GetHitFlashingSpeed;
+		_baseTintColor = _material.GetColor("_MainColor");
+		_innerFlashingTime = getHitEffectConfig.GetHitFlashingDuration;
+		_flashingColor = getHitEffectConfig.GetHitFlashingColor;
+	}
+
+	public override void OnUpdate()
+	{
+		ApplyHitEffect();
+	}
+
+	public override void OnStateEnter()
+	{
+		_innerFlashingTime = _getHitFlashingDuration;
+	}
+
+	public override void OnStateExit()
+	{
+		_material.SetColor("_MainColor", _baseTintColor);
+	}
+
+	}
 /* {
 	protected override StateAction CreateAction() => new GetHitFlashingEffectAction();
 }
