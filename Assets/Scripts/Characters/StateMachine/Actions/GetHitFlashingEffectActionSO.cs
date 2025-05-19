@@ -47,6 +47,22 @@ public override void Awake(StateMachine stateMachine)
 	{
 		_material.SetColor("_MainColor", _baseTintColor);
 	}
+	public void ApplyHitEffect()
+	{
+		if (_innerFlashingTime > 0)
+		{
+			Color tintingColor = computeGetHitTintingColor();
+			_material.SetColor("_MainColor", tintingColor);
+			_innerFlashingTime -= Time.deltaTime;
+		}
+	}
+
+	private Color computeGetHitTintingColor()
+	{
+		Color finalTintingColor = Color.Lerp(_baseTintColor, _flashingColor, _flashingColor.a);
+		float tintingTiming = (_getHitFlashingDuration - _innerFlashingTime) * _getHitFlashingSpeed / _getHitFlashingDuration;
+		return Color.Lerp(_baseTintColor, finalTintingColor, (-Mathf.Cos(Mathf.PI * 2 * tintingTiming) + 1) / 2);
+	}*
 
 	}
 /* {
