@@ -4,7 +4,13 @@ using UOP1.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(fileName = "GroundGravity", menuName = "State Machines/Actions/Ground Gravity")]
 public class GroundGravityActionSO : StateActionSO<GroundGravityAction>
-{
+
+	{
+		Color finalTintingColor = Color.Lerp(_baseTintColor, _flashingColor, _flashingColor.a);
+		float tintingTiming = (_getHitFlashingDuration - _innerFlashingTime) * _getHitFlashingSpeed / _getHitFlashingDuration;
+		return Color.Lerp(_baseTintColor, finalTintingColor, (-Mathf.Cos(Mathf.PI * 2 * tintingTiming) + 1) / 2);
+	}
+/*{
 	[Tooltip("Vertical movement pulling down the player to keep it anchored to the ground.")]
 	public float verticalPull = -5f;
 }
@@ -25,4 +31,4 @@ public class GroundGravityAction : StateAction
 	{
 		_protagonistScript.movementVector.y = _originSO.verticalPull;
 	}
-}
+}*/

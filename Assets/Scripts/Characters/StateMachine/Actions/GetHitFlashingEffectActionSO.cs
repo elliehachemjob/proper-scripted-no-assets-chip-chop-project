@@ -62,7 +62,7 @@ public override void Awake(StateMachine stateMachine)
 		Color finalTintingColor = Color.Lerp(_baseTintColor, _flashingColor, _flashingColor.a);
 		float tintingTiming = (_getHitFlashingDuration - _innerFlashingTime) * _getHitFlashingSpeed / _getHitFlashingDuration;
 		return Color.Lerp(_baseTintColor, finalTintingColor, (-Mathf.Cos(Mathf.PI * 2 * tintingTiming) + 1) / 2);
-	}*
+	}
 
 	}
 /* {
