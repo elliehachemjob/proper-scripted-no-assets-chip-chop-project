@@ -25,7 +25,14 @@ public class GroundGravityAction : StateAction
 	{
 		_protagonistScript = stateMachine.GetComponent<Protagonist>();
 	}
+	
 	}
+
+	ublic override void OnUpdate()
+	{
+		_protagonistScript.movementVector.y = _originSO.verticalPull;
+	}
+
 /*{
 
 Color finalTintingColor = Color.Lerp(_baseTintColor, _flashingColor, _flashingColor.a);
