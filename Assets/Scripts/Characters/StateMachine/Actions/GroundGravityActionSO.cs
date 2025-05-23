@@ -28,7 +28,7 @@ public class GroundGravityAction : StateAction
 	
 	}
 
-	ublic override void OnUpdate()
+	public override void OnUpdate()
 	{
 		_protagonistScript.movementVector.y = _originSO.verticalPull;
 	}

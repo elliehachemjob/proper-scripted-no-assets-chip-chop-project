@@ -4,7 +4,13 @@ using UOP1.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(fileName = "HorizontalMove", menuName = "State Machines/Actions/Horizontal Move")]
 public class HorizontalMoveActionSO : StateActionSO<HorizontalMoveAction>
+public class HorizontalMoveActionSO : StateActionSO<HorizontalMoveAction>
 {
+	[Tooltip("Horizontal XZ plane speed multiplier")]
+	public float speed = 8f;
+}
+
+/*{
 	[Tooltip("Horizontal XZ plane speed multiplier")]
 	public float speed = 8f;
 }
@@ -26,4 +32,4 @@ public class HorizontalMoveAction : StateAction
 		_protagonistScript.movementVector.x = _protagonistScript.movementInput.x * _originSO.speed;
 		_protagonistScript.movementVector.z = _protagonistScript.movementInput.z * _originSO.speed;
 	}
-}
+}*/
