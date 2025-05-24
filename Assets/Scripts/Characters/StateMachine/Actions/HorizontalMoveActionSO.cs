@@ -10,6 +10,18 @@ public class HorizontalMoveActionSO : StateActionSO<HorizontalMoveAction>
 	public float speed = 8f;
 }
 
+public class HorizontalMoveAction : StateAction
+{
+	//Component references
+	private Protagonist _protagonistScript;
+	private HorizontalMoveActionSO _originSO => (HorizontalMoveActionSO)base.OriginSO; // The SO this StateAction spawned from
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_protagonistScript = stateMachine.GetComponent<Protagonist>();
+	}
+}
+
 /*{
 	[Tooltip("Horizontal XZ plane speed multiplier")]
 	public float speed = 8f;
