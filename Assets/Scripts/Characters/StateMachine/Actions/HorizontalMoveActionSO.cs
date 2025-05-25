@@ -20,6 +20,12 @@ public class HorizontalMoveAction : StateAction
 	{
 		_protagonistScript = stateMachine.GetComponent<Protagonist>();
 	}
+	public override void OnUpdate()
+	{
+		//delta.Time is used when the movement is applied (ApplyMovementVectorAction)
+		_protagonistScript.movementVector.x = _protagonistScript.movementInput.x * _originSO.speed;
+		_protagonistScript.movementVector.z = _protagonistScript.movementInput.z * _originSO.speed;
+	}
 }
 
 /*{
