@@ -3,8 +3,13 @@ using UOP1.StateMachine;
 using UOP1.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(fileName = "NPCFaceProtagonist", menuName = "State Machines/Actions/NPC Face Protagonist")]
-public class NPCFaceProtagonistSO : StateActionSO
+public class NPCFaceProtagonistSO : StateActionSOs
+
 {
+	public TransformAnchor playerAnchor;
+	protected override StateAction CreateAction() => new NPCFaceProtagonist();
+}
+/* {
 	public TransformAnchor playerAnchor;
 	protected override StateAction CreateAction() => new NPCFaceProtagonist();
 }
@@ -42,4 +47,4 @@ public class NPCFaceProtagonist : StateAction
 	{
 		_actor.rotation = rotationOnEnter;
 	}
-}
+}*/
