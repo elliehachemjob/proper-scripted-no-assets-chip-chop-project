@@ -31,6 +31,15 @@ public class NPCFaceProtagonist : StateAction
 			_actor.rotation = rotation;
 		}
 	}
+	public override void OnStateEnter()
+	{
+
+	}
+
+	public override void OnStateExit()
+	{
+		_actor.rotation = rotationOnEnter;
+	}
 }
 /* {
 	public TransformAnchor playerAnchor;
