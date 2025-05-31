@@ -8,8 +8,29 @@ public class NPCMoveToNextDestinationSO : StateActionSO
 {
 	protected override StateAction CreateAction() => new NPCMoveToNextDestination();
 }
-
 public class NPCMoveToNextDestination : StateAction
+{
+	private NPCMovement _npcMovement;
+	private NPCMovementConfigSO _config;
+	private NPCMovementAction _action;
+	private NavMeshAgent _agent;
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_agent = stateMachine.GetComponent<NavMeshAgent>();
+		_npcMovement = stateMachine.GetComponent<NPCMovement>();
+		InitMovementStrategy(_npcMovement.NPCMovementConfig);
+	}
+
+	public override void OnStateEnter()
+	{
+		if (_config != _npcMovement.NPCMovementConfig)
+		{
+			InitMovementStrategy(_npcMovement.NPCMovementConfig);
+		}
+		_action.OnStateEnter();
+	}}s
+/* public class NPCMoveToNextDestination : StateAction
 {
 	private NPCMovement _npcMovement;
 	private NPCMovementConfigSO _config;
@@ -58,5 +79,4 @@ public class NPCMoveToNextDestination : StateAction
 				(PathwayConfigSO)_npcMovement.NPCMovementConfig,
 				_agent);
 		}
-	}
-}
+	}*/
