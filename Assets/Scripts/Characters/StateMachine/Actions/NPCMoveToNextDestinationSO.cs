@@ -29,7 +29,34 @@ public class NPCMoveToNextDestination : StateAction
 			InitMovementStrategy(_npcMovement.NPCMovementConfig);
 		}
 		_action.OnStateEnter();
-	}}s
+	}
+	public override void OnUpdate()
+	{
+		_action.OnUpdate();
+	}
+
+	public override void OnStateExit()
+	{
+		_action.OnStateExit();
+	}
+
+	private void InitMovementStrategy(NPCMovementConfigSO config)
+	{
+		_config = config;
+		if (_npcMovement.NPCMovementConfig is RoamingAroundCenterConfigSO)
+		{
+			_action = new RoamingMovementAction(
+				(RoamingAroundCenterConfigSO)_npcMovement.NPCMovementConfig,
+				_agent,
+				_npcMovement.transform.position);
+		}
+		else if (_npcMovement.NPCMovementConfig is PathwayConfigSO)
+		{
+			_action = new PathwayMovementAction(
+				(PathwayConfigSO)_npcMovement.NPCMovementConfig,
+				_agent);
+		}
+	}
 /* public class NPCMoveToNextDestination : StateAction
 {
 	private NPCMovement _npcMovement;
