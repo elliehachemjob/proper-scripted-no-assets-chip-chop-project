@@ -23,7 +23,14 @@ public class PlayAudioCueAction : StateAction
 	public override void Awake(StateMachine stateMachine)
 	{
 		_stateMachineTransform = stateMachine.transform;
-	}}
+	}
+	public override void OnUpdate() { }
+
+	public override void OnStateEnter()
+	{
+		_originSO.audioCueEventChannel.RaisePlayEvent(_originSO.audioCue, _originSO.audioConfiguration, _stateMachineTransform.position);
+	}
+	}
 /*{
 	public AudioCueSO audioCue = default;
 	public AudioCueEventChannelSO audioCueEventChannel = default;
