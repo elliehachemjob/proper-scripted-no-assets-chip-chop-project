@@ -7,8 +7,14 @@ public class PlayJumpParticlesActionSO : StateActionSO<PlayJumpParticlesAction> 
 
 public class PlayJumpParticlesAction : StateAction
 {
+		//Component references
+	public override void Awake(StateMachine stateMachine)
+	{
+		_dustController = stateMachine.GetComponent<PlayerEffectController>();
+	}
+
 	//Component references
-	private PlayerEffectController _dustController;
+/*	private PlayerEffectController _dustController;
 
 	public override void Awake(StateMachine stateMachine)
 	{
@@ -21,4 +27,4 @@ public class PlayJumpParticlesAction : StateAction
 	}
 
 	public override void OnUpdate() { }
-}
+}*/}
