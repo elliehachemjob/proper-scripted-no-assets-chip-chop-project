@@ -12,6 +12,12 @@ public class PlayJumpParticlesAction : StateAction
 	{
 		_dustController = stateMachine.GetComponent<PlayerEffectController>();
 	}
+	public override void OnStateEnter()
+	{
+		_dustController.PlayJumpParticles();
+	}
+
+	public override void OnUpdate() { }
 
 	//Component references
 /*	private PlayerEffectController _dustController;
