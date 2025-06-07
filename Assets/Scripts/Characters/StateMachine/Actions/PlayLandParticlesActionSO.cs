@@ -7,7 +7,18 @@ public class PlayLandParticlesActionSO : StateActionSO<PlayLandParticlesAction> 
 
 public class PlayLandParticlesAction : StateAction
 {
-	//Component references
+	Component references
+	private PlayerEffectController _dustController;
+	private Transform _transform;
+	private CharacterController _characterController;
+
+	private float _coolDown = 0.3f;
+	private float t = 0f;
+
+	private float _fallStartY = 0f;
+	private float _fallEndY = 0f;
+	private float _maxFallDistance = 4f; //Used to adjust particle emission intensity
+	/* //Component references
 	private PlayerEffectController _dustController;
 	private Transform _transform;
 	private CharacterController _characterController;
@@ -44,5 +55,5 @@ public class PlayLandParticlesAction : StateAction
 		}
 	}
 
-	public override void OnUpdate() { }
+	public override void OnUpdate() { }*/
 }
