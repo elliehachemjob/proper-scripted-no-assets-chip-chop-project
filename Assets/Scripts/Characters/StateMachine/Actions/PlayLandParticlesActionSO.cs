@@ -17,7 +17,23 @@ public class PlayLandParticlesAction : StateAction
 
 	private float _fallStartY = 0f;
 	private float _fallEndY = 0f;
-	private float _maxFallDistance = 4f; //Used to adjust particle emission intensity
+	private float _maxFallDistance = 4f; 
+	
+	public override void Awake(StateMachine stateMachine)
+	{
+		_dustController = stateMachine.GetComponent<PlayerEffectController>();
+		_transform = stateMachine.transform;
+		_characterController = stateMachine.GetComponent<CharacterController>();
+	}
+
+	public override void OnStateEnter()
+	{
+		_fallStartY = _transform.position.y;
+	}
+
+	//Used to adjust particle emission intensity
+
+
 	/* //Component references
 	private PlayerEffectController _dustController;
 	private Transform _transform;
