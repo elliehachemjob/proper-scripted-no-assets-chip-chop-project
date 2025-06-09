@@ -30,7 +30,18 @@ public class PlayLandParticlesAction : StateAction
 	{
 		_fallStartY = _transform.position.y;
 	}
+	public override void OnStateExit()
+	{
+		_fallEndY = _transform.position.y;
+		float dY = Mathf.Abs(_fallStartY - _fallEndY);
+		float fallIntensity = Mathf.InverseLerp(0, _maxFallDistance, dY);
 
+		if (Time.time >= t + _coolDown && _characterController.isGrounded)
+		{
+			_dustController.PlayLandParticles(fallIntensity);
+			t = Time.time;
+		}
+	}
 	//Used to adjust particle emission intensity
 
 
