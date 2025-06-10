@@ -8,7 +8,18 @@ using UOP1.StateMachine.ScriptableObjects;
 public class PlayLiftoffJumpParticlesActionSO : StateActionSO<PlayLiftoffJumpParticlesAction> { }
 
 public class PlayLiftoffJumpParticlesAction : StateAction
-{
+
+	{
+	//Component references
+	private PlayerEffectController _dustController;
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_dustController = stateMachine.GetComponent<PlayerEffectController>();
+	}
+
+}
+/*{
 	//Component references
 	private PlayerEffectController _dustController;
 
@@ -23,4 +34,4 @@ public class PlayLiftoffJumpParticlesAction : StateAction
 	}
 
 	public override void OnUpdate() { }
-}
+}*/
