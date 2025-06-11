@@ -18,6 +18,13 @@ public class PlayLiftoffJumpParticlesAction : StateAction
 		_dustController = stateMachine.GetComponent<PlayerEffectController>();
 	}
 
+public override void OnStateEnter()
+	{
+		_dustController.PlayLandParticles(1f); //Same particles as the landing, but with full power
+	}
+
+	public override void OnUpdate() { }
+
 }
 /*{
 	//Component references
