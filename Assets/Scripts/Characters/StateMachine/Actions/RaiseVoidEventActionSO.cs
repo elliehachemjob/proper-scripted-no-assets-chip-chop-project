@@ -20,8 +20,16 @@ public class RaiseVoidEventActionSO : StateActionSOss
 	{
 
 	}
+public override void OnStateEnter()
+	{
+		_voidEvent.RaiseEvent();
+	}
 
-}
+	public override void OnStateExit()
+	{
+
+	}
+}}s
 /*{
 	public VoidEventChannelSO voidEvent;
 
