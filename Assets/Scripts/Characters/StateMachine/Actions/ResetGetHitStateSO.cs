@@ -4,7 +4,10 @@ using UOP1.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(fileName = "ResetGetHitState", menuName = "State Machines/Actions/Reset Get Hit State")]
 public class ResetGetHitStateSO : StateActionSO
-{
+s{
+	protected override StateAction CreateAction() => new ResetGetHitState();
+}
+/*{
 	protected override StateAction CreateAction() => new ResetGetHitState();
 }
 
@@ -26,4 +29,4 @@ public class ResetGetHitState : StateAction
 	{
 		_damageableEntity.GetHit = false;
 	}
-}
+}*/ss
