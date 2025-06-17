@@ -14,7 +14,19 @@ public class ResetGetHitState : StateAction
 	public override void Awake(StateMachine stateMachine)
 	{
 		_damageableEntity = stateMachine.GetComponent<Damageable>();
-	}}
+	}
+
+	public override void OnUpdate()
+	{
+
+	}
+
+	public override void OnStateExit()
+	{
+		_damageableEntity.GetHit = false;
+	
+	
+	}
 /*{
 	protected override StateAction CreateAction() => new ResetGetHitState();
 }
