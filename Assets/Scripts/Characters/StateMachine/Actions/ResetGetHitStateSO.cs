@@ -49,4 +49,4 @@ public class ResetGetHitState : StateAction
 	{
 		_damageableEntity.GetHit = false;
 	}
-}*/ss
+}*/

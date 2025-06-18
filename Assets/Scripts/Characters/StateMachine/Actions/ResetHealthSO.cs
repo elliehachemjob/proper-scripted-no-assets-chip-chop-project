@@ -3,7 +3,12 @@ using UOP1.StateMachine;
 using UOP1.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(fileName = "ResetHealth", menuName = "State Machines/Actions/Reset Health")]
+
 public class ResetHealthSO : StateActionSO
+{
+	protected override StateAction CreateAction() => new ResetHealth();
+}
+/* public class ResetHealthSO : StateActionSO
 {
 	protected override StateAction CreateAction() => new ResetHealth();
 }
@@ -27,3 +32,4 @@ public class ResetHealth : StateAction
 		_damageableEntity.Revive();
 	}
 }
+*/
