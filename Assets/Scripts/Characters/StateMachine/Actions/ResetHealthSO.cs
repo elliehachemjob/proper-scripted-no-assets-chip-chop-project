@@ -15,7 +15,17 @@ public class ResetHealth : StateAction
 	public override void Awake(StateMachine stateMachine)
 	{
 		_damageableEntity = stateMachine.GetComponent<Damageable>();
-	}}
+	}
+	public override void OnUpdate()
+	{
+
+	}
+
+	public override void OnStateExit()
+	{
+		_damageableEntity.Revive();
+	}ssssssss
+	}
 /* public class ResetHealthSO : StateActionSO
 {
 	protected override StateAction CreateAction() => new ResetHealth();
