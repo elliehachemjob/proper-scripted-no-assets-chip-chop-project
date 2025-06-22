@@ -9,6 +9,22 @@ public class RotateActionSO : StateActionSO<RotateAction>
 	[Tooltip("Smoothing for rotating the character to their movement direction")]
 	public float turnSmoothTime = 0.2f;
 }
+public class RotateAction : StateAction
+{
+	//Component references
+	private Protagonist _protagonistScript;
+	private Transform _transform;
+
+	private float _turnSmoothSpeed; //Used by Mathf.SmoothDampAngle to smoothly rotate the character to their movement direction
+	private const float ROTATION_TRESHOLD = .02f; // Used to prevent NaN result causing rotation in a non direction
+	private RotateActionSO _originSO => (RotateActionSO)base.OriginSO; // The SO this StateAction spawned from
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_protagonistScript = stateMachine.GetComponent<Protagonist>();
+		_transform = stateMachine.GetComponent<Transform>();
+	}}
+
 /* {
 	[Tooltip("Smoothing for rotating the character to their movement direction")]
 	public float turnSmoothTime = 0.2f;
