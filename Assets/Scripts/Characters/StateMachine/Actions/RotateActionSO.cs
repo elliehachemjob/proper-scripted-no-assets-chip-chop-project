@@ -23,7 +23,22 @@ public class RotateAction : StateAction
 	{
 		_protagonistScript = stateMachine.GetComponent<Protagonist>();
 		_transform = stateMachine.GetComponent<Transform>();
-	}}
+	}
+	public override void OnUpdate()
+	{
+		Vector3 horizontalMovement = _protagonistScript.movementVector;
+		horizontalMovement.y = 0f;
+
+		if (horizontalMovement.sqrMagnitude >= ROTATION_TRESHOLD)
+		{
+			float targetRotation = Mathf.Atan2(_protagonistScript.movementVector.x, _protagonistScript.movementVector.z) * Mathf.Rad2Deg;
+			_transform.eulerAngles = Vector3.up * Mathf.SmoothDampAngle(
+				_transform.eulerAngles.y,
+				targetRotation,
+				ref _turnSmoothSpeed,
+				_originSO.turnSmoothTime);
+		}
+	}
 
 /* {
 	[Tooltip("Smoothing for rotating the character to their movement direction")]
