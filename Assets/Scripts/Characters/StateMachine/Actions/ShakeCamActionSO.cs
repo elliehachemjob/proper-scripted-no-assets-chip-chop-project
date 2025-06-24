@@ -8,6 +8,10 @@ public class ShakeCamActionSO : StateActionSO
 	public VoidEventChannelSO camShakeEvent;
 	protected override StateAction CreateAction() => new ShakeCamAction();
 }
+/*{
+	public VoidEventChannelSO camShakeEvent;
+	protected override StateAction CreateAction() => new ShakeCamAction();
+}
 
 public class ShakeCamAction : StateAction
 {
@@ -30,3 +34,4 @@ public class ShakeCamAction : StateAction
 	{
 	}
 }
+*/
