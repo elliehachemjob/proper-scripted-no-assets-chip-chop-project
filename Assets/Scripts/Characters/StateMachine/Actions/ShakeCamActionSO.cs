@@ -8,6 +8,17 @@ public class ShakeCamActionSO : StateActionSO
 	public VoidEventChannelSO camShakeEvent;
 	protected override StateAction CreateAction() => new ShakeCamAction();
 }
+public class ShakeCamAction : StateAction
+{
+	protected new ShakeCamActionSO OriginSO => (ShakeCamActionSO)base.OriginSO;
+
+	public override void Awake(StateMachine stateMachine)
+	{
+	}
+	
+	public override void OnUpdate()
+	{
+	}}
 /*{
 	public VoidEventChannelSO camShakeEvent;
 	protected override StateAction CreateAction() => new ShakeCamAction();
