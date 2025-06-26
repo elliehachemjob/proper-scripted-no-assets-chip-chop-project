@@ -18,7 +18,17 @@ public class ShakeCamAction : StateAction
 	
 	public override void OnUpdate()
 	{
-	}}
+	}
+	public override void OnStateEnter()
+	{
+		OriginSO.camShakeEvent.RaiseEvent();
+	}
+	
+	public override void OnStateExit()
+	{
+	}
+}
+	}
 /*{
 	public VoidEventChannelSO camShakeEvent;
 	protected override StateAction CreateAction() => new ShakeCamAction();
