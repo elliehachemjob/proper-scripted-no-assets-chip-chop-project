@@ -28,7 +28,7 @@ public class ShakeCamAction : StateAction
 	{
 	}
 }
-	}
+	
 /*{
 	public VoidEventChannelSO camShakeEvent;
 	protected override StateAction CreateAction() => new ShakeCamAction();

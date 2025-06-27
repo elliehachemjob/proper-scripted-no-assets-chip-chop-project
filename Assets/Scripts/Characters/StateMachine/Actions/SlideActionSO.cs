@@ -6,7 +6,14 @@ using UOP1.StateMachine.ScriptableObjects;
 public class SlideActionSO : StateActionSO<SlideAction> { }
 
 public class SlideAction : StateAction
-{
+
+	private Protagonist _protagonist;
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_protagonist = stateMachine.GetComponent<Protagonist>();
+	}
+/*{
 	private Protagonist _protagonist;
 
 	public override void Awake(StateMachine stateMachine)
@@ -35,4 +42,4 @@ public class SlideAction : StateAction
 
 		_protagonist.movementVector = slideDirection * speed;
 	}
-}
+}*/
