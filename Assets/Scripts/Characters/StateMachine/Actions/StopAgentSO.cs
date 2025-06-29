@@ -4,7 +4,7 @@ using UOP1.StateMachine;
 using UOP1.StateMachine.ScriptableObjects;
 
 [CreateAssetMenu(fileName = "StopAgent", menuName = "State Machines/Actions/Stop NavMesh Agent")]
-public class StopAgentSO : StateActionSO
+/*public class StopAgentSO : StateActionSO
 {
 	protected override StateAction CreateAction() => new StopAgent();
 }
@@ -32,4 +32,4 @@ public class StopAgent : StateAction
 			_agent.isStopped = true;
 		}
 	}
-}
+}*/
