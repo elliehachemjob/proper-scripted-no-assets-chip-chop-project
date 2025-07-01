@@ -20,6 +20,18 @@ public class StopAgent : StateAction
 		_agent = stateMachine.gameObject.GetComponent<NavMeshAgent>();
 		_agentDefined = _agent != null;
 	}
+	public override void OnUpdate()
+	{
+
+	}
+
+	public override void OnStateEnter()
+	{
+		if (_agentDefined)
+		{
+			_agent.isStopped = true;
+		}
+	}
 }
 /*public class StopAgentSO : StateActionSO
 {
