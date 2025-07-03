@@ -24,6 +24,22 @@ public class StopMovement : StateAction
 		_protagonist = stateMachine.GetComponent<Protagonist>();
 	}
 
+	/*[SerializeField] private StateAction.SpecificMoment _moment = default;
+	public StateAction.SpecificMoment Moment => _moment;
+
+	protected override StateAction CreateAction() => new StopMovement();
+}
+
+public class StopMovement : StateAction
+{
+	private Protagonist _protagonist;
+	private new StopMovementActionSO OriginSO => (StopMovementActionSO)base.OriginSO;
+
+	public override void Awake(StateMachine stateMachine)
+	{
+		_protagonist = stateMachine.GetComponent<Protagonist>();
+	}
+
 	public override void OnUpdate()
 	{
 		if (OriginSO.Moment == SpecificMoment.OnUpdate)
@@ -40,5 +56,5 @@ public class StopMovement : StateAction
 	{
 		if (OriginSO.Moment == SpecificMoment.OnStateExit)
 			_protagonist.movementVector = Vector3.zero;
-	}
+	}*/
 }
