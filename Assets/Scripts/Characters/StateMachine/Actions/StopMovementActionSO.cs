@@ -23,7 +23,23 @@ public class StopMovement : StateAction
 	{
 		_protagonist = stateMachine.GetComponent<Protagonist>();
 	}
+	public override void OnUpdate()
+	{
+		if (OriginSO.Moment == SpecificMoment.OnUpdate)
+			_protagonist.movementVector = Vector3.zero;
+	}
 
+	public override void OnStateEnter()
+	{
+		if (OriginSO.Moment == SpecificMoment.OnStateEnter)
+			_protagonist.movementVector = Vector3.zero;
+	}
+
+	public override void OnStateExit()
+	{
+		if (OriginSO.Moment == SpecificMoment.OnStateExit)
+			_protagonist.movementVector = Vector3.zero;
+	}
 	/*[SerializeField] private StateAction.SpecificMoment _moment = default;
 	public StateAction.SpecificMoment Moment => _moment;
 
