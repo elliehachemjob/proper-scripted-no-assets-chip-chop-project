@@ -9,3 +9,7 @@ public class AlwaysFalseCondition : Condition
 {
 	protected override bool Statement() => false;
 }
+/*public class AlwaysFalseCondition : Condition
+{
+	protected override bool Statement() => false;
+}*/
