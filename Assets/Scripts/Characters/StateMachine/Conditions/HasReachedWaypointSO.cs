@@ -9,8 +9,13 @@ public class HasReachedWaypointSO : StateConditionSO
 {
 	protected override Condition CreateCondition() => new HasReachedWaypoint();
 }
+private NavMeshAgent _agent;
 
-public class HasReachedWaypoint : Condition
+	public override void Awake(StateMachine stateMachine)
+	{
+		_agent = stateMachine.gameObject.GetComponent<NavMeshAgent>();
+	}
+/* public class HasReachedWaypoint : Condition
 {
 	private NavMeshAgent _agent;
 
@@ -35,4 +40,4 @@ public class HasReachedWaypoint : Condition
 		}
 		return false;
 	}
-}
+}*/
