@@ -20,7 +20,15 @@ public class ZoneTriggerController : MonoBehaviour
 		{
 			_enterZone.Invoke(true, other.gameObject);
 		}
-	}}
+	}
+		private void OnTriggerExit(Collider other)
+	{
+		if ((1 << other.gameObject.layer & _layers) != 0)
+		{
+			_enterZone.Invoke(false, other.gameObject);
+		}
+	}
+	}
 /* public class ZoneTriggerController : MonoBehaviour
 {
 	[SerializeField] private BoolEvent _enterZone = default;

@@ -33,7 +33,7 @@ public class HasHitHeadCondition : Condition
 		}
 
 		return false;
-	}*/
+	}
 	/*private Protagonist _protagonistScript;
 	private CharacterController _characterController;
 	private Transform _transform;
