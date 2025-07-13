@@ -6,7 +6,17 @@ using UnityEngine.Playables;
 [Serializable]
 public class DialogueBehaviour : PlayableBehaviour
 {
-	[SerializeField] private LocalizedString _dialogueLine = default;
+		[SerializeField] private LocalizedString _dialogueLine = default;
+	[SerializeField] private ActorSO _actor = default;
+	[SerializeField] private bool _pauseWhenClipEnds = default; //This won't work if the clip ends on the very last frame of the Timeline
+	[SerializeField] public VoidEventChannelSO LineEndedEvent;
+
+	[HideInInspector] public DialogueLineChannelSO PlayDialogueEvent;
+	[HideInInspector] public VoidEventChannelSO PauseTimelineEvent;
+
+	private bool _dialoguePlayed;
+
+	/*[SerializeField] private LocalizedString _dialogueLine = default;
 	[SerializeField] private ActorSO _actor = default;
 	[SerializeField] private bool _pauseWhenClipEnds = default; //This won't work if the clip ends on the very last frame of the Timeline
 	[SerializeField] public VoidEventChannelSO LineEndedEvent;
@@ -66,5 +76,5 @@ public class DialogueBehaviour : PlayableBehaviour
 				LineEndedEvent.RaiseEvent();
 			}
 		}
-	}
+	}*/
 }
