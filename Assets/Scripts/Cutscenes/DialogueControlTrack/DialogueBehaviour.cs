@@ -42,7 +42,28 @@ public class DialogueBehaviour : PlayableBehaviour
 			}
 		}
 	}
-
+public override void OnBehaviourPause(Playable playable, FrameData info)
+	{
+		// The check on _dialoguePlayed is needed because OnBehaviourPause is called also at the beginning of the Timeline,
+		// so we need to make sure that the Timeline has actually gone through this clip (i.e. called OnBehaviourPlay) at least once before we stop it
+		if (Application.isPlaying
+			&& playable.GetGraph().IsPlaying()
+			&& !playable.GetGraph().GetRootPlayable(0).IsDone()
+			&& _dialoguePlayed)
+		{
+			if (_pauseWhenClipEnds)
+			{
+				if (PauseTimelineEvent != null)
+				{
+					PauseTimelineEvent.OnEventRaised();
+				}
+			}
+			else
+			{
+				//We need to disable the dialogue UI when the line is finished
+				LineEndedEvent.RaiseEvent();
+			}
+		}
 	/*[SerializeField] private LocalizedString _dialogueLine = default;
 	[SerializeField] private ActorSO _actor = default;
 	[SerializeField] private bool _pauseWhenClipEnds = default; //This won't work if the clip ends on the very last frame of the Timeline
