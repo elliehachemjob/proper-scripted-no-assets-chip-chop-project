@@ -4,7 +4,7 @@ using UnityEngine.Timeline;
 
 public class DialogueClip : PlayableAsset, ITimelineClipAsset
 {
-	[SerializeField] private DialogueBehaviour _template = default;
+	/* [SerializeField] private DialogueBehaviour _template = default;
 
 	[HideInInspector] public DialogueLineChannelSO PlayDialogueEvent;
 	[HideInInspector] public VoidEventChannelSO PauseTimelineEvent;
@@ -23,5 +23,5 @@ public class DialogueClip : PlayableAsset, ITimelineClipAsset
 		_template.PauseTimelineEvent = PauseTimelineEvent;
 
 		return playable;
-	}
+	}*/
 }
