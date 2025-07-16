@@ -9,6 +9,20 @@ public class DialogueClip : PlayableAsset, ITimelineClipAsset
 	[HideInInspector] public DialogueLineChannelSO PlayDialogueEvent;
 	[HideInInspector] public VoidEventChannelSO PauseTimelineEvent;
 	
+		public ClipCaps clipCaps
+	{
+		get { return ClipCaps.None; }
+	}
+
+	public override Playable CreatePlayable(PlayableGraph graph, GameObject owner)
+	{
+		ScriptPlayable<DialogueBehaviour> playable = ScriptPlayable<DialogueBehaviour>.Create(graph, _template);
+
+		_template.PlayDialogueEvent = PlayDialogueEvent;
+		_template.PauseTimelineEvent = PauseTimelineEvent;
+
+		return playable;
+	}
 	/* [SerializeField] private DialogueBehaviour _template = default;
 
 	[HideInInspector] public DialogueLineChannelSO PlayDialogueEvent;
