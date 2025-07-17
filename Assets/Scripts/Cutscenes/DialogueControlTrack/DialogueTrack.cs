@@ -5,7 +5,11 @@ using UnityEngine.Timeline;
 [TrackClipType(typeof(DialogueClip))]
 public class DialogueTrack : PlayableTrack
 {
+	
 	[SerializeField] public DialogueLineChannelSO PlayDialogueEvent;
+	[SerializeField] public VoidEventChannelSO PauseTimelineEvent;
+	
+	/*[SerializeField] public DialogueLineChannelSO PlayDialogueEvent;
 	[SerializeField] public VoidEventChannelSO PauseTimelineEvent;
 	
 	public override Playable CreateTrackMixer(PlayableGraph graph, GameObject go, int inputCount)
@@ -18,5 +22,5 @@ public class DialogueTrack : PlayableTrack
 		}
 
 		return base.CreateTrackMixer(graph, go, inputCount);
-	}
+	}*/
 }
