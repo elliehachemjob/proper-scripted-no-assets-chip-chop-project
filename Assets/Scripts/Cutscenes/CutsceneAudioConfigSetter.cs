@@ -14,6 +14,11 @@ public class CutsceneAudioConfigSetter : MonoBehaviour
 	{
 		onCutsceneStart.OnEventRaised -= SetVolume;
 	}
+	
+	private void SetVolume()
+	{
+		GetComponent<AudioSource>().volume = _audioConfig.Volume;
+	}
 	/*[SerializeField] private AudioConfigurationSO _audioConfig = default;
 	[SerializeField] private VoidEventChannelSO onCutsceneStart = default;
 
