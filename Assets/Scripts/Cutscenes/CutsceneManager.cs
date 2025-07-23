@@ -14,6 +14,15 @@ public class CutsceneManager : MonoBehaviour
 	[SerializeField] public DialogueLineChannelSO _playDialogueEvent = default;
 	[SerializeField] public VoidEventChannelSO _pauseTimelineEvent = default;
 	[SerializeField] public VoidEventChannelSO _onLineEndedEvent = default;
+/*	[SerializeField] private DialogueManager _dialogueManager = default;
+	[SerializeField] private InputReader _inputReader = default;
+	[SerializeField] private GameStateSO _gameState = default;
+
+	[Header("Listening on")]
+	[SerializeField] private PlayableDirectorChannelSO _playCutsceneEvent = default;
+	[SerializeField] public DialogueLineChannelSO _playDialogueEvent = default;
+	[SerializeField] public VoidEventChannelSO _pauseTimelineEvent = default;
+	[SerializeField] public VoidEventChannelSO _onLineEndedEvent = default;
 
 	private PlayableDirector _activePlayableDirector;
 	private bool _isPaused;
@@ -96,5 +105,5 @@ public class CutsceneManager : MonoBehaviour
 	{
 		_isPaused = false;
 		_activePlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
-	}
+	}*/
 }
