@@ -14,6 +14,22 @@ public class CutsceneManager : MonoBehaviour
 	[SerializeField] public DialogueLineChannelSO _playDialogueEvent = default;
 	[SerializeField] public VoidEventChannelSO _pauseTimelineEvent = default;
 	[SerializeField] public VoidEventChannelSO _onLineEndedEvent = default;
+
+	private PlayableDirector _activePlayableDirector;
+	private bool _isPaused;
+
+	bool IsCutscenePlaying => _activePlayableDirector.playableGraph.GetRootPlayable(0).GetSpeed() != 0d;
+
+	private void OnEnable()
+	{
+		_inputReader.AdvanceDialogueEvent += OnAdvance;
+	}
+
+	private void OnDisable()
+	{
+		_inputReader.AdvanceDialogueEvent -= OnAdvance;
+	}
+
 /*	[SerializeField] private DialogueManager _dialogueManager = default;
 	[SerializeField] private InputReader _inputReader = default;
 	[SerializeField] private GameStateSO _gameState = default;
