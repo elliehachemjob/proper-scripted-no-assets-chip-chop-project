@@ -29,6 +29,24 @@ public class CutsceneManager : MonoBehaviour
 	{
 		_inputReader.AdvanceDialogueEvent -= OnAdvance;
 	}
+private void Start()
+	{
+		_playCutsceneEvent.OnEventRaised += PlayCutscene;
+		_playDialogueEvent.OnEventRaised += PlayDialogueFromClip;
+		_pauseTimelineEvent.OnEventRaised += PauseTimeline;
+		_onLineEndedEvent.OnEventRaised += LineEnded ;
+	}
+
+	void PlayCutscene(PlayableDirector activePlayableDirector)
+	{
+		_inputReader.EnableDialogueInput();
+		_gameState.UpdateGameState(GameState.Cutscene);
+		_activePlayableDirector = activePlayableDirector;
+
+		_isPaused = false;
+		_activePlayableDirector.Play();
+		_activePlayableDirector.stopped += HandleDirectorStopped;
+	}
 
 /*	[SerializeField] private DialogueManager _dialogueManager = default;
 	[SerializeField] private InputReader _inputReader = default;
