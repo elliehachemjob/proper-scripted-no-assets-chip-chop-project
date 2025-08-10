@@ -47,7 +47,27 @@ private void Start()
 		_activePlayableDirector.Play();
 		_activePlayableDirector.stopped += HandleDirectorStopped;
 	}
+	void CutsceneEnded()
+	{
+		if (_activePlayableDirector != null)
+			_activePlayableDirector.stopped -= HandleDirectorStopped;
 
+		_gameState.UpdateGameState(GameState.Gameplay);
+		_inputReader.EnableGameplayInput();
+		_dialogueManager.CutsceneDialogueEnded();
+	}
+
+	public void LineEnded()
+	{
+		_dialogueManager.CutsceneDialogueEnded();
+	}
+
+	private void HandleDirectorStopped(PlayableDirector director) => CutsceneEnded();
+
+	void PlayDialogueFromClip(LocalizedString dialogueLine, ActorSO actor)
+	{
+		_dialogueManager.DisplayDialogueLine(dialogueLine, actor);
+	}
 /*	[SerializeField] private DialogueManager _dialogueManager = default;
 	[SerializeField] private InputReader _inputReader = default;
 	[SerializeField] private GameStateSO _gameState = default;
