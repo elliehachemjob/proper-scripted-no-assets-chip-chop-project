@@ -68,6 +68,33 @@ private void Start()
 	{
 		_dialogueManager.DisplayDialogueLine(dialogueLine, actor);
 	}
+	/// <summary>
+	/// This callback is executed when the player presses the button to advance dialogues. If the Timeline is currently paused due to a <c>DialogueControlClip</c>, it will resume its playback.
+	/// </summary>
+	private void OnAdvance()
+	{
+		if (_isPaused)
+		{
+			ResumeTimeline();
+			LineEnded();
+		}
+	}
+
+	/// <summary>
+	/// Called by <c>DialogueControlClip</c> on the Timeline.
+	/// </summary>
+	void PauseTimeline()
+	{
+		_isPaused = true;
+		_activePlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(0);
+	}
+
+	void ResumeTimeline()
+	{
+		_isPaused = false;
+		_activePlayableDirector.playableGraph.GetRootPlayable(0).SetSpeed(1);
+	}
+
 /*	[SerializeField] private DialogueManager _dialogueManager = default;
 	[SerializeField] private InputReader _inputReader = default;
 	[SerializeField] private GameStateSO _gameState = default;
