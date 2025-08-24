@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class CutsceneSceneLoader : MonoBehaviour
 {
-	[SerializeField] private GameSceneSO _sceneToLoad = default;
+		[SerializeField] private GameSceneSO _sceneToLoad = default;
+
+	[Header("Broadcasting on")]
+	[SerializeField] private LoadEventChannelSO _sceneLoadChannel = default;
+
+	/*[SerializeField] private GameSceneSO _sceneToLoad = default;
 
 	[Header("Broadcasting on")]
 	[SerializeField] private LoadEventChannelSO _sceneLoadChannel = default;
@@ -11,5 +16,5 @@ public class CutsceneSceneLoader : MonoBehaviour
 	public void LoadScene()
 	{
 		_sceneLoadChannel.RaiseEvent(_sceneToLoad, false, true);
-	}
+	}*/
 }
