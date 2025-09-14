@@ -15,7 +15,33 @@ public class CutsceneTrigger : MonoBehaviour
 
 	[Header("Broadcasting on")]
 	[SerializeField] private PlayableDirectorChannelSO _playCutsceneEvent = default;
+	private PlayableDirector _playableDirector = default;
 
+	private void Start()
+	{
+		_playableDirector = GetComponent<PlayableDirector>();
+		if (_playOnStart)
+			if (_playCutsceneEvent != null)
+				_playCutsceneEvent.RaiseEvent(_playableDirector);
+
+		//Check if we are playing a new game, we should play the intro cutscene
+		if (_questManager)
+		{
+			if (_questManager.IsNewGame())
+			{
+				_playableDirector.Play();
+			}
+		}
+}
+
+	private void OnEnable()
+	{
+		_playSpeceficCutscene.OnEventRaised += PlaySpecificCutscene;
+	}
+	private void OnDisable()
+	{
+		_playSpeceficCutscene.OnEventRaised -= PlaySpecificCutscene;
+	}
 /*	[SerializeField] private bool _playOnStart = default;
 	[SerializeField] private bool _playOnce = default;
 	[SerializeField] private QuestManagerSO _questManager = default;
