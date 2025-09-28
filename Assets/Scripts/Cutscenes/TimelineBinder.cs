@@ -3,7 +3,20 @@ using UnityEngine.Playables;
 
 public class TimelineBinder : MonoBehaviour
 {
-	[SerializeField] private PlayableDirector _playableDirector;
+		[SerializeField] private PlayableDirector _playableDirector;
+	[SerializeField] private GameObject[] _objectsToBind;
+
+	public string[] objectsToBindTags;
+	public string[] trackNames;
+
+	[SerializeField] private TransformEventChannelSO _playerInstantiatedChannel = default;
+
+	private void OnEnable()
+	{
+		_playerInstantiatedChannel.OnEventRaised += BindObjects;
+	}
+
+/* [SerializeField] private PlayableDirector _playableDirector;
 	[SerializeField] private GameObject[] _objectsToBind;
 
 	public string[] objectsToBindTags;
@@ -39,5 +52,5 @@ public class TimelineBinder : MonoBehaviour
 				}
 			}
 		}
-	}
+	}*/
 }
