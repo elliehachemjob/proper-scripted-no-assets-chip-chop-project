@@ -27,7 +27,18 @@ public class TimelineBinder : MonoBehaviour
 		{
 			_objectsToBind[i] = GameObject.FindGameObjectWithTag(objectsToBindTags[i]);
 		}
-
+		
+		foreach (var playableAssetOutput in _playableDirector.playableAsset.outputs)
+		{
+			for (int i = 0; i < objectsToBindTags.Length; ++i)
+			{
+				if (playableAssetOutput.streamName == trackNames[i])
+				{
+					_playableDirector.SetGenericBinding(playableAssetOutput.sourceObject, _objectsToBind[i]);
+				}
+			}
+		}
+	}
 /* [SerializeField] private PlayableDirector _playableDirector;
 	[SerializeField] private GameObject[] _objectsToBind;
 
