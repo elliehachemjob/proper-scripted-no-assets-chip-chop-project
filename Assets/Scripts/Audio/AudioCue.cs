@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class AudioCue : MonoBehaviour
 {
-	[Header("Sound definition")]
+	/*[Header("Sound definition")]
 	[SerializeField] private AudioCueSO _audioCue = default;
 	[SerializeField] private bool _playOnStart = false;
 
@@ -66,4 +66,4 @@ public class AudioCue : MonoBehaviour
 			}
 		}
 	}
-}
+}*/
