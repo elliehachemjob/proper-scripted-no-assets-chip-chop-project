@@ -5,7 +5,24 @@ using System.Collections;
 
 public class CameraManager : MonoBehaviour
 {
+
 	public InputReader inputReader;
+	public Camera mainCamera;
+	public CinemachineFreeLook freeLookVCam;
+	public CinemachineImpulseSource impulseSource;
+	private bool _isRMBPressed;
+
+	[SerializeField][Range(.5f, 3f)] private float _speedMultiplier = 1f; //TODO: make this modifiable in the game settings											
+	[SerializeField] private TransformAnchor _cameraTransformAnchor = default;
+	[SerializeField] private TransformAnchor _protagonistTransformAnchor = default;
+
+	[Header("Listening on channels")]
+	[Tooltip("The CameraManager listens to this event, fired by protagonist GettingHit state, to shake camera")]
+	[SerializeField] private VoidEventChannelSO _camShakeEvent = default;
+
+	private bool _cameraMovementLock = false;
+
+	/* public InputReader inputReader;
 	public Camera mainCamera;
 	public CinemachineFreeLook freeLookVCam;
 	public CinemachineImpulseSource impulseSource;
@@ -110,4 +127,5 @@ public class CameraManager : MonoBehaviour
 		freeLookVCam.LookAt = target;
 		freeLookVCam.OnTargetObjectWarped(target, target.position - freeLookVCam.transform.position - Vector3.forward);
 	}
+*/
 }
