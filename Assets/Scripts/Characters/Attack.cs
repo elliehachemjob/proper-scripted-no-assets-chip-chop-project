@@ -2,7 +2,16 @@
 
 public class Attack : MonoBehaviour
 {
-	[SerializeField] private AttackConfigSO _attackConfigSO;
+		[SerializeField] private AttackConfigSO _attackConfigSO;
+
+	public AttackConfigSO AttackConfig => _attackConfigSO;
+
+	private void Awake()
+	{
+		gameObject.SetActive(false);
+	}
+
+/*	[SerializeField] private AttackConfigSO _attackConfigSO;
 
 	public AttackConfigSO AttackConfig => _attackConfigSO;
 
@@ -22,5 +31,5 @@ public class Attack : MonoBehaviour
 					damageableComp.ReceiveAnAttack(_attackConfigSO.AttackStrength);
 			}
 		}
-	}
+	}*/
 }

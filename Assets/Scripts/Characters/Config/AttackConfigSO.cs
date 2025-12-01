@@ -14,9 +14,4 @@ public class AttackConfigSO : ScriptableObject
 
 	public int AttackStrength => _attackStrength;
 	public float AttackReloadDuration => _attackReloadDuration;
-	/* [SerializeField] private int _attackStrength;
-	[SerializeField] private float _attackReloadDuration;
-
-	public int AttackStrength => _attackStrength;
-	public float AttackReloadDuration => _attackReloadDuration;*/
 }
