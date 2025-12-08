@@ -2,7 +2,7 @@
 
 public class Attacker : MonoBehaviour
 {
-	[SerializeField] private GameObject _attackCollider;
+[SerializeField] private GameObject _attackCollider;
 
 	public void EnableWeapon()
 	{
@@ -13,4 +13,17 @@ public class Attacker : MonoBehaviour
 	{
 		_attackCollider.SetActive(false);
 	}
+
+
+	/*[SerializeField] private GameObject _attackCollider;
+
+	public void EnableWeapon()
+	{
+		_attackCollider.SetActive(true);
+	}
+
+	public void DisableWeapon()
+	{
+		_attackCollider.SetActive(false);
+	}*/
 }
