@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class CharacterAudio : MonoBehaviour
 {
-    [SerializeField] protected AudioCueEventChannelSO _sfxEventChannel = default;
+   /* [SerializeField] protected AudioCueEventChannelSO _sfxEventChannel = default;
 	[SerializeField] protected AudioConfigurationSO _audioConfig = default;
 	[SerializeField] protected GameStateSO _gameState = default;
 	
@@ -12,5 +12,5 @@ public class CharacterAudio : MonoBehaviour
 	{
 		if (_gameState.CurrentGameState != GameState.Cutscene)
 			_sfxEventChannel.RaisePlayEvent(audioCue, audioConfiguration, positionInSpace);
-	}
+	}*/
 }
