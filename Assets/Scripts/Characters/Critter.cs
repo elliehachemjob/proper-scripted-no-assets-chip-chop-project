@@ -22,7 +22,22 @@ public class Critter : MonoBehaviour
 			currentTarget = null;
 		}
 	}
-	//The StateMachine evaluates its health when needed
+
+	public void OnAttackTriggerChange(bool entered, GameObject who)
+	{
+		isPlayerInAttackZone = entered;
+
+		//No need to set the target. If we did, we would get currentTarget to null even if
+		//a target exited the Attack zone (inner) but stayed in the Alert zone (outer).
+	}
+
+	private void OnTargetDead()
+	{
+		currentTarget = null;
+		isPlayerInAlertZone = false;
+		isPlayerInAttackZone = false;
+	}
+	//The StateMachine evaluates its health when needed*****************************
 	/* [HideInInspector] public bool isPlayerInAlertZone;
 	[HideInInspector] public bool isPlayerInAttackZone;
 	
