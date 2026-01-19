@@ -19,6 +19,22 @@ public class Damageable : MonoBehaviour
 	[Header("Listening To")]
 	[SerializeField] private IntEventChannelSO _restoreHealth = default; //Getting cured when eating food
 
+	/* [Header("Health")]
+	[SerializeField] private HealthConfigSO _healthConfigSO;
+	[SerializeField] private HealthSO _currentHealthSO;
+
+	[Header("Combat")]
+	[SerializeField] private GetHitEffectConfigSO _getHitEffectSO;
+	[SerializeField] private Renderer _mainMeshRenderer;
+	[SerializeField] private DroppableRewardConfigSO _droppableRewardSO;
+
+	[Header("Broadcasting On")]
+	[SerializeField] private VoidEventChannelSO _updateHealthUI = default;
+	[SerializeField] private VoidEventChannelSO _deathEvent = default;
+
+	[Header("Listening To")]
+	[SerializeField] private IntEventChannelSO _restoreHealth = default; //Getting cured when eating food
+
 	public DroppableRewardConfigSO DroppableRewardConfig => _droppableRewardSO;
 
 	//Flags that the StateMachine uses for Conditions to move between states
@@ -113,5 +129,5 @@ public class Damageable : MonoBehaviour
 
 		if (_updateHealthUI != null)
 			_updateHealthUI.RaiseEvent();
-	}
+	}*/
 }
