@@ -18,6 +18,31 @@ public class Damageable : MonoBehaviour
 
 	[Header("Listening To")]
 	[SerializeField] private IntEventChannelSO _restoreHealth = default; //Getting cured when eating food
+public DroppableRewardConfigSO DroppableRewardConfig => _droppableRewardSO;
+
+	//Flags that the StateMachine uses for Conditions to move between states
+	public bool GetHit { get; set; }
+	public bool IsDead { get; set; }
+
+	public GetHitEffectConfigSO GetHitEffectConfig => _getHitEffectSO;
+	public Renderer MainMeshRenderer => _mainMeshRenderer; //used to apply the hit flash effect
+
+	public event UnityAction OnDie;
+
+	private void Awake()
+	{
+		//If the HealthSO hasn't been provided in the Inspector (as it's the case for the player),
+		//we create a new SO unique to this instance of the component. This is typical for enemies.
+		if (_currentHealthSO == null)
+		{
+			_currentHealthSO = ScriptableObject.CreateInstance<HealthSO>();
+			_currentHealthSO.SetMaxHealth(_healthConfigSO.InitialHealth);
+			_currentHealthSO.SetCurrentHealth(_healthConfigSO.InitialHealth);
+		}
+
+		if (_updateHealthUI != null)
+			_updateHealthUI.RaiseEvent();
+	}
 
 	/* [Header("Health")]
 	[SerializeField] private HealthConfigSO _healthConfigSO;
