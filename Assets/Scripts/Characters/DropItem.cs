@@ -9,4 +9,9 @@ public class DropItem
 
 	public ItemSO Item => _item;
 	public float ItemDropRate => _itemDropRate;
+	/*[SerializeField] ItemSO _item;
+	[SerializeField] float _itemDropRate;
+
+	public ItemSO Item => _item;
+	public float ItemDropRate => _itemDropRate;*/
 }
