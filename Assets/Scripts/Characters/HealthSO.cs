@@ -7,7 +7,11 @@
 [CreateAssetMenu(fileName = "PlayersHealth", menuName = "EntityConfig/Player's Health")]
 public class HealthSO : ScriptableObject
 {
+	
 	[Tooltip("The initial health")]
+	[SerializeField][ReadOnly] private int _maxHealth;
+	[SerializeField][ReadOnly] private int _currentHealth;
+	/* [Tooltip("The initial health")]
 	[SerializeField][ReadOnly] private int _maxHealth;
 	[SerializeField][ReadOnly] private int _currentHealth;
 
@@ -34,5 +38,5 @@ public class HealthSO : ScriptableObject
 		_currentHealth += HealthValue;
 		if(_currentHealth > _maxHealth)
 			_currentHealth = _maxHealth;
-	}
+	}*/
 }
