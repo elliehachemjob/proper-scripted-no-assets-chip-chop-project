@@ -20,6 +20,23 @@ public class SettingsSO : ScriptableObject
 	public float ShadowDistance => _shadowDistance;
 	public bool IsFullscreen => _isFullscreen;
 	public Locale CurrentLocale => _currentLocale;
+	
+	/* [SerializeField] float _masterVolume = default;
+	[SerializeField] float _musicVolume = default;
+	[SerializeField] float _sfxVolume = default;
+	[SerializeField] int _resolutionsIndex = default;
+	[SerializeField] int _antiAliasingIndex = default;
+	[SerializeField] float _shadowDistance = default;
+	[SerializeField] bool _isFullscreen = default;
+	[SerializeField] Locale _currentLocale = default;
+	public float MasterVolume => _masterVolume;
+	public float MusicVolume => _musicVolume;
+	public float SfxVolume => _sfxVolume;
+	public int ResolutionsIndex => _resolutionsIndex;
+	public int AntiAliasingIndex => _antiAliasingIndex;
+	public float ShadowDistance => _shadowDistance;
+	public bool IsFullscreen => _isFullscreen;
+	public Locale CurrentLocale => _currentLocale;
 
 		public void SaveAudioSettings(float newMusicVolume, float newSfxVolume, float newMasterVolume)
 	{
