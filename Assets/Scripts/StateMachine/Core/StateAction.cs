@@ -7,7 +7,27 @@ namespace UOP1.StateMachine
 	/// </summary>
 	public abstract class StateAction : IStateComponent
 	{
-		internal StateActionSO _originSO;
+			internal StateActionSO _originSO;
+
+		/// <summary>
+		/// Use this property to access shared data from the <see cref="StateActionSO"/> that corresponds to this <see cref="StateAction"/>
+		/// </summary>
+		protected StateActionSO OriginSO => _originSO;
+
+		/// <summary>
+		/// Called every frame the <see cref="StateMachine"/> is in a <see cref="State"/> with this <see cref="StateAction"/>.
+		/// </summary>
+		public abstract void OnUpdate();
+
+		/// <summary>
+		/// Awake is called when creating a new instance. Use this method to cache the components needed for the action.
+		/// </summary>
+		/// <param name="stateMachine">The <see cref="StateMachine"/> this instance belongs to.</param>
+		public virtual void Awake(StateMachine stateMachine) { }
+
+		public virtual void OnStateEnter() { }
+		public virtual void OnStateExit() { }
+		/* internal StateActionSO _originSO;
 
 		/// <summary>
 		/// Use this property to access shared data from the <see cref="StateActionSO"/> that corresponds to this <see cref="StateAction"/>
@@ -36,5 +56,5 @@ namespace UOP1.StateMachine
 		{
 			OnStateEnter, OnStateExit, OnUpdate,
 		}
-	}
+	}*/
 }
