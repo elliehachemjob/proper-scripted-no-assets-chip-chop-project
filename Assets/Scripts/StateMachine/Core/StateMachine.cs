@@ -4,7 +4,34 @@ using UnityEngine;
 
 namespace UOP1.StateMachine
 {
+
 	public class StateMachine : MonoBehaviour
+	{
+	[Tooltip("Set the initial state of this StateMachine")]
+		[SerializeField] private ScriptableObjects.TransitionTableSO _transitionTableSO = default;
+
+#if UNITY_EDITOR
+		[Space]
+		[SerializeField]
+		internal Debugging.StateMachineDebugger _debugger = default;
+#endif
+
+		private readonly Dictionary<Type, Component> _cachedComponents = new Dictionary<Type, Component>();
+		internal State _currentState;
+
+		private void Awake()
+		{
+			_currentState = _transitionTableSO.GetInitialState(this);
+#if UNITY_EDITOR
+			_debugger.Awake(this);
+#endif
+		}
+		#if UNITY_EDITOR
+		private void OnEnable()
+		{
+			UnityEditor.AssemblyReloadEvents.afterAssemblyReload += OnAfterAssemblyReload;
+		}
+	/*( public class StateMachine : MonoBehaviour
 	{
 	[Tooltip("Set the initial state of this StateMachine")]
 		[SerializeField] private ScriptableObjects.TransitionTableSO _transitionTableSO = default;
@@ -187,4 +214,5 @@ namespace UOP1.StateMachine
 			_currentState.OnStateEnter();
 		}
 	}*/
+}
 }
